@@ -17,12 +17,12 @@ public class LoginControl {
     public static void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
 
         //DB User abfrage
-        ResultSet set = null;
+        ResultSet rs = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
         try {
-            set = statement.executeQuery("SELECT * " +
+            rs = statement.executeQuery("SELECT id " +
                     "FROM collhbrs.user " +
-                    "WHERE email = \'" + email + "\'" +
+                    "WHERE email = \'" + email + "\' " +
                     "AND password = \'" + password + "\'");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -32,8 +32,9 @@ public class LoginControl {
         User user = null;
 
         try {
-            if( set.next() ) {
+            if( rs.next() ) {
                 user = new User();
+                user.setId(rs.getInt(1));
             }
             else {
                 throw new NoSuchUserOrPassword();
