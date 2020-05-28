@@ -45,7 +45,7 @@ class seleniumRegisterViewTest {
         driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/span[2]/span")).click();
 
         //Daten eingeben
-        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys("Lachs@lax.de");
+        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys("Lachs@laxi.de");
         driver.findElement(By.xpath("//*[@id=\"passwort1\"]")).sendKeys("12345");
         driver.findElement(By.xpath("//*[@id=\"passwort2\"]")).sendKeys("12345");
 
