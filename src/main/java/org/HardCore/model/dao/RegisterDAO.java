@@ -58,4 +58,7 @@ public class RegisterDAO extends AbstractDAO {
             return false;
         }
     }
+
+    public void unregisterUser(User user) {
+    }
 }

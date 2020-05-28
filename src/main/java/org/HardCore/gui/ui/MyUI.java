@@ -12,7 +12,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.views.LoginView;
 import org.HardCore.gui.views.MainView;
-import org.HardCore.gui.views.ProfilView;
+import org.HardCore.gui.views.ProfileView;
 import org.HardCore.gui.views.RegistrationView;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.services.util.Views;
@@ -25,7 +25,7 @@ import org.HardCore.services.util.Views;
  * overridden to add component to the user interface and initialize non-component functionality.
  */
 @Theme("mytheme")
-@Title("HardCOre")
+@Title("HardCore")
 @PreserveOnRefresh
 public class MyUI extends UI {
     private User user= null;
@@ -43,7 +43,7 @@ public class MyUI extends UI {
         Navigator navi = new Navigator(this,this);
 
         navi.addView(Views.MAIN, MainView.class);
-        navi.addView(Views.PROFILE, ProfilView.class);
+        navi.addView(Views.PROFILE, ProfileView.class);
         navi.addView(Views.REGISTRATION, RegistrationView.class);
         navi.addView(Views.LOGIN, LoginView.class);
 

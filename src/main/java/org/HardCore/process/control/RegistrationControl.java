@@ -6,11 +6,10 @@ import org.HardCore.gui.windows.ConfirmationWindow;
 import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.dao.RoleDAO;
 import org.HardCore.model.dao.UserDAO;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.process.control.exceptions.EmailInUseException;
+import org.HardCore.process.control.exceptions.EmptyFieldException;
 import org.HardCore.process.control.exceptions.NoEqualPasswordException;
 import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
@@ -22,7 +21,12 @@ import java.sql.Statement;
 
 public class RegistrationControl {
 
-    public static void checkValid(String email, String password1, String password2) throws NoEqualPasswordException, DatabaseException, EmailInUseException {
+    public static void checkValid(String email, boolean emailBool, String password1, String password2, boolean password1Bool, boolean password2Bool, boolean checkBox) throws NoEqualPasswordException, DatabaseException, EmailInUseException, EmptyFieldException {
+
+        //Eingabecheck
+        if (!emailBool || !password1Bool  || !password2Bool || !checkBox) {
+            throw new EmptyFieldException("Bitte ergänzen Sie Ihre Eingaben in den makierten Bereichen!");
+        }
 
         //Passwortcheck
         if ( !password1.equals(password2) ) {

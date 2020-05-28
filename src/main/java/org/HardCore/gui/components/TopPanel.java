@@ -1,5 +1,6 @@
 package org.HardCore.gui.components;
 
+import com.vaadin.event.ContextClickEvent;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
@@ -16,10 +17,15 @@ public class TopPanel extends HorizontalLayout {
         this.setSizeFull();
 
         //Logo links oben in der Ecke
-        Label headlabel = new Label("HardCore-Logo");
-        headlabel.setSizeUndefined();
-        this.addComponent(headlabel);
-        this.setComponentAlignment(headlabel, Alignment.TOP_LEFT);
+        Button logo = new Button("HardCore-Logo");
+        logo.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
+            }
+        });
+        this.addComponent(logo);
+        this.setComponentAlignment(logo, Alignment.TOP_LEFT);
 
 
         //Willkommenstext oben rechts
@@ -62,7 +68,12 @@ public class TopPanel extends HorizontalLayout {
 
         //Profil
         if (user != null) {
-            item1.addItem("Profil", VaadinIcons.USER, null);
+            item1.addItem("Profil", VaadinIcons.USER, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem menuItem) {
+                    UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
+                }
+            });
 
             //Unternehmer Menü
             if ( user.hasRole(Roles.UNTERNEHMEN) ) {
