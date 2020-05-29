@@ -1,11 +1,8 @@
 package org.HardCore.gui.components;
 
-import com.vaadin.event.ContextClickEvent;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.LoginControl;
 import org.HardCore.services.util.Roles;
