@@ -30,7 +30,7 @@ public class LoginView extends VerticalLayout implements View {
         final TextField userLogin = new TextField("Email:");
         Binder<User> binder = new Binder<>();
         binder.forField(userLogin)
-                .withValidator(new EmailValidator("Biite geben Sie eine korrekte Emailadresse ein!"))
+                .withValidator(new EmailValidator("Bitte geben Sie eine korrekte Emailadresse ein!"))
                 .bind(User::getEmail, User::setEmail);
         final PasswordField passwordField = new PasswordField("Passwort:");
 
@@ -63,7 +63,7 @@ public class LoginView extends VerticalLayout implements View {
         panel.setContent(verticalLayout);
         panel.setSizeUndefined();
 
-        //Ennfügen
+        //Einfügen
         this.addComponent(panel);
         this.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 

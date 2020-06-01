@@ -3,6 +3,8 @@ package org.HardCore.model.dao;
 import org.HardCore.model.objects.dto.User;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class RegisterDAO extends AbstractDAO {
@@ -59,6 +61,37 @@ public class RegisterDAO extends AbstractDAO {
         }
     }
 
-    public void unregisterUser(User user) {
+    public void deleteUser(User user) {
+        Statement statement = this.getStatement();
+        try {
+            System.out.println("ID: " + user.getId());
+            //Lösche Student
+            if (user.hasRole("Student")) {
+            statement.execute("DELETE " +
+                        "FROM collhbrs.student s " +
+                        "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
+                        "WHERE u.id = \'" + user.getId() + "\' AND u.id = s.id AND u.id = utr.id;");
+            }
+            //Lösche Unternehmen
+            if (user.hasRole("Unternehmen")) {
+            statement.execute(
+                    "DELETE " +
+                            "FROM collhbrs.unternehmen un " +
+                            "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
+                            "WHERE u.id = \'" + user.getId() + "\' AND u.id = un.id AND u.id = utr.id;");
+            }
+            //Lösche USER-To-Rolle Eintrag
+            statement.execute("DELETE " +
+                    "FROM collhbrs.user_to_rolle utr " + "WHERE utr.id =\'" + user.getId() + "\';");
+            //Lösche User
+            statement.execute("DELETE " +
+                    "FROM collhbrs.user u " +
+                    "WHERE u.id = \'" + user.getId() + "\';");
+
+            System.out.println("Löschen erfolgreich");
+        } catch (SQLException ex) {
+            Logger.getLogger((RegisterDAO.class.getName())).log(Level.SEVERE, null, ex);
+            System.out.println("Löschen nicht erfolgreich");
+        }
     }
 }
