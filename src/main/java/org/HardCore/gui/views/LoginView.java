@@ -3,6 +3,7 @@ package org.HardCore.gui.views;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
@@ -30,12 +31,13 @@ public class LoginView extends VerticalLayout implements View {
         final TextField userLogin = new TextField("Email:");
         Binder<User> binder = new Binder<>();
         binder.forField(userLogin)
-                .withValidator(new EmailValidator("Biite geben Sie eine korrekte Emailadresse ein!"))
+                .withValidator(new EmailValidator("Bitte geben Sie eine korrekte Emailadresse ein!"))
                 .bind(User::getEmail, User::setEmail);
         final PasswordField passwordField = new PasswordField("Passwort:");
 
         //Login Button
         Button loginButton = new Button("Login");
+        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         loginButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -63,7 +65,7 @@ public class LoginView extends VerticalLayout implements View {
         panel.setContent(verticalLayout);
         panel.setSizeUndefined();
 
-        //Ennfügen
+        //Einfügen
         this.addComponent(panel);
         this.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 

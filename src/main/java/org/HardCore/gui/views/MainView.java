@@ -3,18 +3,20 @@ package org.HardCore.gui.views;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
-import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.objects.dto.User;
+import org.HardCore.services.util.Roles;
 
 public class MainView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        User user = ( (MyUI)UI.getCurrent() ).getUser();
+        User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
+        //User user = ( (MyUI)UI.getCurrent() ).getUser();
 
         this.setUp();
     }

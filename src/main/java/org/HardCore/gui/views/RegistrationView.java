@@ -1,10 +1,12 @@
 package org.HardCore.gui.views;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.HasValue;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.model.objects.dto.User;
@@ -31,29 +33,56 @@ public class RegistrationView extends VerticalLayout implements View {
         //Email
         final Binder<User> emailBinder = new Binder<>();
         final TextField fieldEmail = new TextField("Email:");
+        fieldEmail.focus();
+        fieldEmail.setPlaceholder("Email");
         fieldEmail.setRequiredIndicatorVisible(true);
         emailBinder.forField(fieldEmail)
                 .withValidator(new EmailValidator("Biite geben Sie eine korrekte Emailadresse ein!"))
                 .bind(User::getEmail, User::setEmail);
         fieldEmail.setId("email");
 
-        //Passwort setzen
+        //Passwort setzen und Counter Label darunter
         final Binder<User> password1Binder = new Binder<>();
         final PasswordField fieldPassword1 = new PasswordField("Passwort:");
+        fieldPassword1.setPlaceholder("Passwort");
+        fieldPassword1.setMaxLength(20);
         fieldPassword1.setRequiredIndicatorVisible(true);
         password1Binder.forField(fieldPassword1)
                 .withValidator(str -> str.length() > 2, "Ihr Passwort muss mindestens 3 Zeichen enthalten!")
+                .withValidator(str -> str.length() < 21, "Ihr Passwort darf nicht mehr als 20 Zeichen enthalten!")
                 .asRequired("Bitte gegen Sie ein Passwort ein!")
                 .bind(User::getPassword, User::setPassword);
+        Label counter1 = new Label();
+        counter1.setValue(fieldPassword1.getValue().length() + " of " + fieldPassword1.getMaxLength());
+        fieldPassword1.addValueChangeListener(new HasValue.ValueChangeListener<String>() {
+            @Override
+            public void valueChange(HasValue.ValueChangeEvent<String> valueChangeEvent) {
+                counter1.setValue(fieldPassword1.getValue().length() + " of " + fieldPassword1.getMaxLength());
+
+            }
+        });
+        fieldPassword1.setValueChangeMode(ValueChangeMode.EAGER);
         fieldPassword1.setId("passwort1");
 
         //Passwort wiederholen
         final Binder<User> password2Binder = new Binder<>();
         final PasswordField fieldPassword2 = new PasswordField("Passwort wiederholen:");
+        fieldPassword2.setPlaceholder("Passwort");
+        fieldPassword2.setMaxLength(20);
         fieldPassword2.setRequiredIndicatorVisible(true);
         password2Binder.forField(fieldPassword2)
                 .asRequired("Bitte wiederholen Sie Ihr Passwort!")
                 .bind(User::getPassword, User::setPassword);
+        Label counter2 = new Label();
+        counter2.setValue(fieldPassword2.getValue().length() + " of " + fieldPassword2.getMaxLength());
+        fieldPassword2.addValueChangeListener(new HasValue.ValueChangeListener<String>() {
+            @Override
+            public void valueChange(HasValue.ValueChangeEvent<String> valueChangeEvent) {
+                counter2.setValue(fieldPassword2.getValue().length() + " of " + fieldPassword2.getMaxLength());
+
+            }
+        });
+        fieldPassword1.setValueChangeMode(ValueChangeMode.EAGER);
         fieldPassword2.setId("passwort2");
 
         //Checkbox
@@ -98,7 +127,9 @@ public class RegistrationView extends VerticalLayout implements View {
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponent(fieldEmail);
         verticalLayout.addComponent(fieldPassword1);
+        verticalLayout.addComponent(counter1);
         verticalLayout.addComponent(fieldPassword2);
+        verticalLayout.addComponent(counter2);
         verticalLayout.addComponent(radioButtonGroup);
         verticalLayout.addComponent(registerButton);
 
