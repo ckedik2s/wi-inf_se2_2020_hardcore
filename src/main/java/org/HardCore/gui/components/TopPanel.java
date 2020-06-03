@@ -9,7 +9,7 @@ import org.HardCore.process.control.LoginControl;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
-public class TopPanel extends HorizontalLayout {
+public class  TopPanel extends HorizontalLayout {
 
     public TopPanel() {
         this.setSizeFull();
