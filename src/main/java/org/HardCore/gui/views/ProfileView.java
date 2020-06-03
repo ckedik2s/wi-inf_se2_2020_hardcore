@@ -6,11 +6,8 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.ConfirmWindow;
-import org.HardCore.gui.windows.ConfirmationWindow;
-import org.HardCore.model.dao.RegisterDAO;
+import org.HardCore.gui.windows.DeleteProfileWindow;
 import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.RegistrationControl;
 
 public class ProfileView extends VerticalLayout implements View {
 
@@ -33,7 +30,7 @@ public class ProfileView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new ConfirmWindow("Sind Sie sicher, dass Sie Ihr Profil löschen wollen? Dieser Vorgang ist endgültig!"));
+                UI.getCurrent().addWindow(new DeleteProfileWindow("Sind Sie sicher, dass Sie Ihr Profil löschen wollen? Dieser Vorgang ist endgültig!"));
             }
         });
 
