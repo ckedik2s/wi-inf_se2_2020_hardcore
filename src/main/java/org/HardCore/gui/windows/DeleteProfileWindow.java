@@ -8,9 +8,9 @@ import org.HardCore.process.control.LoginControl;
 import org.HardCore.process.control.RegistrationControl;
 import org.HardCore.services.util.Views;
 
-public class ConfirmWindow extends Window {
+public class DeleteProfileWindow extends Window {
     //Window zum Löschen von Usern
-    public ConfirmWindow( String text) {
+    public DeleteProfileWindow(String text) {
         center();
 
         VerticalLayout content = new VerticalLayout();

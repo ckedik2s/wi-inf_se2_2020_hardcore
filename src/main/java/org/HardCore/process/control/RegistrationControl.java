@@ -21,6 +21,15 @@ import java.sql.Statement;
 
 public class RegistrationControl {
 
+    public static RegistrationControl registration = null;
+
+    public static RegistrationControl getInstance(){
+        if(registration == null){
+            registration = new RegistrationControl();
+        }
+        return registration;
+    }
+
     public static void checkValid(String email, boolean emailBool, String password1, String password2, boolean password1Bool, boolean password2Bool, boolean checkBox) throws NoEqualPasswordException, DatabaseException, EmailInUseException, EmptyFieldException {
 
         //Eingabecheck
@@ -79,5 +88,10 @@ public class RegistrationControl {
             throw new DatabaseException("Fehler bei Abschluß der Registration");
         }
 
+    }
+
+    //User Löschen
+    public void deleteUser(User user){
+        RegisterDAO.getInstance().deleteUser(user);
     }
 }
