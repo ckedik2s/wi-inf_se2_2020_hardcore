@@ -45,7 +45,7 @@ public class LoginControl {
         finally {
             JDBCConnection.getInstance().closeConnection();
         }
-        //UI.getCurrent().getSession().getAttribute()
+        //UI.getCurrent().getSession().setAttribute(user);
         ((MyUI) UI.getCurrent() ).setUser(user); //Mockito zum Testen
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }

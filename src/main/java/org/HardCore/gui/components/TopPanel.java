@@ -1,6 +1,7 @@
 package org.HardCore.gui.components;
 
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.objects.dto.User;
@@ -27,7 +28,7 @@ public class TopPanel extends HorizontalLayout {
 
         //Willkommenstext oben rechts
         HorizontalLayout hlayout = new HorizontalLayout();
-        User user = ( (MyUI)MyUI.getCurrent() ).getUser();
+        User user = ( (MyUI) MyUI.getCurrent() ).getUser();
         Label welcome = null;
         if (user == null) {
             welcome = new Label("Willkommen bei HardCore!");
@@ -74,12 +75,22 @@ public class TopPanel extends HorizontalLayout {
 
             //Unternehmer Menü
             if ( user.hasRole(Roles.UNTERNEHMEN) ) {
-                item1.addItem("Meine Stellenanzeigen", VaadinIcons.FILE_TEXT_O, null);
+                item1.addItem("Meine Stellenanzeigen", VaadinIcons.FILE_TEXT_O, new MenuBar.Command() {
+                    @Override
+                    public void menuSelected(MenuBar.MenuItem menuItem) {
+                        UI.getCurrent().getNavigator().navigateTo(Views.STELLENANZEIGE);
+                    }
+                });
             }
 
             //Student Menü
             if ( user.hasRole(Roles.STUDENT) ) {
-                item1.addItem("Meine Bewerbungen", VaadinIcons.FILE_TEXT_O, null);
+                item1.addItem("Meine Bewerbungen", VaadinIcons.FILE_TEXT_O, new MenuBar.Command() {
+                    @Override
+                    public void menuSelected(MenuBar.MenuItem menuItem) {
+                        UI.getCurrent().getNavigator().navigateTo(Views.BEWERBUNG);
+                    }
+                });
             }
 
             item1.addItem("Logout", VaadinIcons.SIGN_OUT, new MenuBar.Command() {

@@ -1,5 +1,6 @@
 package org.HardCore.gui.windows;
 
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.dao.RegisterDAO;
@@ -10,14 +11,17 @@ import org.HardCore.services.util.Views;
 
 public class DeleteProfileWindow extends Window {
     //Window zum Löschen von Usern
-    public DeleteProfileWindow(String text) {
+    public DeleteProfileWindow() {
         center();
 
-        VerticalLayout content = new VerticalLayout();
-        content.addComponent(new Label( text ));
-        content.setMargin(true);
-        setContent(content);
+        VerticalLayout verticalLayout = new VerticalLayout();
+        Panel panel = new Panel();
+        panel.setWidth("700");
+        panel.setContent(new Label( "Sind Sie sicher, dass Sie Ihr Profil löschen wollen? <br>" +
+                "Dieser Vorgang ist endgültig und löscht auch alle mit Ihrem Porfil erzeugten Dokumente!", ContentMode.HTML));
+        verticalLayout.addComponent(panel);
 
+        //OK Button
         Button okButton = new Button("Ok");
         okButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -30,6 +34,7 @@ public class DeleteProfileWindow extends Window {
             }
         });
 
+        //Abbruch Button
         Button abortButton = new Button("Abbrechen");
         abortButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -38,7 +43,11 @@ public class DeleteProfileWindow extends Window {
             }
         });
 
-        content.addComponent(okButton);
-        content.addComponent(abortButton);
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.addComponent(okButton);
+        horizontalLayout.addComponent(abortButton);
+        verticalLayout.addComponent(horizontalLayout);
+        verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
+        setContent(verticalLayout);
     }
 }

@@ -30,7 +30,7 @@ public class ProfileView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new DeleteProfileWindow("Sind Sie sicher, dass Sie Ihr Profil löschen wollen? Dieser Vorgang ist endgültig!"));
+                UI.getCurrent().addWindow(new DeleteProfileWindow());
             }
         });
 

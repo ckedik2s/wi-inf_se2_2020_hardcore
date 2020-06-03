@@ -3,6 +3,7 @@ package org.HardCore.gui.views;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
@@ -36,6 +37,7 @@ public class LoginView extends VerticalLayout implements View {
 
         //Login Button
         Button loginButton = new Button("Login");
+        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         loginButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

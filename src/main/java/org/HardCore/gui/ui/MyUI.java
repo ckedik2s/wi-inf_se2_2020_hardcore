@@ -10,10 +10,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import org.HardCore.gui.views.LoginView;
-import org.HardCore.gui.views.MainView;
-import org.HardCore.gui.views.ProfileView;
-import org.HardCore.gui.views.RegistrationView;
+import org.HardCore.gui.views.*;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.services.util.Views;
 
@@ -46,6 +43,8 @@ public class MyUI extends UI {
         navi.addView(Views.PROFILE, ProfileView.class);
         navi.addView(Views.REGISTRATION, RegistrationView.class);
         navi.addView(Views.LOGIN, LoginView.class);
+        navi.addView(Views.STELLENANZEIGE, StellenanzeigeView.class);
+        navi.addView(Views.BEWERBUNG, BewerbungView.class);
 
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }
