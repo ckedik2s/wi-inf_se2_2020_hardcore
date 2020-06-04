@@ -3,6 +3,7 @@ package org.HardCore.model.objects.dto;
 import org.HardCore.model.dao.RoleDAO;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class User implements Serializable {
@@ -12,6 +13,16 @@ public class User implements Serializable {
     private String email;
     private String password;
     private List<Role> roles = null;
+
+    public User () {}
+    public User (User user) {
+        this.id = user.id;
+        this.vorname = user.vorname;
+        this.name = user.name;
+        this.email = user.email;
+        this.password = user.password;
+        this.roles = user.roles;
+    }
 
     public String getVorname() {
         return vorname;
