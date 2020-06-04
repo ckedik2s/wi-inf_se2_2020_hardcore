@@ -5,6 +5,7 @@ import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.ConfirmationWindow;
 import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.dao.StudentDAO;
+import org.HardCore.model.dao.UnternehmenDAO;
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
@@ -34,13 +35,16 @@ public class ProfileControl {
         stu_dao.setStudentKenntnisse(student, new_kenntnisse);
         stu_dao.setStudentStudiengang(student, new_studiengang);
     }
-    public static void updateUnternehmenData(Unternehmen unternehmen, String firmenname) throws DatabaseException{
-        unternehmen.setName(firmenname);
-    }
+    public static void updateUnternehmenData(Unternehmen unternehmen, String firmennameValue, String ansprechpartnerValue, String strasseValue, String plzValue, String haus_nrValue, String zusatzValue, String ortValue, String brancheValue) throws DatabaseException{
+        UnternehmenDAO unt_dao = UnternehmenDAO.getInstance();
+        unt_dao.setUnternehmenFirmenname(unternehmen,firmennameValue);
+        unt_dao.setUnternehmenAnsprechpartner(unternehmen,ansprechpartnerValue);
+        unt_dao.setUnternehmenStrasse(unternehmen,strasseValue);
+        unt_dao.setUnternehmenPLZ(unternehmen,plzValue);
+        unt_dao.setUnternehmenHausnr(unternehmen,haus_nrValue);
+        unt_dao.setUnternehmenZusatz(unternehmen,zusatzValue);
+        unt_dao.setUnternehmenOrt(unternehmen,ortValue);
+        unt_dao.setUnternehmenBranche(unternehmen,brancheValue);
 
-    public static void deleteUser(User user){
-        RegisterDAO.getInstance().deleteUser(user);
-        ( (MyUI)UI.getCurrent() ).setUser(null);
-        UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }
 }

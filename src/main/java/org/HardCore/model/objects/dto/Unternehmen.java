@@ -1,14 +1,14 @@
 package org.HardCore.model.objects.dto;
 
 public class Unternehmen extends User{
-    private String firmenname;
-    private String ansprechpartner;
-    private String strasse;
-    private String plz;
-    private String haus_nr;
-    private String zusatz;
-    private String ort;
-    private String branche;
+    private String firmenname = "Test GmbH";
+    private String ansprechpartner ="Paddy Cheese";
+    private String strasse ="Teststrasse";
+    private String plz = "53721";
+    private String haus_nr = "1";
+    private String zusatz = "b";
+    private String ort = "Siegburg";
+    private String branche ="Informatik";
 
     public Unternehmen(User user) {
         super(user);

@@ -8,6 +8,7 @@ import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.ConfirmationWindow;
+import org.HardCore.gui.windows.DeleteProfileWindow;
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
@@ -73,11 +74,9 @@ public class ProfileView extends VerticalLayout implements View {
             gebDatum.setValue(student.getGebDatum());
             kenntnisse.setValue(student.getKenntnisse());
             studiengang.setValue(student.getStudiengang());
-            //Restlichen Werte default setzen
-
         } else {
             //Werte Setzen
-           /* Unternehmen unternehmen = new Unternehmen(user);
+            Unternehmen unternehmen = new Unternehmen(user);
             firmenname.setValue(unternehmen.getFirmenname());
             ansprechpartner.setValue(unternehmen.getAnsprechpartner());
             strasse.setValue(unternehmen.getStrasse());
@@ -86,8 +85,6 @@ public class ProfileView extends VerticalLayout implements View {
             zusatz.setValue(unternehmen.getZusatz());
             ort.setValue(unternehmen.getOrt());
             branche.setValue(unternehmen.getBranche());
-            //Restlichen Werte default setzen*/
-
         }
 
         Button overwriteBtn = new Button("Daten aktualisieren");
@@ -97,8 +94,7 @@ public class ProfileView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new ConfirmationWindow("Sind Sie sicher, dass Sie Ihr Profil löschen wollen? Dieser Vorgang ist endgültig!"));
-                ProfileControl.deleteUser(user);
+                UI.getCurrent().addWindow(new DeleteProfileWindow());
             }
         });
 
@@ -124,10 +120,9 @@ public class ProfileView extends VerticalLayout implements View {
                         Notification.show("DB-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
                     }
                 } else {
-                    String new_firmenname = firmenname.getValue();
                     Unternehmen unternehmen = new Unternehmen(user);
                     try{
-                        ProfileControl.updateUnternehmenData(unternehmen, new_firmenname);
+                        ProfileControl.updateUnternehmenData(unternehmen, firmenname.getValue(), ansprechpartner.getValue(), strasse.getValue(), plz.getValue(), haus_nr.getValue(), zusatz.getValue(), ort.getValue(), branche.getValue());
                     } catch (DatabaseException e) {
                         Notification.show("DB-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
                     }
@@ -147,10 +142,16 @@ public class ProfileView extends VerticalLayout implements View {
             this.addComponent(studiengang);
             this.addComponent(overwriteBtn);
             this.addComponent(deleteButton);
-        } else if(user.hasRole(Roles.UNTERNEHMEN)){
-            meinProfil.setValue("Mein Unternehmensprofil");
-            this.addComponent(meinProfil);
+        } else {
+            this.addComponent(meinUnternehmen);
             this.addComponent(firmenname);
+            this.addComponent(ansprechpartner);
+            this.addComponent(strasse);
+            this.addComponent(plz);
+            this.addComponent(haus_nr);
+            this.addComponent(zusatz);
+            this.addComponent(ort);
+            this.addComponent(branche);
             this.addComponent(overwriteBtn);
             this.addComponent(deleteButton);
         }
