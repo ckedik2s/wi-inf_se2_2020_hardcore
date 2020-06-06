@@ -1,14 +1,14 @@
 package org.HardCore.model.objects.dto;
 
 public class Unternehmen extends User{
-    private String firmenname = "Test GmbH";
-    private String ansprechpartner ="Paddy Cheese";
-    private String strasse ="Teststrasse";
-    private String plz = "53721";
-    private String haus_nr = "1";
-    private String zusatz = "b";
-    private String ort = "Siegburg";
-    private String branche ="Informatik";
+    private String firmenname = "Firmenname eingeben";
+    private String ansprechpartner ="Ansprechpartner eingeben";
+    private String strasse ="Straße eingeben";
+    private Integer plz = 0;
+    private Integer haus_nr = 0;
+    private String zusatz = " ";
+    private String ort = "Ort eingeben";
+    private String branche ="Branche eingeben";
 
     public Unternehmen(User user) {
         super(user);
@@ -37,19 +37,19 @@ public class Unternehmen extends User{
         this.strasse = strasse;
     }
 
-    public String getPlz() {
+    public Integer getPlz() {
         return plz;
     }
 
-    public void setPlz(String plz) {
+    public void setPlz(Integer plz) {
         this.plz = plz;
     }
 
-    public String getHaus_nr() {
+    public Integer getHaus_nr() {
         return haus_nr;
     }
 
-    public void setHaus_nr(String haus_nr) {
+    public void setHaus_nr(Integer haus_nr) {
         this.haus_nr = haus_nr;
     }
 

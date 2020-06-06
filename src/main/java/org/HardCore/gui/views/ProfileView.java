@@ -26,7 +26,7 @@ public class ProfileView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
+        User user = ((MyUI) UI.getCurrent()).getUser();
         this.setUp();
     }
 
@@ -63,28 +63,61 @@ public class ProfileView extends VerticalLayout implements View {
         TextField branche = new TextField("Branche");
         Label meinUnternehmen = new Label("Mein Unternehmensprofil");
 
-        if(user.hasRole(Roles.STUDENT)){
+        if (user.hasRole(Roles.STUDENT)) {
             //Werte einsetzen
-            Student student = new Student(user);
-            anrede.setValue(student.getAnrede());
-            vorname.setValue(student.getVorname());
-            name.setValue(student.getAnrede());
-            hochschule.setValue(student.getHochschule());
-            semester.setValue(String.valueOf(student.getSemester()));
-            gebDatum.setValue(student.getGebDatum());
-            kenntnisse.setValue(student.getKenntnisse());
-            studiengang.setValue(student.getStudiengang());
+            Student student = ProfileControl.getStudent(user);
+            if (student.getAnrede() != null) {
+                anrede.setValue(student.getAnrede());
+            }
+            if (student.getVorname() != null) {
+                vorname.setValue(student.getVorname());
+            }
+            if (student.getName() != null) {
+                name.setValue(student.getName());
+            }
+            if (student.getHochschule() != null) {
+                hochschule.setValue(student.getHochschule());
+            }
+            if (student.getSemester() != null) {
+                semester.setValue(String.valueOf(student.getSemester()));
+            }
+            if (student.getGebDatum() != null) {
+                gebDatum.setValue(student.getGebDatum());
+            }
+            if (student.getKenntnisse() != null) {
+                kenntnisse.setValue(student.getKenntnisse());
+            }
+            if (student.getStudiengang() != null) {
+                studiengang.setValue(student.getStudiengang());
+            }
         } else {
             //Werte Setzen
-            Unternehmen unternehmen = new Unternehmen(user);
-            firmenname.setValue(unternehmen.getFirmenname());
-            ansprechpartner.setValue(unternehmen.getAnsprechpartner());
-            strasse.setValue(unternehmen.getStrasse());
-            plz.setValue(unternehmen.getPlz());
-            haus_nr.setValue(unternehmen.getHaus_nr());
-            zusatz.setValue(unternehmen.getZusatz());
-            ort.setValue(unternehmen.getOrt());
-            branche.setValue(unternehmen.getBranche());
+            Unternehmen unternehmen = ProfileControl.getUnternehmen(user);
+            //Unternehmen unternehmen = new Unternehmen(user);
+            if (unternehmen.getFirmenname() != null) {
+                firmenname.setValue(unternehmen.getFirmenname());
+            }
+            if (unternehmen.getAnsprechpartner() != null) {
+                ansprechpartner.setValue(unternehmen.getAnsprechpartner());
+            }
+            if (unternehmen.getStrasse() != null) {
+                strasse.setValue(unternehmen.getStrasse());
+            }
+            if (unternehmen.getPlz() != null) {
+                plz.setValue(String.valueOf(unternehmen.getPlz()));
+            }
+            if (unternehmen.getHaus_nr() != null) {
+                haus_nr.setValue(String.valueOf(unternehmen.getHaus_nr()));
+            }
+            if (unternehmen.getZusatz() != null) {
+                zusatz.setValue(unternehmen.getZusatz());
+            }
+            if (unternehmen.getOrt() != null) {
+                ort.setValue(unternehmen.getOrt());
+            }
+            if (unternehmen.getBranche() != null) {
+                branche.setValue(unternehmen.getBranche());
+            }
         }
 
         Button overwriteBtn = new Button("Daten aktualisieren");
@@ -102,9 +135,9 @@ public class ProfileView extends VerticalLayout implements View {
         overwriteBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new ConfirmationWindow("Sollen alle Daten überschrieben werden?"));
+                UI.getCurrent().addWindow(new ConfirmationWindow("Sollen alle Daten aktualisiert werden?"));
 
-                if(user.hasRole(Roles.STUDENT)) {
+                if (user.hasRole(Roles.STUDENT)) {
                     String new_anrede = anrede.getValue();
                     String new_vorname = vorname.getValue();
                     String new_name = name.getValue();
@@ -115,13 +148,13 @@ public class ProfileView extends VerticalLayout implements View {
                     String new_studiengang = studiengang.getValue();
                     Student student = new Student(user);
                     try {
-                        ProfileControl.updateStudentData(student, new_anrede, new_vorname, new_name, new_hochschule,new_semester, new_gebDatum, new_kenntnisse, new_studiengang);
+                        ProfileControl.updateStudentData(student, new_anrede, new_vorname, new_name, new_hochschule, new_semester, new_gebDatum, new_kenntnisse, new_studiengang);
                     } catch (DatabaseException e) {
                         Notification.show("DB-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
                     }
                 } else {
                     Unternehmen unternehmen = new Unternehmen(user);
-                    try{
+                    try {
                         ProfileControl.updateUnternehmenData(unternehmen, firmenname.getValue(), ansprechpartner.getValue(), strasse.getValue(), plz.getValue(), haus_nr.getValue(), zusatz.getValue(), ort.getValue(), branche.getValue());
                     } catch (DatabaseException e) {
                         Notification.show("DB-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
@@ -130,7 +163,7 @@ public class ProfileView extends VerticalLayout implements View {
             }
         });
 
-        if(user.hasRole(Roles.STUDENT)) {
+        if (user.hasRole(Roles.STUDENT)) {
             this.addComponent(meinProfil);
             this.addComponent(anrede);
             this.addComponent(vorname);

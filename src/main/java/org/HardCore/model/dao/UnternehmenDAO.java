@@ -2,12 +2,17 @@ package org.HardCore.model.dao;
 
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
+import org.HardCore.model.objects.dto.User;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class UnternehmenDAO extends AbstractDAO{
+public class UnternehmenDAO extends AbstractDAO {
 
     private static UnternehmenDAO dao = null;
 
@@ -116,5 +121,40 @@ public class UnternehmenDAO extends AbstractDAO{
         } catch (SQLException ex) {
             return false;
         }
+    }
+
+    public Unternehmen getAllDataUnternehmen(User user) {
+        Statement statement = this.getStatement();
+        ResultSet rs = null;
+        System.out.println(user.getId());
+        try {
+            rs = statement.executeQuery("SELECT * " +
+                    "FROM collhbrs.unternehmen " +
+                    "WHERE collhbrs.unternehmen.id = \'" + user.getId() + "\';");
+
+        } catch (SQLException ex) {
+            Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        Unternehmen un = new Unternehmen(user);
+        try {
+            while (rs.next()) {
+
+                un.setFirmenname(rs.getString(2));
+                un.setAnsprechpartner(rs.getString(3));
+                un.setStrasse(rs.getString(4));
+                un.setPlz((Integer) rs.getInt(5));
+                un.setHaus_nr((Integer) rs.getInt(6));
+                un.setZusatz(rs.getString(7));
+                un.setOrt(rs.getString(8));
+                un.setBranche(rs.getString(9));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return un;
     }
 }
