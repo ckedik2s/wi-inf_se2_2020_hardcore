@@ -1,22 +1,20 @@
 package org.HardCore.model.objects.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Student extends User{
     private String anrede ="Herr";
-    private String vorname ="vorname";
-    private String name = "name";
-    private String hochschule ="hochschule";
-    private String semester = "semester";
+    private String vorname ="Vorname eingeben";
+    private String name = "Nachname eingeben";
+    private String hochschule ="Hochschule eingeben";
+    private Integer semester = 0;
     private LocalDate gebDatum = LocalDate.now();
-    private String kenntnisse ="Kenntnisse";
-    private String studiengang ="Studiengang";
+    private String kenntnisse ="Kenntnisse eingeben";
+    private String studiengang ="Studiengang eingeben";
 
     public Student(User user) {
         super(user);
     }
-
 
     public String getVorname() {
         return vorname;
@@ -52,11 +50,11 @@ public class Student extends User{
         this.hochschule = hochschule;
     }
 
-    public String getSemester() {
+    public Integer getSemester() {
         return semester;
     }
 
-    public void setSemester(String semester) {
+    public void setSemester(Integer semester) {
         this.semester = semester;
     }
 
