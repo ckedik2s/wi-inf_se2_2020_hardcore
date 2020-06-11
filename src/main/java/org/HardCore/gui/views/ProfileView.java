@@ -2,7 +2,6 @@ package org.HardCore.gui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.sass.internal.parser.function.DarkenFunctionGenerator;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
@@ -15,12 +14,8 @@ import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.ProfileControl;
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.services.util.Roles;
-import org.w3c.dom.Text;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ProfileView extends VerticalLayout implements View {
 

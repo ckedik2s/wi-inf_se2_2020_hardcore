@@ -29,11 +29,14 @@ public class LoginView extends VerticalLayout implements View {
 
         //Login Felder
         final TextField userLogin = new TextField("Email:");
+        userLogin.focus();
+        userLogin.setPlaceholder("beispiel@gmx.de");
         Binder<User> binder = new Binder<>();
         binder.forField(userLogin)
                 .withValidator(new EmailValidator("Bitte geben Sie eine korrekte Emailadresse ein!"))
                 .bind(User::getEmail, User::setEmail);
         final PasswordField passwordField = new PasswordField("Passwort:");
+        passwordField.setPlaceholder("Passwort");
 
         //Login Button
         Button loginButton = new Button("Login");

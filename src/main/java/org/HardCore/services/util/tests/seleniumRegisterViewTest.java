@@ -1,4 +1,4 @@
-package org.HardCore.services.util.tests;
+/*package org.HardCore.services.util.tests;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -66,4 +66,4 @@ class seleniumRegisterViewTest {
         driver.quit();
     }
 
-}
+}*/
