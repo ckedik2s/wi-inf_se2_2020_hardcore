@@ -1,6 +1,5 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 
@@ -8,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,96 +25,26 @@ public class UnternehmenDAO extends AbstractDAO {
         return dao;
     }
 
-    public boolean setUnternehmenFirmenname(Unternehmen unternehmen, String name_unternehmen) {
-        String sql = "UPDATE collhbrs.unternehmen set name_unternehmen = \'" + name_unternehmen + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
+    public boolean updateUnternehmen(Unternehmen unternehmen) {
+        String sql = "UPDATE collhbrs.unternehmen " +
+                "SET name_unternehmen = ?, ansprechpartner = ?, strasse = ?, plz = ?, " +
+                "hausnr = ?, zusatz = ?, ort = ?, branche = ? " +
+                "WHERE collhbrs.unternehmen.id = ? ;";
+
         PreparedStatement statement = this.getPreparedStatement(sql);
-
         try {
+            statement.setString(1, unternehmen.getFirmenname());
+            statement.setString(2, unternehmen.getAnsprechpartner());
+            statement.setString(3, unternehmen.getStrasse());
+            statement.setInt(4, unternehmen.getPlz());
+            statement.setInt(5, unternehmen.getHaus_nr());
+            statement.setString(6, unternehmen.getZusatz());
+            statement.setString(7, unternehmen.getOrt());
+            statement.setString(8, unternehmen.getBranche());
+            statement.setInt(9, unternehmen.getId());
+            System.out.println("Check bis update");
             statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenAnsprechpartner(Unternehmen unternehmen, String ansprechpartner) {
-        String sql = "UPDATE collhbrs.unternehmen set ansprechpartner = \'" + ansprechpartner + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenStrasse(Unternehmen unternehmen, String strasse) {
-        String sql = "UPDATE collhbrs.unternehmen set strasse = \'" + strasse + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenPLZ(Unternehmen unternehmen, String plz) {
-        String sql = "UPDATE collhbrs.unternehmen set plz = \'" + plz + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenHausnr(Unternehmen unternehmen, String hausnr) {
-        String sql = "UPDATE collhbrs.unternehmen set hausnr = \'" + hausnr + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenZusatz(Unternehmen unternehmen, String zusatz) {
-        String sql = "UPDATE collhbrs.unternehmen set zusatz = \'" + zusatz + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenOrt(Unternehmen unternehmen, String ort) {
-        String sql = "UPDATE collhbrs.unternehmen set ort = \'" + ort + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
-    public boolean setUnternehmenBranche(Unternehmen unternehmen, String branche) {
-        String sql = "UPDATE collhbrs.unternehmen set branche = \'" + branche + "\' where collhbrs.unternehmen.id = \'" + unternehmen.getId() + "\';";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-
-        try {
-            statement.executeUpdate();
+            System.out.println("Check nach update");
             return true;
         } catch (SQLException ex) {
             return false;
