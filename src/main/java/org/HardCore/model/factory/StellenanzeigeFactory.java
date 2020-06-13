@@ -13,6 +13,7 @@ public class StellenanzeigeFactory {
 
         stellenanzeige.setId(stellenanzeigeDetail.getId());
         stellenanzeige.setId_anzeige(stellenanzeigeDetail.getId_anzeige());
+        stellenanzeige.setBeschreibung(stellenanzeigeDetail.getBeschreibung());
         stellenanzeige.setName(stellenanzeigeDetail.getName());
         stellenanzeige.setArt(stellenanzeigeDetail.getArt());
         stellenanzeige.setBranche(stellenanzeigeDetail.getBranche());

@@ -4,9 +4,9 @@ import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.process.control.StellenanzeigeControl;
 
-public class StellenanzeigeWindow extends Window {
+public class CreateStellenanzeigeWindow extends Window {
 
-    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige) {
+    public CreateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige) {
         super("Ihre Stellenanzeige");
         center();
 
@@ -45,7 +45,8 @@ public class StellenanzeigeWindow extends Window {
                 stellenanzeige.setStudiengang(studiengang.getValue());
                 stellenanzeige.setZeitraum(zeitraum.getValue());
                 stellenanzeige.setBeschreibung(beschreibung.getValue());
-                boolean result = StellenanzeigeControl.getInstance().updateStellenanzeige(stellenanzeige);
+
+                boolean result = StellenanzeigeControl.getInstance().createStellenanzeige(stellenanzeige);
                 if (result == true) {
                     UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
                     close();

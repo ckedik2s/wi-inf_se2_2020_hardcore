@@ -76,4 +76,16 @@ public class Stellenanzeige {
     public void setStudiengang(String studiengang) {
         this.studiengang = studiengang;
     }
+
+    public String toString(){
+        return "Stellenanzeige \n" +
+                "ID: " + this.getId() + "\n" +
+                "ID Anzeige: " + this.getId_anzeige() + "\n" +
+                "Beschreibung: " + this.getBeschreibung() + "\n" +
+                "Art: " + this.getArt() + "\n" +
+                "Name: " + this.getName() + "\n" +
+                "Zeitraum: " + this.getZeitraum().toString() + "\n" +
+                "Branche: "+ this.getBranche() + "\n" +
+                "Studiengang: "+ this.getStudiengang() + "\n";
+    }
 }

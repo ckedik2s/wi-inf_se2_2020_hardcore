@@ -3,7 +3,7 @@ package org.HardCore.model.objects.dto;
 import java.time.LocalDate;
 
 public class StellenanzeigeDetail {
-    private int id;
+    private int id ;
     private int id_anzeige;
     private String beschreibung = "";
     private String art = "";
@@ -74,5 +74,16 @@ public class StellenanzeigeDetail {
 
     public void setStudiengang(String studiengang) {
         this.studiengang = studiengang;
+    }
+
+    public String toString(){
+        return "ID: " + this.getId() + "\n" +
+                "ID Anzeige: " + this.getId_anzeige() + "\n" +
+                "Beschreibung: " + this.getBeschreibung() + "\n" +
+                "Art: " + this.getArt() + "\n" +
+                "Name: " + this.getName() + "\n" +
+                "Zeitraum: " + this.getZeitraum().toString() + "\n" +
+                "Branche: "+ this.getBranche() + "\n" +
+                "Studiengang: "+ this.getStudiengang() + "\n";
     }
 }
