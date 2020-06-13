@@ -42,9 +42,7 @@ public class UnternehmenDAO extends AbstractDAO {
             statement.setString(7, unternehmen.getOrt());
             statement.setString(8, unternehmen.getBranche());
             statement.setInt(9, unternehmen.getId());
-            System.out.println("Check bis update");
             statement.executeUpdate();
-            System.out.println("Check nach update");
             return true;
         } catch (SQLException ex) {
             return false;
