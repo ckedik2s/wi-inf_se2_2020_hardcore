@@ -1,22 +1,21 @@
-package org.HardCore.services.util.tests;
+package tests;
 
+import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.dao.RoleDAO;
-import org.HardCore.model.dao.StudentDAO;
-import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RoleDAOTest {
+class RegisterDAOTest {
 
-    private static RoleDAO roleDAO;
+    private static RegisterDAO regiDAO;
     private User user;
 
     @Test
     static void testCreate() {
-        roleDAO =  RoleDAO.getInstance();
-        assertNotNull(roleDAO);
+        regiDAO =  RegisterDAO.getInstance();
+        assertNotNull(regiDAO);
     }
     @Test
     void testRead() {
@@ -28,6 +27,7 @@ class RoleDAOTest {
     }
     @Test
     void testDelete() {
-
+        user = new User();
+        regiDAO.addUser(user);
     }
 }

@@ -1,4 +1,4 @@
-package org.HardCore.services.util.tests;
+package tests;
 
 import org.HardCore.model.dao.StudentDAO;
 import org.HardCore.model.objects.dto.Unternehmen;

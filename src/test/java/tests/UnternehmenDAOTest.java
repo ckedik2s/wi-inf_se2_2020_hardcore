@@ -1,6 +1,6 @@
-package org.HardCore.services.util.tests;
+package tests;
 
-import org.HardCore.model.dao.StudentDAO;
+import org.HardCore.model.dao.UnternehmenDAO;
 import org.HardCore.model.dao.UserDAO;
 import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
@@ -8,29 +8,31 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StudentDAOTest {
+class UnternehmenDAOTest {
 
-    private static StudentDAO studDAO;
+    private static UnternehmenDAO uDAO;
     private User user;
-    private Object stud;
+    private Object un;
 
     @Test
     static void testCreate() {
-        studDAO =  StudentDAO.getInstance();
-        assertNotNull(studDAO);
+        uDAO =  UnternehmenDAO.getInstance();
+        assertNotNull(uDAO);
     }
     @Test
     void testRead() {
         user = new User();
-        studDAO.getAllDataStudent(user);
-        assertEquals((Unternehmen)stud,(Unternehmen)stud);
+        uDAO.getAllDataUnternehmen(user);
+        assertEquals((Unternehmen)un,(Unternehmen)un);
     }
     @Test
     void testUpdate() {
+
 
     }
     @Test
     void testDelete() {
 
     }
+
 }

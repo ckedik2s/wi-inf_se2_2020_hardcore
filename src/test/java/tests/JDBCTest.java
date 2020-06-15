@@ -1,4 +1,4 @@
-package org.HardCore.services.util.tests;
+package tests;
 
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
