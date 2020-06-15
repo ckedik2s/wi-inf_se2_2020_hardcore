@@ -1,5 +1,3 @@
-package tests;
-
 import org.HardCore.process.control.RegistrationControl;
 import org.HardCore.process.control.exceptions.EmptyFieldException;
 

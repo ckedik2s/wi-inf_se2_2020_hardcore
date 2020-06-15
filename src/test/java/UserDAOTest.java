@@ -1,4 +1,3 @@
-package tests;
 import org.HardCore.model.dao.UserDAO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
