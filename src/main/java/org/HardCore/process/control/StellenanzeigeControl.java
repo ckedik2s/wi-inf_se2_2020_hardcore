@@ -28,7 +28,11 @@ public class StellenanzeigeControl {
         User user = ( (MyUI) UI.getCurrent() ).getUser();
         return StellenanzeigeDAO.getInstance().getAnzeigenForUser(user);
     }
-
+    public boolean createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail){
+        User user = ( (MyUI) UI.getCurrent() ).getUser();
+        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, user);
+        return StellenanzeigeDAO.getInstance().createStellenanzeige(stellenanzeige, user);
+    }
     public boolean updateStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) {
         User user = ( (MyUI) UI.getCurrent() ).getUser();
         Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, user);

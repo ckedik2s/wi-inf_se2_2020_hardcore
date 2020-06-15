@@ -64,7 +64,7 @@ public class RegisterDAO extends AbstractDAO {
     public void deleteUser(User user) {
         Statement statement = this.getStatement();
         try {
-            System.out.println("ID: " + user.getId());
+
             //Lösche Student
             if (user.hasRole("Student")) {
             statement.execute("DELETE " +
