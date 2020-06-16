@@ -1,4 +1,3 @@
-/*package org.HardCore.services.util.tests;
 import org.HardCore.process.control.LoginControl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,4 +16,3 @@ public class MockitoTest {
     public void testLogoutUser() {
     }
 }
-*/
