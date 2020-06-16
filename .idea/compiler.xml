@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="wi-inf_se2_2020_hardcore" />
         <module name="HardCore" />
+        <module name="wi-inf_se2_2020_hardcore" />
       </profile>
     </annotationProcessing>
   </component>
