@@ -1,5 +1,4 @@
 import org.HardCore.model.dao.RegisterDAO;
-import org.HardCore.model.dao.RoleDAO;
 import org.HardCore.model.objects.dto.User;
 import org.junit.jupiter.api.Test;
 

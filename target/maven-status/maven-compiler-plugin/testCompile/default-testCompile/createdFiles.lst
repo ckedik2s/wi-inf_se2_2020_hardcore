@@ -1,0 +1,9 @@
+RegisterDAOTest.class
+RoleDAOTest.class
+UserDAOTest.class
+UnternehmenDAOTest.class
+AbstractDAOTest.class
+StudentDAOTest.class
+RegiControlTest.class
+JDBCTest.class
+StellenanzeigeDAOTest.class

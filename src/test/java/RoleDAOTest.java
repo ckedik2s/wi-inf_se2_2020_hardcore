@@ -1,10 +1,8 @@
 import org.HardCore.model.dao.RoleDAO;
-import org.HardCore.model.dao.StudentDAO;
-import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class RoleDAOTest {
 

@@ -78,6 +78,12 @@
 			<version>42.2.12</version>
 		</dependency>
 		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.7.0-M1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-surefire-provider</artifactId>
 			<version>1.2.0-M1</version>
@@ -92,17 +98,6 @@
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>5.7.0-M1</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>org.jacoco.agent</artifactId>
-			<version>0.8.5</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
