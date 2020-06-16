@@ -1,24 +1,16 @@
 package org.HardCore.model.objects.dto;
 
 public class Unternehmen extends User{
-    private String firmenname = "Firmenname eingeben";
-    private String ansprechpartner ="Ansprechpartner eingeben";
-    private String strasse ="Straße eingeben";
-    private Integer plz = 0;
-    private Integer haus_nr = 0;
-    private String zusatz = " ";
-    private String ort = "Ort eingeben";
-    private String branche ="Branche eingeben";
+    private String ansprechpartner;
+    private String strasse;
+    private Integer plz;
+    private Integer haus_nr;
+    private String zusatz;
+    private String ort;
+    private String branche;
 
     public Unternehmen(User user) {
         super(user);
-    }
-
-
-    public String getFirmenname() { return firmenname; }
-
-    public void setFirmenname(String name) {
-        this.firmenname = name;
     }
 
     public String getAnsprechpartner() {

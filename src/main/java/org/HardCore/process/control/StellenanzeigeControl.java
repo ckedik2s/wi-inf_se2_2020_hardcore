@@ -44,4 +44,8 @@ public class StellenanzeigeControl {
         Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, user);
         return StellenanzeigeDAO.getInstance().deleteStellenanzeige(stellenanzeige);
     }
+
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
+        return StellenanzeigeDAO.getInstance().getAnzeigenForSearch(suchtext);
+    }
 }

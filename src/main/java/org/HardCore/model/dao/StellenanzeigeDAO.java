@@ -121,5 +121,41 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
     }
 
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
+        Statement statement = this.getStatement();
+        ResultSet rs = null;
+
+        try {
+            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
+                    "FROM collhbrs.stellenanzeige " +
+                    "WHERE name like \'%" + suchtext + "%\'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (rs == null) {
+            return null;
+        }
+
+        List<StellenanzeigeDetail> list = new ArrayList<>();
+        StellenanzeigeDetail stellenanzeigeDetail = null;
+
+        try {
+            while (rs.next()) {
+                stellenanzeigeDetail = new StellenanzeigeDetail();
+                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
+                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
+                stellenanzeigeDetail.setArt(rs.getString(3));
+                stellenanzeigeDetail.setName(rs.getString(4));
+                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
+                stellenanzeigeDetail.setBranche(rs.getString(6));
+                stellenanzeigeDetail.setStudiengang(rs.getString(7));
+                list.add(stellenanzeigeDetail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
 

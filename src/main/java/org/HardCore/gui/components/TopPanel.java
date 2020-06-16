@@ -4,6 +4,8 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
+import org.HardCore.model.objects.dto.Student;
+import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.LoginControl;
 import org.HardCore.services.util.Roles;
@@ -29,15 +31,14 @@ public class  TopPanel extends HorizontalLayout {
         //Willkommenstext oben rechts
         HorizontalLayout hlayout = new HorizontalLayout();
         User user = ( (MyUI) MyUI.getCurrent() ).getUser();
-        Label welcome = null;
-        if (user == null) {
-            welcome = new Label("Willkommen bei HardCore!");
-        } else if ( user.hasRole(Roles.STUDENT) && user.getVorname() != null ) {
-            welcome = new Label("Willkommen " + user.getVorname() + "!");
-        } else if (user.hasRole(Roles.UNTERNEHMEN) && user.getName() != null ) {
-            welcome = new Label("Willkommen " + user.getName() + "!");
-        } else {
-            welcome = new Label("Willkommen bei HardCore!");
+        Label welcome = new Label("Willkommen bei HardCore!");
+        if (user != null) {
+            if (user.hasRole(Roles.STUDENT) && user.getVorname() != null) {
+                welcome = new Label("Willkommen " + user.getVorname() + "!");
+            }
+            if (user.hasRole(Roles.UNTERNEHMEN) && user.getName() != null) {
+                welcome = new Label("Willkommen " + user.getName() + "!");
+            }
         }
         hlayout.addComponent(welcome);
         hlayout.setComponentAlignment(welcome, Alignment.MIDDLE_CENTER);
