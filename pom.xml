@@ -104,6 +104,11 @@
 			<version>5.7.0-M1</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>
