@@ -17,12 +17,12 @@ class StudentDAOTest {
         studDAO =  StudentDAO.getInstance();
         assertNotNull(studDAO);
     }
-    @Test
-    void testRead() {
-        user = new User();
-        studDAO.getAllDataStudent(user);
-        assertEquals((Unternehmen)stud,(Unternehmen)stud);
-    }
+//    @Test
+//    void testRead() {
+//        user = new User();
+//        studDAO.getAllDataStudent(user);
+//        assertEquals((Unternehmen)stud,(Unternehmen)stud);
+//    }
     @Test
     void testUpdate() {
 

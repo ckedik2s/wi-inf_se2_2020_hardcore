@@ -17,12 +17,12 @@ class UnternehmenDAOTest {
         uDAO =  UnternehmenDAO.getInstance();
         assertNotNull(uDAO);
     }
-    @Test
-    void testRead() {
-        user = new User();
-        uDAO.getAllDataUnternehmen(user);
-        assertEquals((Unternehmen)un,(Unternehmen)un);
-    }
+//    @Test
+//    void testRead() {
+//        user = new User();
+//        uDAO.getAllDataUnternehmen(user);
+//        assertEquals((Unternehmen)un,(Unternehmen)un);
+//    }
     @Test
     void testUpdate() {
 
