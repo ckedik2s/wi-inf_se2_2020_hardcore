@@ -23,9 +23,9 @@ class RegisterDAOTest {
     void testUpdate() {
 
     }
-    @Test
-    void testDelete() {
-        user = new User();
-        regiDAO.addUser(user);
-    }
+//    @Test
+//    void testDelete() {
+//        user = new User();
+//        regiDAO.addUser(user);
+//    }
 }

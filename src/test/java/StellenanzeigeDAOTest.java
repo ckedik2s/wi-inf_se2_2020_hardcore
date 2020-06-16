@@ -16,12 +16,12 @@ class StellenanzeigeDAOTest {
         stellenDAO =  StudentDAO.getInstance();
         assertNotNull(stellenDAO);
     }
-    @Test
-    void testRead() {
-        user = new User();
-        stellenDAO.getAllDataStudent(user);
-        assertEquals((Unternehmen)stud,(Unternehmen)stud);
-    }
+//    @Test
+//    void testRead() {
+//        user = new User();
+//        stellenDAO.getAllDataStudent(user);
+//        assertEquals((Unternehmen)stud,(Unternehmen)stud);
+//    }
     @Test
     void testUpdate() {
 

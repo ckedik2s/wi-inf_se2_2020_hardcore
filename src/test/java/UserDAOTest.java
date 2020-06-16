@@ -13,10 +13,10 @@ class UserDAOTest {
         userDAO =  UserDAO.getInstance();
         assertNotNull(userDAO);
     }
-    @Test
-    void testRead() {
-        assertNotNull(userDAO.getMaxID());
-    }
+//    @Test
+//    void testRead() {
+//        assertNotNull(userDAO.getMaxID());
+//    }
     @Test
     void testUpdate() {
 
