@@ -38,6 +38,7 @@ public class RoleDAO extends AbstractDAO{
             throwables.printStackTrace();
         }
 
+
         if (rs == null) {
             return null;
         }

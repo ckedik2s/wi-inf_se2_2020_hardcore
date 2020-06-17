@@ -9,7 +9,9 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.StellenanzeigeWindow;
+import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
+import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
+import org.HardCore.gui.windows.UpdateStellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.SearchControl;
@@ -83,21 +85,21 @@ public class StellenanzeigeView extends VerticalLayout implements View {
             }
         });
 
-        //ShowButton Config
+        //ShowButton Config Stellenanzeige Bearbeiten
         showButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                System.out.println("Stellenanziege selektiert: " + selektiert.getName());
-                StellenanzeigeWindow window = new StellenanzeigeWindow( selektiert );
+                System.out.println("Stellenanzeige selektiert: " + selektiert.getName());
+                UpdateStellenanzeigeWindow window = new UpdateStellenanzeigeWindow( selektiert , grid);
                 UI.getCurrent().addWindow(window);
             }
         });
 
-        //ShowButton Config
+        //CreateButton Config
         createButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                StellenanzeigeWindow window = new StellenanzeigeWindow(new StellenanzeigeDetail());
+                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail(), grid);
                 UI.getCurrent().addWindow(window);
             }
         });
@@ -106,7 +108,9 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                StellenanzeigeControl.getInstance().deleteStellenanzeige(selektiert);
+                DeleteStellenanzeigeWindow window = new DeleteStellenanzeigeWindow(selektiert);
+                UI.getCurrent().addWindow(window);
+
                 deleteButton.setEnabled(false);
                 showButton.setEnabled(false);
                 grid.setItems();

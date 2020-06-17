@@ -48,7 +48,7 @@ public class LoginView extends VerticalLayout implements View {
                 String password = passwordField.getValue();
 
                 try {
-                    LoginControl.checkAuthentification(email, password);
+                    LoginControl.getInstance().checkAuthentification(email, password);
                 } catch (NoSuchUserOrPassword noSuchUserOrPassword) {
                     Notification.show("Benutzer-Fehler", "Login oder Passwort falsch!", Notification.Type.ERROR_MESSAGE);
                 } catch (DatabaseException e) {

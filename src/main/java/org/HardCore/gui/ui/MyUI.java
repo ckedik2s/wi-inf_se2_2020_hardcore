@@ -9,6 +9,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.views.*;
 import org.HardCore.model.objects.dto.User;
@@ -37,6 +38,7 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        System.out.println(VaadinSession.getCurrent().toString());
         Navigator navi = new Navigator(this,this);
 
         navi.addView(Views.MAIN, MainView.class);

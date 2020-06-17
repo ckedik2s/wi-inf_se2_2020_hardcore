@@ -28,7 +28,7 @@ public class DeleteProfileWindow extends Window {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 User user = ((MyUI) UI.getCurrent()).getUser();
                 RegistrationControl.getInstance().deleteUser(user);
-                LoginControl.logoutUser();
+                LoginControl.getInstance().logoutUser();
                 UI.getCurrent().getNavigator().navigateTo(Views.LOGIN);
                 close();
             }

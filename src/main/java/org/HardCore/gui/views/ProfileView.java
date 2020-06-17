@@ -15,6 +15,7 @@ import org.HardCore.process.control.ProfileControl;
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.services.util.Roles;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class ProfileView extends VerticalLayout implements View {
@@ -60,7 +61,7 @@ public class ProfileView extends VerticalLayout implements View {
 
         if (user.hasRole(Roles.STUDENT)) {
             //Werte einsetzen
-            Student student = ProfileControl.getStudent(user);
+            Student student = ProfileControl.getInstance().getStudent(user);
             if (student.getAnrede() != null) {
                 anrede.setValue(student.getAnrede());
             }
@@ -87,10 +88,10 @@ public class ProfileView extends VerticalLayout implements View {
             }
         } else {
             //Werte Setzen
-            Unternehmen unternehmen = ProfileControl.getUnternehmen(user);
+            Unternehmen unternehmen = ProfileControl.getInstance().getUnternehmen(user);
             //Unternehmen unternehmen = new Unternehmen(user);
-            if (unternehmen.getFirmenname() != null) {
-                firmenname.setValue(unternehmen.getFirmenname());
+            if (unternehmen.getName() != null) {
+                firmenname.setValue(unternehmen.getName());
             }
             if (unternehmen.getAnsprechpartner() != null) {
                 ansprechpartner.setValue(unternehmen.getAnsprechpartner());
@@ -130,30 +131,38 @@ public class ProfileView extends VerticalLayout implements View {
         overwriteBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new ConfirmationWindow("Sollen alle Daten aktualisiert werden?"));
+                //UI.getCurrent().addWindow(new ConfirmationWindow("Sollen alle Daten aktualisiert werden?"));
 
                 if (user.hasRole(Roles.STUDENT)) {
-                    String new_anrede = anrede.getValue();
-                    String new_vorname = vorname.getValue();
-                    String new_name = name.getValue();
-                    String new_hochschule = hochschule.getValue();
-                    String new_semester = semester.getValue();
-                    LocalDate new_gebDatum = gebDatum.getValue();
-                    String new_kenntnisse = kenntnisse.getValue();
-                    String new_studiengang = studiengang.getValue();
                     Student student = new Student(user);
-                    try {
-                        ProfileControl.updateStudentData(student, new_anrede, new_vorname, new_name, new_hochschule, new_semester, new_gebDatum, new_kenntnisse, new_studiengang);
-                    } catch (DatabaseException e) {
-                        Notification.show("DB-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                    student.setAnrede(anrede.getValue());
+                    student.setVorname(vorname.getValue());
+                    student.setName(name.getValue());
+                    student.setHochschule(hochschule.getValue());
+                    student.setSemester(Integer.valueOf(semester.getValue()));
+                    student.setGebDatum(gebDatum.getValue());
+                    student.setKenntnisse(kenntnisse.getValue());
+                    student.setStudiengang(studiengang.getValue());
+
+                    boolean result = ProfileControl.getInstance().updateStudentData(student);
+                    if (result != true) {
+                        Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                     }
+
                 } else {
                     Unternehmen unternehmen = new Unternehmen(user);
-                    try {
-                        ProfileControl.updateUnternehmenData(unternehmen, firmenname.getValue(), ansprechpartner.getValue(), strasse.getValue(), plz.getValue(), haus_nr.getValue(), zusatz.getValue(), ort.getValue(), branche.getValue());
-                    } catch (DatabaseException e) {
-                        Notification.show("DB-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                    unternehmen.setName(firmenname.getValue());
+                    unternehmen.setAnsprechpartner(ansprechpartner.getValue());
+                    unternehmen.setStrasse(strasse.getValue());
+                    unternehmen.setPlz(Integer.valueOf(plz.getValue()));
+                    unternehmen.setHaus_nr(Integer.valueOf(haus_nr.getValue()));
+                    unternehmen.setZusatz(zusatz.getValue());
+                    unternehmen.setBranche(branche.getValue());
+                    boolean result = ProfileControl.getInstance().updateUnternehmenData(unternehmen);
+                    if (result != true) {
+                        Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                     }
+
                 }
             }
         });

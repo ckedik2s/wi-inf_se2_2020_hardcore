@@ -10,7 +10,7 @@ import org.HardCore.model.objects.dto.User;
 import java.util.List;
 
 public class SearchControl {
-    public static SearchControl search = null;
+    private static SearchControl search = null;
 
     public static SearchControl getInstance() {
         if (search == null) {
@@ -25,5 +25,9 @@ public class SearchControl {
 
     public List<StellenanzeigeDetail> getAnzeigenForUser() {
         return StellenanzeigeControl.getInstance().getAnzeigenForUser();
+    }
+
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
+        return StellenanzeigeControl.getInstance().getAnzeigenForSearch(suchtext);
     }
 }
