@@ -109,8 +109,8 @@ public class RegistrationView extends VerticalLayout implements View {
                     String password1 = fieldPassword1.getValue();
                     String password2 = fieldPassword2.getValue();
                     String regAs = radioButtonGroup.getValue();
-                    RegistrationControl.checkValid( email, emailBinder.isValid(), password1, password2 , password1Binder.isValid(), password2Binder.isValid(), checkboxBinder.isValid() );
-                    RegistrationControl.registerUser( email, password1, regAs );
+                    RegistrationControl.getInstance().checkValid( email, emailBinder.isValid(), password1, password2 , password1Binder.isValid(), password2Binder.isValid(), checkboxBinder.isValid() );
+                    RegistrationControl.getInstance().registerUser( email, password1, regAs );
                 } catch (NoEqualPasswordException e) {
                     Notification.show("Passwort-Fehler!", e.getReason(), Notification.Type.WARNING_MESSAGE);
                 } catch (DatabaseException e) {
