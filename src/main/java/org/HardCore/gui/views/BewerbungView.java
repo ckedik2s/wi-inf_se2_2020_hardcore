@@ -9,7 +9,6 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.SearchControl;
@@ -17,7 +16,9 @@ import org.HardCore.process.control.StellenanzeigeControl;
 
 import java.util.List;
 
-public class BewerbungView extends VerticalLayout implements View {
+public class
+
+BewerbungView extends VerticalLayout implements View {
 
     private StellenanzeigeDetail selektiert;
     private List<StellenanzeigeDetail> list;
@@ -25,7 +26,6 @@ public class BewerbungView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        //User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
         User user = ( (MyUI) UI.getCurrent() ).getUser();
 
         this.setUp(user);
@@ -46,7 +46,7 @@ public class BewerbungView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = SearchControl.getInstance().getAnzeigenForUser();
+        list = SearchControl.getInstance().getAnzeigeForStudent();
         grid.removeAllColumns();
         grid.setItems(list);
         grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
@@ -81,7 +81,7 @@ public class BewerbungView extends VerticalLayout implements View {
                 StellenanzeigeControl.getInstance().deleteStellenanzeige(selektiert);
                 deleteButton.setEnabled(false);
                 grid.setItems();
-                list = StellenanzeigeControl.getInstance().getAnzeigenForUser();
+                list = StellenanzeigeControl.getInstance().getAnzeigenForStudent();
                 try {
                     grid.setItems(list);
                 } catch (Exception e) {

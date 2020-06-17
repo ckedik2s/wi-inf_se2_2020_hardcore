@@ -25,16 +25,16 @@ public class StellenanzeigeControl {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUser() {
+    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen() {
         User user = ( (MyUI) UI.getCurrent() ).getUser();
-        return StellenanzeigeDAO.getInstance().getAnzeigenForUser(user);
+        return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(user);
     }
 
     public List<StellenanzeigeDetail> getAnzeigenForStudent() {
         User user = ( (MyUI) UI.getCurrent() ).getUser();
         Student student = ProfileControl.getInstance().getStudent(user);
-       // return StellenanzeigeDAO.getInstance().getAnzeigenForStudent(student);
-        return null;
+        return StellenanzeigeDAO.getInstance().getStellenanzeigeforStudent(student);
+
     }
     public boolean createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail){
         User user = ( (MyUI) UI.getCurrent() ).getUser();
@@ -54,6 +54,6 @@ public class StellenanzeigeControl {
     }
 
     public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
-        return StellenanzeigeDAO.getInstance().getAnzeigenForSearch(suchtext);
+        return StellenanzeigeDAO.getInstance().getStellenanzeigenForSearch(suchtext);
     }
 }
