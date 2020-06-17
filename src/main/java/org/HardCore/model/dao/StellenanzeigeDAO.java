@@ -15,7 +15,6 @@ public class StellenanzeigeDAO extends AbstractDAO {
     private static StellenanzeigeDAO dao = null;
 
     private StellenanzeigeDAO() {
-
     }
 
     public static StellenanzeigeDAO getInstance() {
