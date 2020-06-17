@@ -9,7 +9,7 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.StellenanzeigeWindow;
+import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.SearchControl;
@@ -54,14 +54,6 @@ public class BewerbungView extends VerticalLayout implements View {
         grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
         grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
         grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
-        //grid.addColumn(Stellenanzeige::getAnzahlBewerber).setCaption("Anzahl der Bewerber");
-
-        /*//ShowButton
-        Button showButton = new Button("Bearbeiten");
-        showButton.setEnabled(false);
-
-        //CreateButton
-        Button createButton = new Button("Erstellen");*/
 
         //DeleteButton
         Button deleteButton = new Button("Löschen");
@@ -78,29 +70,9 @@ public class BewerbungView extends VerticalLayout implements View {
                     System.out.println("Zeile selektiert: " + selection.getValue());
                     selektiert = selection.getValue();
                     deleteButton.setEnabled(true);
-                    //showButton.setEnabled(true);
                 }
             }
         });
-
-       /* //ShowButton Config
-        showButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                System.out.println("Stellenanziege selektiert: " + selektiert.getName());
-                StellenanzeigeWindow window = new StellenanzeigeWindow( selektiert );
-                UI.getCurrent().addWindow(window);
-            }
-        });*/
-
-       /* //ShowButton Config
-        createButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                StellenanzeigeWindow window = new StellenanzeigeWindow(new StellenanzeigeDetail());
-                UI.getCurrent().addWindow(window);
-            }
-        });*/
 
         //deleteButton Config
         deleteButton.addClickListener(new Button.ClickListener() {
