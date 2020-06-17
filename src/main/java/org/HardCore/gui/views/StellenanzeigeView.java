@@ -90,17 +90,16 @@ public class StellenanzeigeView extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 System.out.println("Stellenanzeige selektiert: " + selektiert.getName());
-                UpdateStellenanzeigeWindow window = new UpdateStellenanzeigeWindow( selektiert );
+                UpdateStellenanzeigeWindow window = new UpdateStellenanzeigeWindow( selektiert , grid);
                 UI.getCurrent().addWindow(window);
             }
         });
 
-        //ShowButton Config
+        //CreateButton Config
         createButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
-                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail());
+                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail(), grid);
                 UI.getCurrent().addWindow(window);
             }
         });

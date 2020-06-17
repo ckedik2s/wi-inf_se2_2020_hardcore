@@ -90,8 +90,8 @@ public class ProfileView extends VerticalLayout implements View {
             //Werte Setzen
             Unternehmen unternehmen = ProfileControl.getUnternehmen(user);
             //Unternehmen unternehmen = new Unternehmen(user);
-            if (unternehmen.getFirmenname() != null) {
-                firmenname.setValue(unternehmen.getFirmenname());
+            if (unternehmen.getName() != null) {
+                firmenname.setValue(unternehmen.getName());
             }
             if (unternehmen.getAnsprechpartner() != null) {
                 ansprechpartner.setValue(unternehmen.getAnsprechpartner());
@@ -151,7 +151,7 @@ public class ProfileView extends VerticalLayout implements View {
 
                 } else {
                     Unternehmen unternehmen = new Unternehmen(user);
-                    unternehmen.setFirmenname(firmenname.getValue());
+                    unternehmen.setName(firmenname.getValue());
                     unternehmen.setAnsprechpartner(ansprechpartner.getValue());
                     unternehmen.setStrasse(strasse.getValue());
                     unternehmen.setPlz(Integer.valueOf(plz.getValue()));

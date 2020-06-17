@@ -2,10 +2,13 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
+import org.HardCore.model.objects.dto.Student;
+import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.process.control.exceptions.NoSuchUserOrPassword;
 import org.HardCore.services.db.JDBCConnection;
+import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
 import java.sql.ResultSet;
@@ -35,6 +38,13 @@ public class LoginControl {
             if( rs.next() ) {
                 user = new User();
                 user.setId(rs.getInt(1));
+                user.setEmail(email);
+                if ( user.hasRole(Roles.STUDENT) ) {
+                    user = ProfileControl.getStudent(new Student(user));
+                }
+                else {
+                    user = ProfileControl.getUnternehmen(new Unternehmen(user));
+                }
             }
             else {
                 throw new NoSuchUserOrPassword();

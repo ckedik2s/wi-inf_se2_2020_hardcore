@@ -4,9 +4,11 @@ import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.process.control.StellenanzeigeControl;
 
-    public class UpdateStellenanzeigeWindow extends Window {
+import java.util.List;
 
-        public UpdateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige) {
+public class UpdateStellenanzeigeWindow extends Window {
+
+        public UpdateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid) {
             super("Ihre Stellenanzeige");
             center();
 
@@ -50,6 +52,14 @@ import org.HardCore.process.control.StellenanzeigeControl;
 
                     if (result == true) {
                         UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
+                        List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUser();
+                        try {
+                            grid.setItems();
+                            grid.setItems(list);
+                        } catch (Exception e) {
+                            System.out.println("Fehler 1");
+                            e.printStackTrace();
+                        }
                         close();
                     } else {
                         Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
