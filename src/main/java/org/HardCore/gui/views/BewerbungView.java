@@ -78,9 +78,11 @@ BewerbungView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                StellenanzeigeControl.getInstance().deleteStellenanzeige(selektiert);
                 deleteButton.setEnabled(false);
                 grid.setItems();
+                System.out.println("Selektiert: "+ selektiert.toString()
+                );
+                StellenanzeigeControl.getInstance().deleteBewerbung(selektiert.getId_anzeige());
                 list = StellenanzeigeControl.getInstance().getAnzeigenForStudent();
                 try {
                     grid.setItems(list);

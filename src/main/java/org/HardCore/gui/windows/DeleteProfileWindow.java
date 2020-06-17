@@ -3,7 +3,6 @@ package org.HardCore.gui.windows;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.LoginControl;
 import org.HardCore.process.control.RegistrationControl;

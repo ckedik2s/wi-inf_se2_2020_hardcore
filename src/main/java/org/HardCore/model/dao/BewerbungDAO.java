@@ -60,4 +60,15 @@ public class BewerbungDAO extends AbstractDAO{
         }
 
     }
+    public boolean deleteBewerbung(int id_anzeige){
+        Statement statement = this.getStatement();
+        try{
+            statement.executeQuery("DELETE " +
+                    "FROM collhbrs.bewerbung_to_stellenanzeige " +
+                    "WHERE id_anzeige =\'" + id_anzeige + "\';");
+            return true;
+        } catch (SQLException ex){
+            return false;
+        }
+    }
 }
