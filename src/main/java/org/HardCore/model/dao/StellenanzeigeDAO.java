@@ -61,6 +61,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         return list;
     }
 
+
     //Erstellt eine neue Stellenanzeige in der Datenbank
     public boolean createStellenanzeige(Stellenanzeige stellenanzeige, User user) {
         String sql = "INSERT INTO collhbrs.stellenanzeige(id, beschreibung, art, name, zeitraum,branche, studiengang)" +
