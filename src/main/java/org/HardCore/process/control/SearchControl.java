@@ -27,6 +27,10 @@ public class SearchControl {
         return StellenanzeigeControl.getInstance().getAnzeigenForUser();
     }
 
+    public List<StellenanzeigeDetail> getAnzeigeForStudent(){
+        return StellenanzeigeControl.getInstance().getAnzeigenForStudent();
+    }
+
     public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
         return StellenanzeigeControl.getInstance().getAnzeigenForSearch(suchtext);
     }
