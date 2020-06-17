@@ -11,7 +11,7 @@ import org.HardCore.model.objects.entities.Stellenanzeige;
 import java.util.List;
 
 public class StellenanzeigeControl {
-    public static StellenanzeigeControl search = null;
+    private static StellenanzeigeControl search = null;
 
     public static StellenanzeigeControl getInstance() {
         if (search == null) {

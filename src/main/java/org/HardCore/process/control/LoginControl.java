@@ -14,10 +14,21 @@ import org.HardCore.services.util.Views;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class LoginControl {
+    private static LoginControl loginControl = null;
 
-    public static void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
+    private LoginControl(){
+    }
+    public static LoginControl getInstance(){
+        if(loginControl == null){
+            loginControl = new LoginControl();
+        }
+        return loginControl;
+    }
+
+    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
 
         //DB User abfrage
         ResultSet rs = null;
@@ -40,10 +51,10 @@ public class LoginControl {
                 user.setId(rs.getInt(1));
                 user.setEmail(email);
                 if ( user.hasRole(Roles.STUDENT) ) {
-                    user = ProfileControl.getStudent(new Student(user));
+                    user = ProfileControl.getInstance().getStudent(new Student(user));
                 }
                 else {
-                    user = ProfileControl.getUnternehmen(new Unternehmen(user));
+                    user = ProfileControl.getInstance().getUnternehmen(new Unternehmen(user));
                 }
             }
             else {
@@ -60,7 +71,7 @@ public class LoginControl {
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }
 
-    public static void logoutUser() {
+    public void logoutUser() {
         UI.getCurrent().close();
         UI.getCurrent().getPage().setLocation("/HardCore");
     }

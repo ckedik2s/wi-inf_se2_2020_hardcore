@@ -26,7 +26,7 @@ class RegiControlTest {
         password2Bool = true;
         checkBox = true;
         assertThrows(NoEqualPasswordException.class,
-                () -> RegistrationControl.checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
+                () -> RegistrationControl.getInstance().checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
     }
 
     @Test
@@ -39,6 +39,6 @@ class RegiControlTest {
         password2Bool = true;
         checkBox = true;
         assertThrows(EmptyFieldException.class,
-                () -> RegistrationControl.checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
+                () -> RegistrationControl.getInstance().checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
     }
 }
