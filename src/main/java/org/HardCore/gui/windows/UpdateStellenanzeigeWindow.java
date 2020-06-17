@@ -52,7 +52,7 @@ public class UpdateStellenanzeigeWindow extends Window {
 
                     if (result == true) {
                         UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                        List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUser();
+                        List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen();
                         try {
                             grid.setItems();
                             grid.setItems(list);

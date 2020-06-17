@@ -1,11 +1,6 @@
 package org.HardCore.process.control;
 
-import com.vaadin.ui.UI;
-import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.dao.StellenanzeigeDAO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.entities.Stellenanzeige;
-import org.HardCore.model.objects.dto.User;
 
 import java.util.List;
 
@@ -24,7 +19,7 @@ public class SearchControl {
     }
 
     public List<StellenanzeigeDetail> getAnzeigenForUser() {
-        return StellenanzeigeControl.getInstance().getAnzeigenForUser();
+        return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen();
     }
 
     public List<StellenanzeigeDetail> getAnzeigeForStudent(){
