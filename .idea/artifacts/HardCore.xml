@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="HardCore">
+    <output-path>$PROJECT_DIR$/out/artifacts/HardCore</output-path>
+    <root id="root">
+      <element id="dir-copy" path="$PROJECT_DIR$/target/HardCore-1.0-SNAPSHOT/META-INF" />
+      <element id="dir-copy" path="$PROJECT_DIR$/target/HardCore-1.0-SNAPSHOT/WEB-INF" />
+    </root>
+  </artifact>
+</component>
