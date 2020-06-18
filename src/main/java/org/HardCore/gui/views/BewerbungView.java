@@ -67,7 +67,6 @@ public class BewerbungView extends VerticalLayout implements View {
                     return;
                 }
                 else {
-                    System.out.println("Zeile selektiert: " + selection.getValue());
                     selektiert = selection.getValue();
                     deleteButton.setEnabled(true);
                 }
@@ -80,8 +79,6 @@ public class BewerbungView extends VerticalLayout implements View {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 DeleteStellenanzeigeWindowStudent window = new DeleteStellenanzeigeWindowStudent(selektiert);
                 UI.getCurrent().addWindow(window);
-
-                StellenanzeigeControl.getInstance().deleteStellenanzeige(selektiert);
                 deleteButton.setEnabled(false);
                 grid.setItems();
                 list = StellenanzeigeControl.getInstance().getAnzeigenForStudent();

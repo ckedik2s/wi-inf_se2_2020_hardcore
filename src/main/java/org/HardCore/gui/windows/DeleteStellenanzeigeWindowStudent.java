@@ -7,7 +7,7 @@ import org.HardCore.process.control.StellenanzeigeControl;
 import org.HardCore.services.util.Views;
 
 public class DeleteStellenanzeigeWindowStudent extends Window {
-    //Window zum Löschen von Usern
+    //Window zum Löschen von Bewerbungen auf Stellenanzeigen
 
     public DeleteStellenanzeigeWindowStudent(StellenanzeigeDetail stellenanzeigeDetail) {
 
@@ -16,7 +16,7 @@ public class DeleteStellenanzeigeWindowStudent extends Window {
         VerticalLayout verticalLayout = new VerticalLayout();
         Panel panel = new Panel();
         panel.setWidth("700");
-        panel.setContent(new Label( "Sind Sie sicher, dass Sie Ihre Bewerbung auf die Stellenanzeige löschen wollen? <br>" +
+        panel.setContent(new Label( "Sind Sie sicher, dass Sie Ihre Bewerbung auf diese Stellenanzeige löschen wollen? <br>" +
                 "Dieser Vorgang ist unumkehrbar!", ContentMode.HTML));
         verticalLayout.addComponent(panel);
 
@@ -25,8 +25,12 @@ public class DeleteStellenanzeigeWindowStudent extends Window {
         okButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                System.out.println(stellenanzeigeDetail.getId());
-              //  StellenanzeigeControl.getInstance().deleteStellenanzeige(stellenanzeigeDetail);
+                boolean delete = StellenanzeigeControl.getInstance().deleteBewerbung(stellenanzeigeDetail.getId_anzeige());
+                if(!delete){
+                    Notification.show("DB-Fehler", "Löschen war nicht erfolgreich!", Notification.Type.ERROR_MESSAGE);
+                }else{
+                    Notification.show( "Bewerbung gelöscht!", Notification.Type.HUMANIZED_MESSAGE);
+                }
                 UI.getCurrent().getNavigator().navigateTo(Views.BEWERBUNG);
                 close();
             }
