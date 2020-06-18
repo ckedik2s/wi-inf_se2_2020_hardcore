@@ -1,7 +1,6 @@
 package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
-import org.HardCore.model.factory.StellenanzeigeFactory;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.process.control.StellenanzeigeControl;
 
@@ -52,7 +51,7 @@ public class CreateStellenanzeigeWindow extends Window {
                 boolean result = StellenanzeigeControl.getInstance().createStellenanzeige(stellenanzeige);
                 if (result == true) {
                     UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                    List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUser();
+                    List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen();
                     try {
                         grid.setItems();
                         grid.setItems(list);

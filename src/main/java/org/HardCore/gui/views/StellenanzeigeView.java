@@ -114,7 +114,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
                 deleteButton.setEnabled(false);
                 showButton.setEnabled(false);
                 grid.setItems();
-                list = StellenanzeigeControl.getInstance().getAnzeigenForUser();
+                list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen();
                 try {
                     grid.setItems(list);
                 } catch (Exception e) {
