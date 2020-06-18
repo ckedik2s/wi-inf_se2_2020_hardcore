@@ -2,19 +2,33 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
+import org.HardCore.model.objects.dto.Student;
+import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.process.control.exceptions.NoSuchUserOrPassword;
 import org.HardCore.services.db.JDBCConnection;
+import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class LoginControl {
+    private static LoginControl loginControl = null;
 
-    public static void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
+    private LoginControl(){
+    }
+    public static LoginControl getInstance(){
+        if(loginControl == null){
+            loginControl = new LoginControl();
+        }
+        return loginControl;
+    }
+
+    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
 
         //DB User abfrage
         ResultSet rs = null;
@@ -35,6 +49,13 @@ public class LoginControl {
             if( rs.next() ) {
                 user = new User();
                 user.setId(rs.getInt(1));
+                user.setEmail(email);
+                if ( user.hasRole(Roles.STUDENT) ) {
+                    user = ProfileControl.getInstance().getStudent(new Student(user));
+                }
+                else {
+                    user = ProfileControl.getInstance().getUnternehmen(new Unternehmen(user));
+                }
             }
             else {
                 throw new NoSuchUserOrPassword();
@@ -50,7 +71,7 @@ public class LoginControl {
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }
 
-    public static void logoutUser() {
+    public void logoutUser() {
         UI.getCurrent().close();
         UI.getCurrent().getPage().setLocation("/HardCore");
     }

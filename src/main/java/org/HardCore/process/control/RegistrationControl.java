@@ -21,7 +21,9 @@ import java.sql.Statement;
 
 public class RegistrationControl {
 
-    public static RegistrationControl registration = null;
+    private static RegistrationControl registration = null;
+    private RegistrationControl(){
+    }
 
     public static RegistrationControl getInstance(){
         if(registration == null){
@@ -30,7 +32,7 @@ public class RegistrationControl {
         return registration;
     }
 
-    public static void checkValid(String email, boolean emailBool, String password1, String password2, boolean password1Bool, boolean password2Bool, boolean checkBox) throws NoEqualPasswordException, DatabaseException, EmailInUseException, EmptyFieldException {
+    public void checkValid(String email, boolean emailBool, String password1, String password2, boolean password1Bool, boolean password2Bool, boolean checkBox) throws NoEqualPasswordException, DatabaseException, EmailInUseException, EmptyFieldException {
 
         //Eingabecheck
         if (!emailBool || !password1Bool  || !password2Bool || !checkBox) {
@@ -65,7 +67,7 @@ public class RegistrationControl {
     }
 
     //User registrieren
-    public static void registerUser( String email, String password, String regAs ) throws DatabaseException {
+    public void registerUser( String email, String password, String regAs ) throws DatabaseException {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);

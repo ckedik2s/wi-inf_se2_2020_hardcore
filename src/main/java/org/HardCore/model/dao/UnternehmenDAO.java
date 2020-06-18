@@ -33,7 +33,7 @@ public class UnternehmenDAO extends AbstractDAO {
 
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setString(1, unternehmen.getFirmenname());
+            statement.setString(1, unternehmen.getName());
             statement.setString(2, unternehmen.getAnsprechpartner());
             statement.setString(3, unternehmen.getStrasse());
             statement.setInt(4, unternehmen.getPlz());
@@ -66,7 +66,7 @@ public class UnternehmenDAO extends AbstractDAO {
         try {
             while (rs.next()) {
 
-                un.setFirmenname(rs.getString(2));
+                un.setName(rs.getString(2));
                 un.setAnsprechpartner(rs.getString(3));
                 un.setStrasse(rs.getString(4));
                 un.setPlz((Integer) rs.getInt(5));

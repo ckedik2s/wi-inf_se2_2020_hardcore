@@ -1,6 +1,7 @@
 package org.HardCore.model.dao;
 
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.model.objects.entities.Stellenanzeige;
 
@@ -15,7 +16,6 @@ public class StellenanzeigeDAO extends AbstractDAO {
     private static StellenanzeigeDAO dao = null;
 
     private StellenanzeigeDAO() {
-
     }
 
     public static StellenanzeigeDAO getInstance() {
@@ -25,7 +25,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         return dao;
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUser(User user) {
+    public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(User user) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
 
@@ -61,6 +61,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
         return list;
     }
+
 
     //Erstellt eine neue Stellenanzeige in der Datenbank
     public boolean createStellenanzeige(Stellenanzeige stellenanzeige, User user) {
@@ -121,5 +122,102 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
     }
 
+    public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext) {
+        Statement statement = this.getStatement();
+        ResultSet rs = null;
+
+        try {
+            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
+                    "FROM collhbrs.stellenanzeige " +
+                    "WHERE name like \'%" + suchtext + "%\'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (rs == null) {
+            return null;
+        }
+
+        List<StellenanzeigeDetail> list = new ArrayList<>();
+        StellenanzeigeDetail stellenanzeigeDetail = null;
+
+        try {
+            while (rs.next()) {
+                stellenanzeigeDetail = new StellenanzeigeDetail();
+                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
+                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
+                stellenanzeigeDetail.setArt(rs.getString(3));
+                stellenanzeigeDetail.setName(rs.getString(4));
+                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
+                stellenanzeigeDetail.setBranche(rs.getString(6));
+                stellenanzeigeDetail.setStudiengang(rs.getString(7));
+                list.add(stellenanzeigeDetail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    //Zeigt alle Stellenanzeigen an, auf die sich ein Student beworben hat
+    public List<StellenanzeigeDetail> getStellenanzeigeforStudent(Student student) {
+        Statement statement = this.getStatement();
+        ResultSet rs = null;
+
+        try {
+            rs = statement.executeQuery("SELECT id_student, id_stellenanzeige " +
+                    "FROM collhbrs.bewerbung_to_stellenanzeige " +
+                    "WHERE id_student = \'" + student.getId() + "\'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (rs == null) {
+            return null;
+        }
+        List<Integer> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                list.add(rs.getInt(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ResultSet rs2 = null;
+        List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
+        StellenanzeigeDetail stellenanzeigeDetail = null;
+
+        for (int id_anzeige : list) {
+            try {
+                rs2 = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
+                        "FROM collhbrs.stellenanzeige " +
+                        "WHERE id_anzeige = \'" + id_anzeige + "\'");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (rs2 == null) {
+                return null;
+            }
+            try {
+                while (rs2.next()) {
+                    stellenanzeigeDetail = new StellenanzeigeDetail();
+                    stellenanzeigeDetail.setId_anzeige(rs2.getInt(1));
+                    stellenanzeigeDetail.setBeschreibung(rs2.getString(2));
+                    stellenanzeigeDetail.setArt(rs2.getString(3));
+                    stellenanzeigeDetail.setName(rs2.getString(4));
+                    stellenanzeigeDetail.setZeitraum(rs2.getDate(5).toLocalDate());
+                    stellenanzeigeDetail.setBranche(rs2.getString(6));
+                    stellenanzeigeDetail.setStudiengang(rs2.getString(7));
+                    listStellenanzeige.add(stellenanzeigeDetail);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return listStellenanzeige;
+    }
+
+
 }
+
 

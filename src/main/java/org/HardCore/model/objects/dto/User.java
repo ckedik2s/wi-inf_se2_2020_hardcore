@@ -8,8 +8,8 @@ import java.util.List;
 
 public class User implements Serializable {
     private int id;
-    private String vorname = "Student";
-    private String name = "Unternehmen";
+    private String vorname;
+    private String name;
     private String email;
     private String password;
     private List<Role> roles = null;

@@ -61,7 +61,7 @@ public class ProfileView extends VerticalLayout implements View {
 
         if (user.hasRole(Roles.STUDENT)) {
             //Werte einsetzen
-            Student student = ProfileControl.getStudent(user);
+            Student student = ProfileControl.getInstance().getStudent(user);
             if (student.getAnrede() != null) {
                 anrede.setValue(student.getAnrede());
             }
@@ -88,10 +88,10 @@ public class ProfileView extends VerticalLayout implements View {
             }
         } else {
             //Werte Setzen
-            Unternehmen unternehmen = ProfileControl.getUnternehmen(user);
+            Unternehmen unternehmen = ProfileControl.getInstance().getUnternehmen(user);
             //Unternehmen unternehmen = new Unternehmen(user);
-            if (unternehmen.getFirmenname() != null) {
-                firmenname.setValue(unternehmen.getFirmenname());
+            if (unternehmen.getName() != null) {
+                firmenname.setValue(unternehmen.getName());
             }
             if (unternehmen.getAnsprechpartner() != null) {
                 ansprechpartner.setValue(unternehmen.getAnsprechpartner());
@@ -144,21 +144,21 @@ public class ProfileView extends VerticalLayout implements View {
                     student.setKenntnisse(kenntnisse.getValue());
                     student.setStudiengang(studiengang.getValue());
 
-                    boolean result = ProfileControl.updateStudentData(student);
+                    boolean result = ProfileControl.getInstance().updateStudentData(student);
                     if (result != true) {
                         Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                     }
 
                 } else {
                     Unternehmen unternehmen = new Unternehmen(user);
-                    unternehmen.setFirmenname(firmenname.getValue());
+                    unternehmen.setName(firmenname.getValue());
                     unternehmen.setAnsprechpartner(ansprechpartner.getValue());
                     unternehmen.setStrasse(strasse.getValue());
                     unternehmen.setPlz(Integer.valueOf(plz.getValue()));
                     unternehmen.setHaus_nr(Integer.valueOf(haus_nr.getValue()));
                     unternehmen.setZusatz(zusatz.getValue());
                     unternehmen.setBranche(branche.getValue());
-                    boolean result = ProfileControl.updateUnternehmenData(unternehmen);
+                    boolean result = ProfileControl.getInstance().updateUnternehmenData(unternehmen);
                     if (result != true) {
                         Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                     }
