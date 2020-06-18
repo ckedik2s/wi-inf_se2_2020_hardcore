@@ -9,6 +9,8 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
+import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
+import org.HardCore.gui.windows.DeleteStellenanzeigeWindowStudent;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.SearchControl;
@@ -16,9 +18,7 @@ import org.HardCore.process.control.StellenanzeigeControl;
 
 import java.util.List;
 
-public class
-
-BewerbungView extends VerticalLayout implements View {
+public class BewerbungView extends VerticalLayout implements View {
 
     private StellenanzeigeDetail selektiert;
     private List<StellenanzeigeDetail> list;
@@ -78,11 +78,12 @@ BewerbungView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                DeleteStellenanzeigeWindowStudent window = new DeleteStellenanzeigeWindowStudent(selektiert);
+                UI.getCurrent().addWindow(window);
+
+                StellenanzeigeControl.getInstance().deleteStellenanzeige(selektiert);
                 deleteButton.setEnabled(false);
                 grid.setItems();
-                System.out.println("Selektiert: "+ selektiert.toString()
-                );
-                StellenanzeigeControl.getInstance().deleteBewerbung(selektiert.getId_anzeige());
                 list = StellenanzeigeControl.getInstance().getAnzeigenForStudent();
                 try {
                     grid.setItems(list);
