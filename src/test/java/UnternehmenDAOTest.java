@@ -1,35 +1,35 @@
 import org.HardCore.model.dao.UnternehmenDAO;
-import org.HardCore.model.dao.UserDAO;
-import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class UnternehmenDAOTest {
+public class UnternehmenDAOTest {
 
     private static UnternehmenDAO uDAO;
     private User user;
     private Object un;
 
     @Test
-    static void testCreate() {
+    public void testCreate() {
         uDAO =  UnternehmenDAO.getInstance();
         assertNotNull(uDAO);
     }
-//    @Test
+
+    public void assertNotNull(UnternehmenDAO uDAO) {
+    }
+
+    //    @Test
 //    void testRead() {
 //        user = new User();
 //        uDAO.getAllDataUnternehmen(user);
 //        assertEquals((Unternehmen)un,(Unternehmen)un);
 //    }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
 
     }
     @Test
-    void testDelete() {
+    public void testDelete() {
 
     }
 

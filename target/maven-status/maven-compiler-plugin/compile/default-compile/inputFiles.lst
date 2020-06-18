@@ -30,8 +30,10 @@ F:\Uni\SE II\HardCore\src\main\java\org\HardCore\model\objects\dto\Student.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\services\util\Roles.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\model\objects\entities\Stellenanzeige.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\process\control\exceptions\DatabaseException.java
+F:\Uni\SE II\HardCore\src\main\java\org\HardCore\model\objects\dto\Bewerbung.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\gui\ui\MyUI.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\gui\views\RegistrationView.java
+F:\Uni\SE II\HardCore\src\main\java\org\HardCore\model\dao\BewerbungDAO.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\model\dao\RegisterDAO.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\gui\views\StellenanzeigeView.java
 F:\Uni\SE II\HardCore\src\main\java\org\HardCore\process\control\exceptions\NoSuchUserOrPassword.java

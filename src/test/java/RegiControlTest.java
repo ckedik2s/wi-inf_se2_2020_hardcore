@@ -2,11 +2,11 @@ import org.HardCore.process.control.RegistrationControl;
 import org.HardCore.process.control.exceptions.EmptyFieldException;
 
 import org.HardCore.process.control.exceptions.NoEqualPasswordException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertThrows;
 
-class RegiControlTest {
+public class RegiControlTest {
 
     private static String email;
     private static String password1;
@@ -17,7 +17,7 @@ class RegiControlTest {
     private static boolean checkBox;
 
     @Test
-    void EqualPasswordTest() {
+    public void EqualPasswordTest() {
         email = "Pfill@test.de";
         password1 = "!ABC123";
         password2 = "!ABC1234";
@@ -30,7 +30,7 @@ class RegiControlTest {
     }
 
     @Test
-    void emptyFieldTest() {
+    public void emptyFieldTest() {
         email = "Pfill";
         password1 = "!ABC123";
         password2 = "!ABC1234";

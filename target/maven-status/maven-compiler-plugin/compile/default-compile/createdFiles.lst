@@ -8,6 +8,7 @@ org\HardCore\gui\windows\DeleteStellenanzeigeWindow$1.class
 org\HardCore\gui\components\TopPanel$5.class
 org\HardCore\gui\views\ProfileView.class
 org\HardCore\gui\components\TopPanel$1.class
+org\HardCore\model\objects\dto\Bewerbung.class
 org\HardCore\process\control\exceptions\NoSuchUserOrPassword.class
 org\HardCore\model\dao\RoleDAO.class
 org\HardCore\process\control\RegistrationControl.class
@@ -54,6 +55,7 @@ org\HardCore\gui\views\ProfileView$1.class
 org\HardCore\services\db\JDBCConnection.class
 org\HardCore\gui\views\MainView$2.class
 org\HardCore\gui\views\StellenanzeigeView$3.class
+org\HardCore\model\dao\BewerbungDAO.class
 org\HardCore\gui\ui\MyUI$MyUIServlet.class
 org\HardCore\gui\windows\DeleteProfileWindow$1.class
 org\HardCore\process\control\StellenanzeigeControl.class

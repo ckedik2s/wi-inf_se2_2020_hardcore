@@ -1,29 +1,29 @@
 import org.HardCore.model.dao.RoleDAO;
 import org.HardCore.model.objects.dto.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
-class RoleDAOTest {
+public class RoleDAOTest {
 
     private static RoleDAO roleDAO;
     private User user;
 
     @Test
-    static void testCreate() {
+    public void testCreate() {
         roleDAO =  RoleDAO.getInstance();
         assertNotNull(roleDAO);
     }
     @Test
-    void testRead() {
+    public void testRead() {
 
     }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
     }
     @Test
-    void testDelete() {
+    public void testDelete() {
 
     }
 }
