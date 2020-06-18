@@ -2,6 +2,7 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
+import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.dao.StellenanzeigeDAO;
 import org.HardCore.model.factory.StellenanzeigeFactory;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
@@ -55,5 +56,9 @@ public class StellenanzeigeControl {
 
     public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
         return StellenanzeigeDAO.getInstance().getStellenanzeigenForSearch(suchtext);
+    }
+
+    public boolean deleteBewerbung(int id_anzeige) {
+        return BewerbungDAO.getInstance().deleteBewerbung(id_anzeige);
     }
 }
