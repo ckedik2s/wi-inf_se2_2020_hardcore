@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDAOTest {
+public class UserDAOTest {
 
     private UserDAO userDAO;
 
     @Test
-    void testCreate() {
+    public void testCreate() {
         userDAO =  UserDAO.getInstance();
         assertNotNull(userDAO);
     }
@@ -18,11 +18,11 @@ class UserDAOTest {
 //        assertNotNull(userDAO.getMaxID());
 //    }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
     }
     @Test
-    void testDelete() {
+    public void testDelete() {
 
     }
 

@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StellenanzeigeDAOTest {
+public class StellenanzeigeDAOTest {
 
     private static StudentDAO stellenDAO;
     private User user;
     private Object stud;
 
     @Test
-    static void testCreate() {
+    public void testCreate() {
         stellenDAO =  StudentDAO.getInstance();
         assertNotNull(stellenDAO);
     }
