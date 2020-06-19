@@ -1,19 +1,17 @@
 import org.HardCore.model.dao.StudentDAO;
-import org.HardCore.model.dao.UserDAO;
-import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertNotNull;
 
-class StudentDAOTest {
+public class StudentDAOTest {
 
     private static StudentDAO studDAO;
     private User user;
     private Object stud;
 
     @Test
-    static void testCreate() {
+    public void testCreate() {
         studDAO =  StudentDAO.getInstance();
         assertNotNull(studDAO);
     }
@@ -24,11 +22,11 @@ class StudentDAOTest {
 //        assertEquals((Unternehmen)stud,(Unternehmen)stud);
 //    }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
     }
     @Test
-    void testDelete() {
+    public void testDelete() {
 
     }
 }

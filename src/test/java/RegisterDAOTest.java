@@ -1,25 +1,25 @@
 import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.objects.dto.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertNotNull;
 
-class RegisterDAOTest {
+public class RegisterDAOTest {
 
     private static RegisterDAO regiDAO;
     private User user;
 
     @Test
-    static void testCreate() {
+    public void testCreate() {
         regiDAO =  RegisterDAO.getInstance();
         assertNotNull(regiDAO);
     }
     @Test
-    void testRead() {
+    public void testRead() {
 
     }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
     }
 //    @Test

@@ -1,31 +1,28 @@
 import org.HardCore.model.dao.AbstractDAO;
-import org.HardCore.model.dao.RegisterDAO;
-import org.HardCore.model.objects.dto.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import java.sql.Statement;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class AbstractDAOTest {
+public class AbstractDAOTest {
 
     private static AbstractDAO abstDAO;
     private Statement statement;
 
     @Test
-    static void testCreate() {
+    public void testCreate() {
 
     }
     @Test
-    void testRead() {
+    public void testRead() {
 
     }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
     }
     @Test
-    void testDelete() {
+    public void testDelete() {
 
     }
 
