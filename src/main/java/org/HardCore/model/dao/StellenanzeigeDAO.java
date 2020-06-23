@@ -122,14 +122,15 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
     }
 
-    public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext) {
+    public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext, String filter) {
+        filter.toLowerCase();
         Statement statement = this.getStatement();
         ResultSet rs = null;
 
         try {
             rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
                     "FROM collhbrs.stellenanzeige " +
-                    "WHERE name like \'%" + suchtext + "%\'");
+                    "WHERE " + filter + " like \'%" + suchtext + "%\'");
         } catch (SQLException e) {
             e.printStackTrace();
         }

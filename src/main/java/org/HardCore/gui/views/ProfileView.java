@@ -6,17 +6,12 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.ConfirmationWindow;
 import org.HardCore.gui.windows.DeleteProfileWindow;
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.ProfileControl;
-import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.services.util.Roles;
-
-import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class ProfileView extends VerticalLayout implements View {
 

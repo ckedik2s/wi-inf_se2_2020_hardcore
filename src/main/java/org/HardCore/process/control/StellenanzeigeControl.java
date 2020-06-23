@@ -54,8 +54,8 @@ public class StellenanzeigeControl {
         return StellenanzeigeDAO.getInstance().deleteStellenanzeige(stellenanzeige);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext) {
-        return StellenanzeigeDAO.getInstance().getStellenanzeigenForSearch(suchtext);
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) {
+        return StellenanzeigeDAO.getInstance().getStellenanzeigenForSearch(suchtext, filter);
     }
 
     public boolean deleteBewerbung(int id_anzeige) {

@@ -1,7 +1,9 @@
 package org.HardCore.model.dao;
 
 import org.HardCore.model.objects.dto.Bewerbung;
+import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.Student;
+import org.HardCore.model.objects.dto.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,5 +81,10 @@ public class BewerbungDAO extends AbstractDAO {
             Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public boolean applyForStellenanzeige(StellenanzeigeDetail stellenanzeige, Student student) {
+        // TODO bewerben auf Stellenanzeige mit Bewerbung des users
+        return true;
     }
 }
