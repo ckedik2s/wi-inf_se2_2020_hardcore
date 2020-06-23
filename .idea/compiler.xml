@@ -10,6 +10,6 @@
         <module name="wi-inf_se2_2020_hardcore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="14" />
   </component>
 </project>

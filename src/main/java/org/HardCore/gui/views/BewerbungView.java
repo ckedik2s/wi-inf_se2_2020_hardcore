@@ -9,7 +9,6 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
 import org.HardCore.gui.windows.DeleteStellenanzeigeWindowStudent;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.User;
