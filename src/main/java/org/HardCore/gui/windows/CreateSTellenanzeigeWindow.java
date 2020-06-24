@@ -2,7 +2,6 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.StellenanzeigeControl;
 
 import java.util.List;
