@@ -2,13 +2,14 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.process.control.StellenanzeigeControl;
 
 import java.util.List;
 
 public class CreateStellenanzeigeWindow extends Window {
 
-    public CreateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid) {
+    public CreateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, Unternehmen unternehmen) {
         super("Ihre Stellenanzeige");
         center();
 
@@ -17,7 +18,7 @@ public class CreateStellenanzeigeWindow extends Window {
         name.setValue(stellenanzeige.getName());
 
         //Art
-        TextField art = new TextField("Art");
+        TextField art = new TextField("Art der Anstellung");
         art.setValue(stellenanzeige.getArt());
 
         //Branche
@@ -28,6 +29,10 @@ public class CreateStellenanzeigeWindow extends Window {
         TextField studiengang = new TextField("Studiengang");
         studiengang.setValue(stellenanzeige.getStudiengang());
 
+        //Ort
+        TextField ort = new TextField("Ort");
+        ort.setValue(stellenanzeige.getOrt());
+
         //Zeitraum
         DateField zeitraum = new DateField("Ende der Ausschreibung");
         zeitraum.setValue(stellenanzeige.getZeitraum());
@@ -35,6 +40,7 @@ public class CreateStellenanzeigeWindow extends Window {
         //Beschreibung
         TextArea beschreibung = new TextArea("Beschreibung");
         beschreibung.setValue(stellenanzeige.getBeschreibung());
+
 
         //saveButton Config
         Button saveButton = new Button("Speichern");
@@ -45,13 +51,14 @@ public class CreateStellenanzeigeWindow extends Window {
                 stellenanzeige.setArt(art.getValue());
                 stellenanzeige.setBranche(branche.getValue());
                 stellenanzeige.setStudiengang(studiengang.getValue());
+                stellenanzeige.setOrt(ort.getValue());
                 stellenanzeige.setZeitraum(zeitraum.getValue());
                 stellenanzeige.setBeschreibung(beschreibung.getValue());
 
                 boolean result = StellenanzeigeControl.getInstance().createStellenanzeige(stellenanzeige);
                 if (result == true) {
                     UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                    List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen();
+                    List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmen);
                     try {
                         grid.setItems();
                         grid.setItems(list);
@@ -86,6 +93,7 @@ public class CreateStellenanzeigeWindow extends Window {
         verticalLayout.addComponent(art);
         verticalLayout.addComponent(branche);
         verticalLayout.addComponent(studiengang);
+        verticalLayout.addComponent(ort);
         verticalLayout.addComponent(zeitraum);
         verticalLayout.addComponent(beschreibung);
         verticalLayout.addComponent(horizontalLayout);

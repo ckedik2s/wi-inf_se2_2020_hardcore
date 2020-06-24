@@ -11,6 +11,7 @@ public class StellenanzeigeDetail {
     private LocalDate zeitraum = LocalDate.now();
     private String branche = "";
     private String studiengang = "";
+    private String ort = "";
 
     public int getId() {
         return id;
@@ -76,6 +77,14 @@ public class StellenanzeigeDetail {
         this.studiengang = studiengang;
     }
 
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
     public String toString(){
         return "ID: " + this.getId() + "\n" +
                 "ID Anzeige: " + this.getId_anzeige() + "\n" +
@@ -84,6 +93,7 @@ public class StellenanzeigeDetail {
                 "Name: " + this.getName() + "\n" +
                 "Zeitraum: " + this.getZeitraum().toString() + "\n" +
                 "Branche: "+ this.getBranche() + "\n" +
-                "Studiengang: "+ this.getStudiengang() + "\n";
+                "Studiengang: "+ this.getStudiengang() + "\n" +
+                "Ort: " + this.getOrt() + "\n";
     }
 }

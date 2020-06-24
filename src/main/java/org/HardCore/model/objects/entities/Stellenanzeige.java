@@ -12,6 +12,7 @@ public class Stellenanzeige {
     private Date zeitraum;
     private String branche;
     private String studiengang;
+    private String ort;
 
     public int getId_anzeige() {
         return id_anzeige;
@@ -77,15 +78,23 @@ public class Stellenanzeige {
         this.studiengang = studiengang;
     }
 
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
     public String toString(){
-        return "Stellenanzeige \n" +
-                "ID: " + this.getId() + "\n" +
+        return "ID: " + this.getId() + "\n" +
                 "ID Anzeige: " + this.getId_anzeige() + "\n" +
                 "Beschreibung: " + this.getBeschreibung() + "\n" +
                 "Art: " + this.getArt() + "\n" +
                 "Name: " + this.getName() + "\n" +
                 "Zeitraum: " + this.getZeitraum().toString() + "\n" +
                 "Branche: "+ this.getBranche() + "\n" +
-                "Studiengang: "+ this.getStudiengang() + "\n";
+                "Studiengang: "+ this.getStudiengang() + "\n" +
+                "Ort: " + this.getOrt() + "\n";
     }
 }

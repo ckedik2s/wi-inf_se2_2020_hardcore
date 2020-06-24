@@ -13,7 +13,7 @@ import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
 import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.process.control.SearchControl;
 import org.HardCore.process.control.StellenanzeigeControl;
 
@@ -28,12 +28,12 @@ public class StellenanzeigeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         //User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
+        Unternehmen unternehmen = new Unternehmen(( (MyUI) UI.getCurrent() ).getUser());
 
-        this.setUp(user);
+        this.setUp(unternehmen);
     }
 
-    private void setUp(User user) {
+    private void setUp(Unternehmen unternehmen) {
 
         //Top Layer
         this.addComponent( new TopPanel() );
@@ -55,6 +55,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
         grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
         grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
+        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
         grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
         //grid.addColumn(Stellenanzeige::getAnzahlBewerber).setCaption("Anzahl der Bewerber");
 
@@ -73,7 +74,9 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
             @Override
             public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
-                if (selection == null) {
+                if (selection.getValue() == null) {
+                    showButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
                     return;
                 }
                 else {
@@ -89,8 +92,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         showButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                System.out.println("Stellenanzeige selektiert: " + selektiert.getName());
-                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(selektiert, grid);
+                StellenanzeigeWindow window = new StellenanzeigeWindow(selektiert, grid, unternehmen);
                 UI.getCurrent().addWindow(window);
             }
         });
@@ -99,7 +101,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         createButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail(), grid);
+                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail(), grid, unternehmen);
                 UI.getCurrent().addWindow(window);
             }
         });
@@ -114,7 +116,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
                 deleteButton.setEnabled(false);
                 showButton.setEnabled(false);
                 grid.setItems();
-                list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen();
+                list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmen);
                 try {
                     grid.setItems(list);
                 } catch (Exception e) {

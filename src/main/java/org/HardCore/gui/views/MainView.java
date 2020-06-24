@@ -49,6 +49,7 @@ public class MainView extends VerticalLayout implements View {
         grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
         grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
         grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
+        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
         grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
@@ -69,7 +70,7 @@ public class MainView extends VerticalLayout implements View {
         //Combobox
         final ComboBox<String> comboBox = new ComboBox<>();
         comboBox.setPlaceholder("Filtern nach");
-        comboBox.setItems("Name", "Art", "Branche", "Studiengang");
+        comboBox.setItems("Name", "Art", "Branche", "Studiengang", "Ort");
 
         //SelectionListener Tabelle
         grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {

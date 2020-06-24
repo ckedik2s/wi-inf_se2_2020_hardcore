@@ -18,6 +18,7 @@ public class StellenanzeigeFactory {
         stellenanzeige.setArt(stellenanzeigeDetail.getArt());
         stellenanzeige.setBranche(stellenanzeigeDetail.getBranche());
         stellenanzeige.setStudiengang(stellenanzeigeDetail.getStudiengang());
+        stellenanzeige.setOrt(stellenanzeigeDetail.getOrt());
         stellenanzeige.setZeitraum(Date.valueOf(stellenanzeigeDetail.getZeitraum()));
 
         return stellenanzeige;
