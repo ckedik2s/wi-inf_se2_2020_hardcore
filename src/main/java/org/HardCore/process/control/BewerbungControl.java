@@ -29,12 +29,15 @@ public class BewerbungControl {
 
     }
 
-    public void applyForStellenanzeige(StellenanzeigeDetail stellenanzeige, User user) throws DatabaseException {
+    public boolean applyForStellenanzeige(StellenanzeigeDetail stellenanzeige, User user) throws DatabaseException {
         // TODO Moritz: bewerben auf Stellenanzeige mit Bewerbung des usersreturn
+        return BewerbungDAO.getInstance().sendBewerbung(stellenanzeige, user);
+
     }
 
-    public void applyingIsAllowed() {
+    public boolean applyingIsAllowed() {
         //TODO Moritz: check nach Bewerbung Toggle auf Datenbank
+        return BewerbungDAO.getInstance().applyingIsAllowed();
     }
 
     public void checkAllowed(User user, Button bewerbenButton) {
