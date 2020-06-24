@@ -10,6 +10,6 @@
         <module name="HardCore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="14" />
+    <bytecodeTargetLevel target="11" />
   </component>
 </project>

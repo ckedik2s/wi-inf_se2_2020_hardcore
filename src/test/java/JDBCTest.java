@@ -1,12 +1,15 @@
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 
 public class JDBCTest {
 
-    @org.junit.jupiter.api.Test
-    void testStatement() throws DatabaseException { //Throwt Exception, da diese in jdbc klasse ebenso geworfen wird
+    @Test
+    public void testStatement() throws DatabaseException { //Throwt Exception, da diese in jdbc klasse ebenso geworfen wird
         JDBCConnection con = JDBCConnection.getInstance();
         try {
             con.initConnection();

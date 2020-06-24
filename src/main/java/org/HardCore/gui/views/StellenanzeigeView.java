@@ -9,9 +9,9 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
 import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
-import org.HardCore.gui.windows.UpdateStellenanzeigeWindow;
+import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
+import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.process.control.SearchControl;
@@ -90,7 +90,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 System.out.println("Stellenanzeige selektiert: " + selektiert.getName());
-                UpdateStellenanzeigeWindow window = new UpdateStellenanzeigeWindow( selektiert , grid);
+                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(selektiert, grid);
                 UI.getCurrent().addWindow(window);
             }
         });

@@ -4,7 +4,7 @@ import com.vaadin.ui.*;
 
 public class ConfirmationWindow extends Window {
     //Window zur Anmeldebestätigung
-    public ConfirmationWindow( String text) {
+    public ConfirmationWindow(String text) {
         super("Bestätigung:");
         center();
 
