@@ -7,6 +7,7 @@ import org.HardCore.model.dao.StellenanzeigeDAO;
 import org.HardCore.model.factory.StellenanzeigeFactory;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.Student;
+import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.model.objects.entities.Stellenanzeige;
 
@@ -26,14 +27,11 @@ public class StellenanzeigeControl {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen() {
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
-        return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(user);
+    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(Unternehmen unternehmen) {
+        return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(unternehmen);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForStudent() {
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
-        Student student = ProfileControl.getInstance().getStudent(user);
+    public List<StellenanzeigeDetail> getAnzeigenForStudent(Student student) {
         return StellenanzeigeDAO.getInstance().getStellenanzeigeforStudent(student);
 
     }

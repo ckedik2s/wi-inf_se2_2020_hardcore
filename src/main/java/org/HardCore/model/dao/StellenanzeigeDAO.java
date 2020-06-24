@@ -30,7 +30,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
+            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                     "FROM collhbrs.stellenanzeige " +
                     "WHERE id = \'" + user.getId() + "\'");
         } catch (SQLException e) {
@@ -54,6 +54,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
                 stellenanzeigeDetail.setBranche(rs.getString(6));
                 stellenanzeigeDetail.setStudiengang(rs.getString(7));
+                stellenanzeigeDetail.setOrt(rs.getString(8));
                 list.add(stellenanzeigeDetail);
             }
         } catch (SQLException e) {
@@ -65,8 +66,8 @@ public class StellenanzeigeDAO extends AbstractDAO {
 
     //Erstellt eine neue Stellenanzeige in der Datenbank
     public boolean createStellenanzeige(Stellenanzeige stellenanzeige, User user) {
-        String sql = "INSERT INTO collhbrs.stellenanzeige(id, beschreibung, art, name, zeitraum,branche, studiengang)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO collhbrs.stellenanzeige(id, beschreibung, art, name, zeitraum, branche, studiengang, ort)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = this.getPreparedStatement(sql);
 
@@ -78,6 +79,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
             statement.setObject(5, stellenanzeige.getZeitraum());
             statement.setString(6, stellenanzeige.getBranche());
             statement.setString(7, stellenanzeige.getStudiengang());
+            statement.setString(8, stellenanzeige.getOrt());
             statement.executeUpdate();
             return true;
 
@@ -90,7 +92,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
     //Verändert eine bestehende Stellenanzeige in der Datenbank
     public boolean updateStellenanzeige(Stellenanzeige stellenanzeige) {
         String sql = "UPDATE collhbrs.stellenanzeige " +
-                "SET beschreibung = ?, art = ?,  name = ?, zeitraum = ?, branche = ?, studiengang = ?  " +
+                "SET beschreibung = ?, art = ?,  name = ?, zeitraum = ?, branche = ?, studiengang = ?, ort = ?  " +
                 "WHERE collhbrs.stellenanzeige.id_anzeige = ? ;";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
@@ -100,7 +102,8 @@ public class StellenanzeigeDAO extends AbstractDAO {
             statement.setObject(4, stellenanzeige.getZeitraum());
             statement.setString(5, stellenanzeige.getBranche());
             statement.setString(6, stellenanzeige.getStudiengang());
-            statement.setInt(7, stellenanzeige.getId_anzeige());
+            statement.setString(7, stellenanzeige.getOrt());
+            statement.setInt(8, stellenanzeige.getId_anzeige());
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -128,7 +131,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
+            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                     "FROM collhbrs.stellenanzeige " +
                     "WHERE " + filter + " like \'%" + suchtext + "%\'");
         } catch (SQLException e) {
@@ -152,6 +155,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
                 stellenanzeigeDetail.setBranche(rs.getString(6));
                 stellenanzeigeDetail.setStudiengang(rs.getString(7));
+                stellenanzeigeDetail.setOrt(rs.getString(8));
                 list.add(stellenanzeigeDetail);
             }
         } catch (SQLException e) {
@@ -190,7 +194,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
 
         for (int id_anzeige : list) {
             try {
-                rs2 = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang " +
+                rs2 = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                         "FROM collhbrs.stellenanzeige " +
                         "WHERE id_anzeige = \'" + id_anzeige + "\'");
             } catch (SQLException e) {
@@ -209,6 +213,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                     stellenanzeigeDetail.setZeitraum(rs2.getDate(5).toLocalDate());
                     stellenanzeigeDetail.setBranche(rs2.getString(6));
                     stellenanzeigeDetail.setStudiengang(rs2.getString(7));
+                    stellenanzeigeDetail.setOrt(rs.getString(8));
                     listStellenanzeige.add(stellenanzeigeDetail);
                 }
             } catch (SQLException e) {
