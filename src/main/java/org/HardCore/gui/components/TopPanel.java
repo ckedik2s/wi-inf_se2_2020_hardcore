@@ -1,8 +1,13 @@
 package org.HardCore.gui.components;
 
+import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.MenuBar;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
@@ -11,19 +16,34 @@ import org.HardCore.process.control.LoginControl;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
+import java.awt.*;
+
 public class  TopPanel extends HorizontalLayout {
 
     public TopPanel() {
         this.setSizeFull();
 
         //Logo links oben in der Ecke
-        Button logo = new Button("HardCore-Logo");
-        logo.addClickListener(new Button.ClickListener() {
+        ThemeResource icon = new ThemeResource("logo_small.png");
+        Image logo = new Image(null, icon);
+        logo.setWidth("80");
+        //logo.setStyleName("different-cursor");
+        logo.addStyleName("pointer");
+        logo.addClickListener(new MouseEvents.ClickListener() {
+
             @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
+            public void click(MouseEvents.ClickEvent clickEvent) {
                 UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
             }
         });
+
+        //Button logo = new Button("HardCore-Logo");
+        //logo.addClickListener(new Button.ClickListener() {
+        //    @Override
+        //    public void buttonClick(Button.ClickEvent clickEvent) {
+        //        UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
+        //    }
+        //});
         this.addComponent(logo);
         this.setComponentAlignment(logo, Alignment.TOP_LEFT);
 
@@ -46,7 +66,7 @@ public class  TopPanel extends HorizontalLayout {
 
         //Menü rechts oben
         MenuBar bar = new MenuBar();
-        MenuBar.MenuItem item1 = bar.addItem("Menu", null);
+        MenuBar.MenuItem item1 = bar.addItem("Menu", VaadinIcons.MENU,null);
 
 
         //Gast Menü

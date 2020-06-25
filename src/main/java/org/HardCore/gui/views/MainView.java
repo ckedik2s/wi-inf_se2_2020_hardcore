@@ -1,6 +1,7 @@
 package org.HardCore.gui.views;
 
 import com.vaadin.data.HasValue;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.selection.SelectionEvent;
 import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.icons.VaadinIcons;
@@ -24,6 +25,8 @@ public class MainView extends VerticalLayout implements View {
     private List<StellenanzeigeDetail> list;
     private String suchtext;
 
+
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
@@ -34,6 +37,7 @@ public class MainView extends VerticalLayout implements View {
     }
 
     private void setUp() {
+
         User user = ( (MyUI)UI.getCurrent() ).getUser();
         //Top Layer
         this.addComponent( new TopPanel() );
@@ -66,6 +70,7 @@ public class MainView extends VerticalLayout implements View {
 
         //SearchButton
         Button searchButton = new Button("Suchen", VaadinIcons.SEARCH);
+        searchButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         //Combobox
         final ComboBox<String> comboBox = new ComboBox<>();
@@ -84,6 +89,7 @@ public class MainView extends VerticalLayout implements View {
 
         //Suchfeld
         final TextField search = new TextField();
+        search.setWidth("300");
         search.addValueChangeListener(new HasValue.ValueChangeListener<String>() {
             @Override
             public void valueChange(HasValue.ValueChangeEvent<String> valueChangeEvent) {
