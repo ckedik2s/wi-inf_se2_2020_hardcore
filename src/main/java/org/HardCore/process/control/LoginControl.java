@@ -14,7 +14,6 @@ import org.HardCore.services.util.Views;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 
 public class LoginControl {
     private static LoginControl loginControl = null;
