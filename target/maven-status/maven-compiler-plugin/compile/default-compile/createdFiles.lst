@@ -22,13 +22,14 @@ org\HardCore\gui\views\MainView.class
 org\HardCore\services\util\Views.class
 org\HardCore\gui\views\RegistrationView$1.class
 org\HardCore\gui\views\StellenanzeigeView$2.class
+org\HardCore\gui\windows\StellenanzeigeWindow$1.class
 org\HardCore\model\objects\dto\Role.class
 org\HardCore\gui\views\StellenanzeigeView.class
+org\HardCore\gui\windows\StellenanzeigeWindow.class
 org\HardCore\model\factory\StellenanzeigeFactory.class
 org\HardCore\gui\views\RegistrationView$3.class
 org\HardCore\gui\windows\DeleteStellenanzeigeWindowStudent$1.class
 org\HardCore\gui\windows\DeleteStellenanzeigeWindow.class
-org\HardCore\gui\windows\UpdateStellenanzeigeWindow$1.class
 org\HardCore\process\control\ProfileControl.class
 org\HardCore\gui\windows\ConfirmationWindow$1.class
 org\HardCore\gui\views\ProfileView$2.class
@@ -38,6 +39,7 @@ org\HardCore\process\control\exceptions\DatabaseException.class
 org\HardCore\gui\components\TopPanel$7.class
 org\HardCore\gui\views\LoginView.class
 org\HardCore\gui\windows\ConfirmationWindow.class
+org\HardCore\gui\windows\StellenanzeigeWindow$2.class
 org\HardCore\gui\components\TopPanel$3.class
 org\HardCore\model\dao\RegisterDAO.class
 org\HardCore\gui\views\BewerbungView.class
@@ -53,7 +55,6 @@ org\HardCore\gui\windows\DeleteStellenanzeigeWindowStudent.class
 org\HardCore\gui\windows\DeleteStellenanzeigeWindowStudent$2.class
 org\HardCore\gui\components\TopPanel$6.class
 org\HardCore\gui\views\RegistrationView.class
-org\HardCore\gui\windows\UpdateStellenanzeigeWindow$2.class
 org\HardCore\process\control\exceptions\NoEqualPasswordException.class
 org\HardCore\gui\views\ProfileView$1.class
 org\HardCore\services\db\JDBCConnection.class
@@ -62,6 +63,7 @@ org\HardCore\gui\views\MainView$2.class
 org\HardCore\gui\views\StellenanzeigeView$3.class
 org\HardCore\model\dao\BewerbungDAO.class
 org\HardCore\gui\ui\MyUI$MyUIServlet.class
+org\HardCore\process\control\BewerbungControl.class
 org\HardCore\gui\windows\DeleteProfileWindow$1.class
 org\HardCore\process\control\StellenanzeigeControl.class
 org\HardCore\gui\ui\MyUI.class
@@ -75,4 +77,3 @@ org\HardCore\gui\components\TopPanel$2.class
 org\HardCore\gui\views\RegistrationView$2.class
 org\HardCore\model\dao\UnternehmenDAO.class
 org\HardCore\gui\windows\DeleteStellenanzeigeWindow$2.class
-org\HardCore\gui\windows\UpdateStellenanzeigeWindow.class

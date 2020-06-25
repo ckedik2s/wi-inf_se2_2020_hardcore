@@ -9,11 +9,9 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
 import org.HardCore.gui.windows.DeleteStellenanzeigeWindowStudent;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.SearchControl;
+import org.HardCore.model.objects.dto.Student;
 import org.HardCore.process.control.StellenanzeigeControl;
 
 import java.util.List;
@@ -26,12 +24,12 @@ public class BewerbungView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
+        Student student = new Student( ( (MyUI) UI.getCurrent() ).getUser() );
 
-        this.setUp(user);
+        this.setUp(student);
     }
 
-    private void setUp(User user) {
+    private void setUp(Student student) {
 
         //Top Layer
         this.addComponent( new TopPanel() );
@@ -46,13 +44,14 @@ public class BewerbungView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = SearchControl.getInstance().getAnzeigeForStudent();
+        list = StellenanzeigeControl.getInstance().getAnzeigenForStudent(student);
         grid.removeAllColumns();
         grid.setItems(list);
         grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
         grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
         grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
         grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
+        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
         grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
 
         //DeleteButton
@@ -63,7 +62,8 @@ public class BewerbungView extends VerticalLayout implements View {
         grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
             @Override
             public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
-                if (selection == null) {
+                if (selection.getValue() == null) {
+                    deleteButton.setEnabled(false);
                     return;
                 }
                 else {
@@ -81,7 +81,7 @@ public class BewerbungView extends VerticalLayout implements View {
                 UI.getCurrent().addWindow(window);
                 deleteButton.setEnabled(false);
                 grid.setItems();
-                list = StellenanzeigeControl.getInstance().getAnzeigenForStudent();
+                list = StellenanzeigeControl.getInstance().getAnzeigenForStudent(student);
                 try {
                     grid.setItems(list);
                 } catch (Exception e) {

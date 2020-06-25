@@ -1,7 +1,9 @@
 package org.HardCore.model.dao;
 
 import org.HardCore.model.objects.dto.Bewerbung;
+import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.Student;
+import org.HardCore.model.objects.dto.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,7 +53,7 @@ public class BewerbungDAO extends AbstractDAO {
     }
 
     public boolean setBewerbung(String text, Student student) {
-        String sql = "INSERT INTO collhbrs.anzeige (id, freitext) " +
+        String sql = "INSERT INTO collhbrs.bewerbung (id, freitext) " +
                 "VALUES (?, ?); ";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
@@ -74,6 +76,38 @@ public class BewerbungDAO extends AbstractDAO {
             statement.setInt(1, id_anzeige);
             statement.executeUpdate();
             return true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean sendBewerbung(StellenanzeigeDetail stellenanzeige, User user) {
+        String sql = "INSERT into collhbrs.bewerbung_to_stellenanzeige (id_student, id_stellenanzeige) " +
+                "VALUES (?, ?);";
+        PreparedStatement statement = this.getPreparedStatement(sql);
+        try {
+            statement.setInt(1, stellenanzeige.getId());
+            statement.setInt(2, user.getId());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean applyingIsAllowed() {
+        String sql = "SELECT sichtbar " +
+                "FROM collhbrs.stellenanzeige_on_off " +
+                "WHERE zeile = ? ;";
+        PreparedStatement statement = this.getPreparedStatement(sql);
+        ResultSet rs = null;
+        try {
+            statement.setInt(1, 1);
+            rs = statement.executeQuery();
+            return rs.getBoolean(1);
 
         } catch (SQLException ex) {
             Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
