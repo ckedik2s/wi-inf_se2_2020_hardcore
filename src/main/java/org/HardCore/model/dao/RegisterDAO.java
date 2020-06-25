@@ -67,18 +67,18 @@ public class RegisterDAO extends AbstractDAO {
 
             //Lösche Student
             if (user.hasRole("Student")) {
-            statement.execute("DELETE " +
+                statement.execute("DELETE " +
                         "FROM collhbrs.student s " +
                         "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
                         "WHERE u.id = \'" + user.getId() + "\' AND u.id = s.id AND u.id = utr.id;");
             }
             //Lösche Unternehmen
             if (user.hasRole("Unternehmen")) {
-            statement.execute(
-                    "DELETE " +
-                            "FROM collhbrs.unternehmen un " +
-                            "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
-                            "WHERE u.id = \'" + user.getId() + "\' AND u.id = un.id AND u.id = utr.id;");
+                statement.execute(
+                        "DELETE " +
+                                "FROM collhbrs.unternehmen un " +
+                                "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
+                                "WHERE u.id = \'" + user.getId() + "\' AND u.id = un.id AND u.id = utr.id;");
             }
             //Lösche USER-To-Rolle Eintrag
             statement.execute("DELETE " +
@@ -88,10 +88,9 @@ public class RegisterDAO extends AbstractDAO {
                     "FROM collhbrs.user u " +
                     "WHERE u.id = \'" + user.getId() + "\';");
 
-            System.out.println("Löschen erfolgreich");
+
         } catch (SQLException ex) {
             Logger.getLogger((RegisterDAO.class.getName())).log(Level.SEVERE, null, ex);
-            System.out.println("Löschen nicht erfolgreich");
         }
     }
 }
