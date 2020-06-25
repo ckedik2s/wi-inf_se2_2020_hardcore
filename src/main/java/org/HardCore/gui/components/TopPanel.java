@@ -26,9 +26,7 @@ public class  TopPanel extends HorizontalLayout {
         //Logo links oben in der Ecke
         ThemeResource icon = new ThemeResource("logo_small.png");
         Image logo = new Image(null, icon);
-        logo.setWidth("80");
-        //logo.setStyleName("different-cursor");
-        logo.addStyleName("pointer");
+        logo.setWidth("150");
         logo.addClickListener(new MouseEvents.ClickListener() {
 
             @Override
@@ -36,14 +34,6 @@ public class  TopPanel extends HorizontalLayout {
                 UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
             }
         });
-
-        //Button logo = new Button("HardCore-Logo");
-        //logo.addClickListener(new Button.ClickListener() {
-        //    @Override
-        //    public void buttonClick(Button.ClickEvent clickEvent) {
-        //        UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
-        //    }
-        //});
         this.addComponent(logo);
         this.setComponentAlignment(logo, Alignment.TOP_LEFT);
 
@@ -125,7 +115,7 @@ public class  TopPanel extends HorizontalLayout {
         //Einfügen
         hlayout.addComponent(bar);
         this.addComponent(hlayout);
-        this.setComponentAlignment(hlayout, Alignment.TOP_RIGHT);
+        this.setComponentAlignment(hlayout, Alignment.BOTTOM_RIGHT);
     }
 
 }
