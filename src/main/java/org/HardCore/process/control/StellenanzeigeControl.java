@@ -2,25 +2,24 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.dao.StellenanzeigeDAO;
 import org.HardCore.model.factory.StellenanzeigeFactory;
-import org.HardCore.model.objects.dto.*;
+import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.model.objects.entities.Stellenanzeige;
-import org.HardCore.process.control.exceptions.BewerbungException;
-import org.HardCore.process.control.exceptions.DatabaseException;
-import org.HardCore.process.control.exceptions.NoSuchUserOrPassword;
+import org.HardCore.process.Interfaces.StellenanzeigeControlInterface;
+import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.StellenanzeigeException;
 import org.HardCore.services.db.JDBCConnection;
-import org.HardCore.services.util.Roles;
-import org.HardCore.services.util.Views;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-public class StellenanzeigeControl {
+public class StellenanzeigeControl implements StellenanzeigeControlInterface {
     private static StellenanzeigeControl search = null;
 
     public static StellenanzeigeControl getInstance() {
@@ -34,29 +33,41 @@ public class StellenanzeigeControl {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(Unternehmen unternehmen) {
-        return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(unternehmen);
+    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) {
+        return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(unternehmenDTO);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForStudent(Student student) {
-        return StellenanzeigeDAO.getInstance().getStellenanzeigeforStudent(student);
+    public List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) {
+        return StellenanzeigeDAO.getInstance().getStellenanzeigeforStudent(studentDTO);
 
     }
-    public boolean createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail){
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
-        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, user);
-        return StellenanzeigeDAO.getInstance().createStellenanzeige(stellenanzeige, user);
+    public void createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {
+        UserDTO userDTO = ( (MyUI) UI.getCurrent() ).getUserDTO();
+        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, userDTO);
+        boolean result = StellenanzeigeDAO.getInstance().createStellenanzeige(stellenanzeige, userDTO);
+        if (result) {
+            return;
+        }
+        throw new StellenanzeigeException();
     }
-    public boolean updateStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) {
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
-        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, user);
-        return StellenanzeigeDAO.getInstance().updateStellenanzeige(stellenanzeige);
+    public void updateStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {
+        UserDTO userDTO = ( (MyUI) UI.getCurrent() ).getUserDTO();
+        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, userDTO);
+        boolean result = StellenanzeigeDAO.getInstance().updateStellenanzeige(stellenanzeige);
+        if (result) {
+            return;
+        }
+        throw new StellenanzeigeException();
     }
 
-    public boolean deleteStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) {
-        User user = ( (MyUI) UI.getCurrent() ).getUser();
-        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, user);
-        return StellenanzeigeDAO.getInstance().deleteStellenanzeige(stellenanzeige);
+    public void deleteStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {
+        UserDTO userDTO = ( (MyUI) UI.getCurrent() ).getUserDTO();
+        Stellenanzeige stellenanzeige = StellenanzeigeFactory.createStellenanzeige(stellenanzeigeDetail, userDTO);
+        boolean result =  StellenanzeigeDAO.getInstance().deleteStellenanzeige(stellenanzeige);
+        if (result) {
+            return;
+        }
+        throw new StellenanzeigeException();
     }
 
     public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) {

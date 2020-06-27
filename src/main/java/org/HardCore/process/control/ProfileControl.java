@@ -3,14 +3,17 @@ package org.HardCore.process.control;
 import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.dao.StudentDAO;
 import org.HardCore.model.dao.UnternehmenDAO;
-import org.HardCore.model.objects.dto.Bewerbung;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.BewerbungDTO;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.Interfaces.ProfileControlInterface;
+import org.HardCore.process.exceptions.ProfileException;
+import org.HardCore.process.exceptions.StellenanzeigeException;
 
 import java.util.List;
 
-public class ProfileControl {
+public class ProfileControl implements ProfileControlInterface {
     private static ProfileControl profileControl = null;
 
     private ProfileControl() {
@@ -24,27 +27,39 @@ public class ProfileControl {
     }
 
 
-    public boolean updateStudentData(Student student) {
-        return StudentDAO.getInstance().updateStudent(student);
+    public void updateStudentData(StudentDTO studentDTO) throws ProfileException {
+        boolean result =  StudentDAO.getInstance().updateStudent(studentDTO);
+        if (result) {
+            return;
+        }
+        throw new ProfileException();
     }
 
-    public boolean updateUnternehmenData(Unternehmen unternehmen) {
-        return UnternehmenDAO.getInstance().updateUnternehmen(unternehmen);
+    public void updateUnternehmenData(UnternehmenDTO unternehmenDTO) throws ProfileException {
+        boolean result = UnternehmenDAO.getInstance().updateUnternehmen(unternehmenDTO);
+        if (result) {
+            return;
+        }
+        throw new ProfileException();
     }
 
-    public Student getStudent(User user) {
-        return StudentDAO.getInstance().getAllDataStudent(user);
+    public StudentDTO getStudent(UserDTO userDTO) {
+        return StudentDAO.getInstance().getAllDataStudent(userDTO);
     }
 
-    public Unternehmen getUnternehmen(User user) {
-        return UnternehmenDAO.getInstance().getAllDataUnternehmen(user);
+    public UnternehmenDTO getUnternehmen(UserDTO userDTO) {
+        return UnternehmenDAO.getInstance().getAllDataUnternehmen(userDTO);
     }
 
-    public boolean setBewerbung(String text, Student student) {
-        return BewerbungDAO.getInstance().createBewerbung(text, student);
+    public void setBewerbung(String text, StudentDTO studentDTO) throws ProfileException {
+        boolean result =  BewerbungDAO.getInstance().createBewerbung(text, studentDTO);
+        if (result) {
+            return;
+        }
+        throw new ProfileException();
     }
 
-    public List<Bewerbung> getBewerbung(Student student) {
-        return BewerbungDAO.getInstance().getBewerbungenForStudent(student);
+    public List<BewerbungDTO> getBewerbung(StudentDTO studentDTO) {
+        return BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
     }
 }

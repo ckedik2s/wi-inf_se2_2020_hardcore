@@ -2,14 +2,14 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.BewerbungControl;
-import org.HardCore.process.control.exceptions.BewerbungException;
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.proxy.BewerbungControlProxy;
+import org.HardCore.process.exceptions.BewerbungException;
+import org.HardCore.process.exceptions.DatabaseException;
 
 public class FreitextWindow extends Window {
 
-    public FreitextWindow(StellenanzeigeDetail stellenanzeige, User user) {
+    public FreitextWindow(StellenanzeigeDetail stellenanzeige, UserDTO userDTO) {
         super(stellenanzeige.getName());
         center();
 
@@ -25,9 +25,9 @@ public class FreitextWindow extends Window {
                 String bewerbungstext = bewerbung.getValue();
 
                 try {
-                    BewerbungControl.getInstance().createBewerbung(bewerbungstext, user);
-                    int id_bewerbung = BewerbungControl.getInstance().getLatestApply(user);
-                    BewerbungControl.getInstance().applyForStellenanzeige(stellenanzeige, id_bewerbung);
+                    BewerbungControlProxy.getInstance().createBewerbung(bewerbungstext, userDTO);
+                    int id_bewerbung = BewerbungControlProxy.getInstance().getLatestApply(userDTO);
+                    BewerbungControlProxy.getInstance().applyForStellenanzeige(stellenanzeige, id_bewerbung);
                 }
                 catch (DatabaseException db) {
                     Notification.show("Es ist ein Fehler bei der Bewerbung aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);

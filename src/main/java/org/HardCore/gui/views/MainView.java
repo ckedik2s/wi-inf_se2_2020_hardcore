@@ -14,8 +14,8 @@ import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.SearchControl;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.proxy.SearchControlProxy;
 
 import java.util.List;
 
@@ -31,13 +31,13 @@ public class MainView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         //User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
-        User user = ( (MyUI)UI.getCurrent() ).getUser();
+        UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
 
         this.setUp();
     }
 
     private void setUp() {
-        User user = ( (MyUI)UI.getCurrent() ).getUser();
+        UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
         //Top Layer
         this.addComponent( new TopPanel() );
         Label line = new Label("<hr>", ContentMode.HTML);
@@ -63,7 +63,7 @@ public class MainView extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 selektiert = selection.getValue();
-                UI.getCurrent().addWindow( new StellenanzeigeWindow(selektiert, user) );
+                UI.getCurrent().addWindow( new StellenanzeigeWindow(selektiert, userDTO) );
             }
         });
 
@@ -121,7 +121,7 @@ public class MainView extends VerticalLayout implements View {
         if (search.getValue().length() > 1) {
             suchtext = search.getValue();
             String filter = comboBox.getValue();
-            list = SearchControl.getInstance().getAnzeigenForSearch(suchtext, filter);
+            list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, filter);
             grid.setItems();
             grid.setItems(list);
             addComponent(grid);

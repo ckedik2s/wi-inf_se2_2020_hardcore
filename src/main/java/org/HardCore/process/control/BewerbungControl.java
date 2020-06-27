@@ -2,24 +2,24 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.Button;
 import org.HardCore.model.dao.BewerbungDAO;
-import org.HardCore.model.objects.dto.Bewerbung;
+import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.exceptions.BewerbungException;
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.Interfaces.BewerbungControlInterface;
+import org.HardCore.process.exceptions.BewerbungException;
+import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BewerbungControl {
+public class BewerbungControl implements BewerbungControlInterface {
     private static BewerbungControl bewerbungControl = null;
 
     private BewerbungControl() {
@@ -33,7 +33,7 @@ public class BewerbungControl {
         return bewerbungControl;
     }
 
-    public int getLatestApply(User user) throws DatabaseException {
+    public int getLatestApply(UserDTO userDTO) throws DatabaseException {
         int id_bewerbung = 0;
         String sql = "SELECT max(id_bewerbung) " +
                 "FROM collhbrs.bewerbung " +
@@ -41,7 +41,7 @@ public class BewerbungControl {
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
         try {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDTO.getId());
             rs = statement.executeQuery();
             if (rs == null) {
                 return id_bewerbung;
@@ -68,7 +68,7 @@ public class BewerbungControl {
         }
     }
 
-    private void applyingIsAllowed() throws DatabaseException, BewerbungException {
+    public void applyingIsAllowed() throws DatabaseException, BewerbungException {
         String sql = "SELECT sichtbar " +
                 "FROM collhbrs.stellenanzeige_on_off";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
@@ -89,17 +89,17 @@ public class BewerbungControl {
         }
     }
 
-    private void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, User user) throws BewerbungException, DatabaseException {
-        Student student = new Student(user);
-        List<Bewerbung> list = BewerbungDAO.getInstance().getBewerbungenForStudent(student);
+    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException {
+        StudentDTO studentDTO = new StudentDTO(userDTO);
+        List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         String sql = "SELECT id_anzeige " +
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
                 "WHERE id_bewerbung = ? " +
                 "AND id_anzeige = ?";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
-        for (Bewerbung bewerbung : list) {
-            int id_bewerbung = bewerbung.getId();
+        for (BewerbungDTO bewerbungDTO : list) {
+            int id_bewerbung = bewerbungDTO.getId();
             try {
                 statement.setInt(1, id_bewerbung);
                 statement.setInt(2, stellenanzeigeDetail.getId_anzeige());
@@ -116,30 +116,30 @@ public class BewerbungControl {
         }
 
     }
-    public void checkAllowed(StellenanzeigeDetail stellenanzeige, User user, Button bewerbenButton) {
+    public void checkAllowed(StellenanzeigeDetail stellenanzeige, UserDTO userDTO, Button bewerbenButton) {
         try {
             applyingIsAllowed();
-            checkAlreadyApplied(stellenanzeige, user);
+            checkAlreadyApplied(stellenanzeige, userDTO);
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (BewerbungException e) {
             bewerbenButton.setVisible(false);
         }
-        if (user == null || !user.hasRole(Roles.STUDENT)) {
+        if (userDTO == null || !userDTO.hasRole(Roles.STUDENT)) {
             bewerbenButton.setVisible(false);
         }
     }
 
-    public void createBewerbung(String bewerbungstext, User user) throws BewerbungException {
-        Student student = new Student(user);
-        boolean result = BewerbungDAO.getInstance().createBewerbung(bewerbungstext, student);
+    public void createBewerbung(String bewerbungstext, UserDTO userDTO) throws BewerbungException {
+        StudentDTO studentDTO = new StudentDTO(userDTO);
+        boolean result = BewerbungDAO.getInstance().createBewerbung(bewerbungstext, studentDTO);
         if (result == false) {
             throw new BewerbungException();
         }
     }
 
-    public Bewerbung getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, Student student) {
-        List<Bewerbung> list = getBewerbungenForStudent(student);
+    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) {
+        List<BewerbungDTO> list = getBewerbungenForStudent(studentDTO);
         String sql = "SELECT id_bewerbung " +
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
                 "WHERE id_anzeige = ? " +
@@ -151,13 +151,13 @@ public class BewerbungControl {
             e.printStackTrace();
         }
         ResultSet rs = null;
-        for (Bewerbung bewerbung : list) {
+        for (BewerbungDTO bewerbungDTO : list) {
             try {
                 statement.setInt(1, selektiert.getId_anzeige());
-                statement.setInt(2, bewerbung.getId());
+                statement.setInt(2, bewerbungDTO.getId());
                 rs = statement.executeQuery();
                 if ( rs.next() ) {
-                    return bewerbung;
+                    return bewerbungDTO;
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -166,12 +166,12 @@ public class BewerbungControl {
         return null;
     }
 
-    public List<Bewerbung> getBewerbungenForStudent(Student student) {
-        return BewerbungDAO.getInstance().getBewerbungenForStudent(student);
+    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+        return BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
     }
 
-    public void deleteBewerbung(Bewerbung bewerbung) throws BewerbungException {
-        boolean result = BewerbungDAO.getInstance().deleteBewerbung(bewerbung);
+    public void deleteBewerbung(BewerbungDTO bewerbungDTO) throws BewerbungException {
+        boolean result = BewerbungDAO.getInstance().deleteBewerbung(bewerbungDTO);
         if (result) {
             return;
         }

@@ -1,8 +1,8 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.Bewerbung;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.model.objects.dto.BewerbungDTO;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 
 import java.sql.PreparedStatement;
@@ -28,48 +28,48 @@ public class BewerbungDAO extends AbstractDAO {
         return bewerbungDAO;
     }
 
-    public Bewerbung getBewerbung(int id_bewerbung) throws DatabaseException {
+    public BewerbungDTO getBewerbung(int id_bewerbung) throws DatabaseException {
         String sql = "SELECT id_bewerbung, freitext " +
                 "FROM collhbrs.bewerbung " +
                 "WHERE id_bewerbung = ?";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
-        Bewerbung bewerbung = null;
+        BewerbungDTO bewerbungDTO = null;
         try {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
             if( rs.next() ) {
-                bewerbung = new Bewerbung();
-                bewerbung.setId(id_bewerbung);
-                bewerbung.setFreitext(rs.getString(2));
+                bewerbungDTO = new BewerbungDTO();
+                bewerbungDTO.setId(id_bewerbung);
+                bewerbungDTO.setFreitext(rs.getString(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return bewerbung;
+        return bewerbungDTO;
     }
 
-    public List<Bewerbung> getBewerbungenForStudent(Student student) {
-        List<Bewerbung> list = new ArrayList<>();
+    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+        List<BewerbungDTO> list = new ArrayList<>();
         Statement statement = getStatement();
         ResultSet rs = null;
         try {
             rs = statement.executeQuery("SELECT id_bewerbung, freitext " +
                     "FROM collhbrs.bewerbung " +
-                    "WHERE id =\'" + student.getId() + "\';");
+                    "WHERE id =\'" + studentDTO.getId() + "\';");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         if (rs == null) {
             return null;
         }
-        Bewerbung bewerbung = null;
+        BewerbungDTO bewerbungDTO = null;
         try {
             while (rs.next()) {
-                bewerbung = new Bewerbung();
-                bewerbung.setId(rs.getInt(1));
-                bewerbung.setFreitext(rs.getString(2));
-                list.add(bewerbung);
+                bewerbungDTO = new BewerbungDTO();
+                bewerbungDTO.setId(rs.getInt(1));
+                bewerbungDTO.setFreitext(rs.getString(2));
+                list.add(bewerbungDTO);
 
             }
         } catch (SQLException ex) {
@@ -78,12 +78,12 @@ public class BewerbungDAO extends AbstractDAO {
         return list;
     }
 
-    public boolean createBewerbung(String text, Student student) {
+    public boolean createBewerbung(String text, StudentDTO studentDTO) {
         String sql = "INSERT INTO collhbrs.bewerbung (id, freitext) " +
                 "VALUES (?, ?); ";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setInt(1, student.getId());
+            statement.setInt(1, studentDTO.getId());
             statement.setString(2, text);
             statement.executeUpdate();
             return true;
@@ -93,13 +93,13 @@ public class BewerbungDAO extends AbstractDAO {
 
     }
 
-    public boolean deleteBewerbung(Bewerbung bewerbung) {
+    public boolean deleteBewerbung(BewerbungDTO bewerbungDTO) {
         String sql = "DELETE " +
                 "FROM collhbrs.bewerbung " +
                 "WHERE id_bewerbung = ?";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setInt(1, bewerbung.getId());
+            statement.setInt(1, bewerbungDTO.getId());
             statement.executeUpdate();
             return true;
 

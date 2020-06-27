@@ -1,8 +1,10 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.UserDTO;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,13 +23,13 @@ public class RegisterDAO extends AbstractDAO {
         return dao;
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.user VALUES (default,?,?)";
         PreparedStatement statement = this.getPreparedStatement(sql);
 
         try {
-            statement.setString(1, user.getEmail());
-            statement.setString(2, user.getPassword());
+            statement.setString(1, userDTO.getEmail());
+            statement.setString(2, userDTO.getPassword());
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -35,12 +37,12 @@ public class RegisterDAO extends AbstractDAO {
         }
     }
 
-    public boolean addStudent(User user) {
+    public boolean addStudent(UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.student(id) VALUES (?)";
         PreparedStatement statement = this.getPreparedStatement(sql);
 
         try {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDTO.getId());
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -48,12 +50,12 @@ public class RegisterDAO extends AbstractDAO {
         }
     }
 
-    public boolean addUnternehmen(User user) {
+    public boolean addUnternehmen(UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.unternehmen(id) VALUES (?)";
         PreparedStatement statement = this.getPreparedStatement(sql);
 
         try {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDTO.getId());
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -61,32 +63,32 @@ public class RegisterDAO extends AbstractDAO {
         }
     }
 
-    public void deleteUser(User user) {
+    public void deleteUser(UserDTO userDTO) {
         Statement statement = this.getStatement();
         try {
 
             //Lösche Student
-            if (user.hasRole("Student")) {
+            if (userDTO.hasRole("Student")) {
             statement.execute("DELETE " +
                         "FROM collhbrs.student s " +
                         "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
-                        "WHERE u.id = \'" + user.getId() + "\' AND u.id = s.id AND u.id = utr.id;");
+                        "WHERE u.id = \'" + userDTO.getId() + "\' AND u.id = s.id AND u.id = utr.id;");
             }
             //Lösche Unternehmen
-            if (user.hasRole("Unternehmen")) {
+            if (userDTO.hasRole("Unternehmen")) {
             statement.execute(
                     "DELETE " +
                             "FROM collhbrs.unternehmen un " +
                             "USING collhbrs.user u, collhbrs.user_to_rolle utr " +
-                            "WHERE u.id = \'" + user.getId() + "\' AND u.id = un.id AND u.id = utr.id;");
+                            "WHERE u.id = \'" + userDTO.getId() + "\' AND u.id = un.id AND u.id = utr.id;");
             }
             //Lösche USER-To-Rolle Eintrag
             statement.execute("DELETE " +
-                    "FROM collhbrs.user_to_rolle utr " + "WHERE utr.id =\'" + user.getId() + "\';");
+                    "FROM collhbrs.user_to_rolle utr " + "WHERE utr.id =\'" + userDTO.getId() + "\';");
             //Lösche User
             statement.execute("DELETE " +
                     "FROM collhbrs.user u " +
-                    "WHERE u.id = \'" + user.getId() + "\';");
+                    "WHERE u.id = \'" + userDTO.getId() + "\';");
 
             System.out.println("Löschen erfolgreich");
         } catch (SQLException ex) {

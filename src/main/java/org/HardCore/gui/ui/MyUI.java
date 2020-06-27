@@ -1,7 +1,5 @@
 package org.HardCore.gui.ui;
 
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -9,12 +7,13 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.HardCore.gui.views.*;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.services.util.Views;
+
+import javax.servlet.annotation.WebServlet;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -27,14 +26,14 @@ import org.HardCore.services.util.Views;
 @Title("HardCore")
 @PreserveOnRefresh
 public class MyUI extends UI {
-    private User user= null;
+    private UserDTO userDTO = null;
 
-    public User getUser() {
-        return user;
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     @Override

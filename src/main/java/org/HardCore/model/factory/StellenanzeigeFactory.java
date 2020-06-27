@@ -1,14 +1,14 @@
 package org.HardCore.model.factory;
 
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.model.objects.entities.Stellenanzeige;
 
 import java.sql.Date;
 
 public class StellenanzeigeFactory {
 
-    public static Stellenanzeige createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail, User user) {
+    public static Stellenanzeige createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) {
         Stellenanzeige stellenanzeige = new Stellenanzeige();
 
         stellenanzeige.setId(stellenanzeigeDetail.getId());

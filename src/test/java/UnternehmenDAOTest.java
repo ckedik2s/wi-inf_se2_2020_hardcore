@@ -1,11 +1,11 @@
 import org.HardCore.model.dao.UnternehmenDAO;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
 public class UnternehmenDAOTest {
 
     private static UnternehmenDAO uDAO;
-    private User user;
+    private UserDTO userDTO;
     private Object un;
 
     @Test

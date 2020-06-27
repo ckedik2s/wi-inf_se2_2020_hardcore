@@ -1,9 +1,5 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.services.util.Roles;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

@@ -1,12 +1,12 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.Bewerbung;
+import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.model.objects.entities.Stellenanzeige;
-import org.HardCore.process.control.StellenanzeigeControl;
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.process.proxy.StellenanzeigeControlProxy;
+import org.HardCore.process.exceptions.DatabaseException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,14 +28,14 @@ public class StellenanzeigeDAO extends AbstractDAO {
         return dao;
     }
 
-    public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(User user) {
+    public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(UserDTO userDTO) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
 
         try {
             rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                     "FROM collhbrs.stellenanzeige " +
-                    "WHERE id = \'" + user.getId() + "\'");
+                    "WHERE id = \'" + userDTO.getId() + "\'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 stellenanzeigeDetail.setStudiengang(rs.getString(7));
                 stellenanzeigeDetail.setOrt(rs.getString(8));
                 try {
-                    stellenanzeigeDetail.setAnzahl_bewerber(StellenanzeigeControl.getInstance().getAnzahlBewerber(stellenanzeigeDetail));
+                    stellenanzeigeDetail.setAnzahl_bewerber(StellenanzeigeControlProxy.getInstance().getAnzahlBewerber(stellenanzeigeDetail));
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                 }
@@ -73,14 +73,14 @@ public class StellenanzeigeDAO extends AbstractDAO {
 
 
     //Erstellt eine neue Stellenanzeige in der Datenbank
-    public boolean createStellenanzeige(Stellenanzeige stellenanzeige, User user) {
+    public boolean createStellenanzeige(Stellenanzeige stellenanzeige, UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.stellenanzeige(id, beschreibung, art, name, zeitraum, branche, studiengang, ort)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = this.getPreparedStatement(sql);
 
         try {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDTO.getId());
             statement.setString(2, stellenanzeige.getBeschreibung());
             statement.setString(3, stellenanzeige.getArt());
             statement.setString(4, stellenanzeige.getName());
@@ -173,14 +173,14 @@ public class StellenanzeigeDAO extends AbstractDAO {
     }
 
     //Zeigt alle Stellenanzeigen an, auf die sich ein Student beworben hat
-    public List<StellenanzeigeDetail> getStellenanzeigeforStudent(Student student) {
+    public List<StellenanzeigeDetail> getStellenanzeigeforStudent(StudentDTO studentDTO) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
-        List<Bewerbung> list = BewerbungDAO.getInstance().getBewerbungenForStudent(student);
+        List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
         StellenanzeigeDetail stellenanzeigeDetail = null;
-        for (Bewerbung bewerbung : list) {
-            int id_bewerbung = bewerbung.getId();
+        for (BewerbungDTO bewerbungDTO : list) {
+            int id_bewerbung = bewerbungDTO.getId();
             try {
                 rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                         "FROM collhbrs.stellenanzeige " +

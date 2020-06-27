@@ -6,11 +6,12 @@ import org.HardCore.gui.windows.ConfirmationWindow;
 import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.dao.RoleDAO;
 import org.HardCore.model.dao.UserDAO;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.exceptions.DatabaseException;
-import org.HardCore.process.control.exceptions.EmailInUseException;
-import org.HardCore.process.control.exceptions.EmptyFieldException;
-import org.HardCore.process.control.exceptions.NoEqualPasswordException;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.Interfaces.RegistrationControlInterface;
+import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.EmailInUseException;
+import org.HardCore.process.exceptions.EmptyFieldException;
+import org.HardCore.process.exceptions.NoEqualPasswordException;
 import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
@@ -19,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class RegistrationControl {
+public class RegistrationControl implements RegistrationControlInterface {
 
     private static RegistrationControl registration = null;
     private RegistrationControl(){
@@ -68,23 +69,23 @@ public class RegistrationControl {
 
     //User registrieren
     public void registerUser( String email, String password, String regAs ) throws DatabaseException {
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        boolean registerUser = RegisterDAO.getInstance().addUser(user);
-        user.setId(UserDAO.getInstance().getMaxID());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(email);
+        userDTO.setPassword(password);
+        boolean registerUser = RegisterDAO.getInstance().addUser(userDTO);
+        userDTO.setId(UserDAO.getInstance().getMaxID());
 
         if (regAs.equals(Roles.STUDENT)) {
-            registerUser = RegisterDAO.getInstance().addStudent(user);
-            registerUser = RoleDAO.getInstance().setRolesForStudent(user);
+            registerUser = RegisterDAO.getInstance().addStudent(userDTO);
+            registerUser = RoleDAO.getInstance().setRolesForStudent(userDTO);
         } else {
-            registerUser = RegisterDAO.getInstance().addUnternehmen(user);
-            registerUser = RoleDAO.getInstance().setRolesForUnternehmen(user);
+            registerUser = RegisterDAO.getInstance().addUnternehmen(userDTO);
+            registerUser = RoleDAO.getInstance().setRolesForUnternehmen(userDTO);
         }
 
         if (registerUser == true) {
             UI.getCurrent().addWindow( new ConfirmationWindow("Registration erfolgreich!") );
-            ( (MyUI)UI.getCurrent() ).setUser(user);
+            ( (MyUI)UI.getCurrent() ).setUserDTO(userDTO);
             UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
         } else {
             throw new DatabaseException("Fehler bei Abschluß der Registration");
@@ -93,7 +94,7 @@ public class RegistrationControl {
     }
 
     //User Löschen
-    public void deleteUser(User user){
-        RegisterDAO.getInstance().deleteUser(user);
+    public void deleteUser(UserDTO userDTO){
+        RegisterDAO.getInstance().deleteUser(userDTO);
     }
 }

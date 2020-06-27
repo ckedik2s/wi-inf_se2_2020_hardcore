@@ -1,6 +1,6 @@
 package org.HardCore.services.db;
 
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.DatabaseException;
 
 import java.sql.*;
 import java.util.Properties;

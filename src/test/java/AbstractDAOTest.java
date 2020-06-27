@@ -1,7 +1,6 @@
 import org.HardCore.model.dao.AbstractDAO;
 import org.junit.Test;
 
-
 import java.sql.Statement;
 
 public class AbstractDAOTest {

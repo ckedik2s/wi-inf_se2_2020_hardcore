@@ -3,20 +3,12 @@ package org.HardCore.gui.components;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.MenuBar;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.LoginControl;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.proxy.LoginControlProxy;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
-
-import java.awt.*;
 
 public class  TopPanel extends HorizontalLayout {
 
@@ -40,14 +32,14 @@ public class  TopPanel extends HorizontalLayout {
 
         //Willkommenstext oben rechts
         HorizontalLayout hlayout = new HorizontalLayout();
-        User user = ( (MyUI) MyUI.getCurrent() ).getUser();
+        UserDTO userDTO = ( (MyUI) MyUI.getCurrent() ).getUserDTO();
         Label welcome = new Label("Willkommen bei HardCore!");
-        if (user != null) {
-            if (user.hasRole(Roles.STUDENT) && user.getVorname() != null) {
-                welcome = new Label("Willkommen " + user.getVorname() + "!");
+        if (userDTO != null) {
+            if (userDTO.hasRole(Roles.STUDENT) && userDTO.getVorname() != null) {
+                welcome = new Label("Willkommen " + userDTO.getVorname() + "!");
             }
-            if (user.hasRole(Roles.UNTERNEHMEN) && user.getName() != null) {
-                welcome = new Label("Willkommen " + user.getName() + "!");
+            if (userDTO.hasRole(Roles.UNTERNEHMEN) && userDTO.getName() != null) {
+                welcome = new Label("Willkommen " + userDTO.getName() + "!");
             }
         }
         hlayout.addComponent(welcome);
@@ -60,7 +52,7 @@ public class  TopPanel extends HorizontalLayout {
 
 
         //Gast Menü
-        if (user == null) {
+        if (userDTO == null) {
             item1.addItem("Login", VaadinIcons.SIGN_IN, new MenuBar.Command() {
                 @Override
                 public void menuSelected(MenuBar.MenuItem menuItem) {
@@ -76,7 +68,7 @@ public class  TopPanel extends HorizontalLayout {
         }
 
         //Profil
-        if (user != null) {
+        if (userDTO != null) {
             item1.addItem("Profil", VaadinIcons.USER, new MenuBar.Command() {
                 @Override
                 public void menuSelected(MenuBar.MenuItem menuItem) {
@@ -85,7 +77,7 @@ public class  TopPanel extends HorizontalLayout {
             });
 
             //Unternehmer Menü
-            if ( user.hasRole(Roles.UNTERNEHMEN) ) {
+            if ( userDTO.hasRole(Roles.UNTERNEHMEN) ) {
                 item1.addItem("Meine Stellenanzeigen", VaadinIcons.FILE_TEXT_O, new MenuBar.Command() {
                     @Override
                     public void menuSelected(MenuBar.MenuItem menuItem) {
@@ -95,7 +87,7 @@ public class  TopPanel extends HorizontalLayout {
             }
 
             //Student Menü
-            if ( user.hasRole(Roles.STUDENT) ) {
+            if ( userDTO.hasRole(Roles.STUDENT) ) {
                 item1.addItem("Meine Bewerbungen", VaadinIcons.FILE_TEXT_O, new MenuBar.Command() {
                     @Override
                     public void menuSelected(MenuBar.MenuItem menuItem) {
@@ -107,7 +99,7 @@ public class  TopPanel extends HorizontalLayout {
             item1.addItem("Logout", VaadinIcons.SIGN_OUT, new MenuBar.Command() {
                 @Override
                 public void menuSelected(MenuBar.MenuItem menuItem) {
-                    LoginControl.getInstance().logoutUser();
+                    LoginControlProxy.getInstance().logoutUser();
                 }
             });
         }
