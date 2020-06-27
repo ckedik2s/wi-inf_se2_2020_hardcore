@@ -7,7 +7,7 @@ import org.HardCore.process.control.StellenanzeigeControl;
 import org.HardCore.services.util.Views;
 
 public class DeleteStellenanzeigeWindow extends Window {
-    //Window zum Löschen von Usern
+    //Window zum Löschen von Stellenanzeigen
 
     public DeleteStellenanzeigeWindow(StellenanzeigeDetail stellenanzeigeDetail) {
 

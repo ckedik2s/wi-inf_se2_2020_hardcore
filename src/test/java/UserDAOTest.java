@@ -1,15 +1,14 @@
 import org.HardCore.model.dao.UserDAO;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertNotNull;
 
-class UserDAOTest {
+public class UserDAOTest {
 
     private UserDAO userDAO;
 
     @Test
-    void testCreate() {
+    public void testCreate() {
         userDAO =  UserDAO.getInstance();
         assertNotNull(userDAO);
     }
@@ -18,11 +17,11 @@ class UserDAOTest {
 //        assertNotNull(userDAO.getMaxID());
 //    }
     @Test
-    void testUpdate() {
+    public void testUpdate() {
 
     }
     @Test
-    void testDelete() {
+    public void testDelete() {
 
     }
 
