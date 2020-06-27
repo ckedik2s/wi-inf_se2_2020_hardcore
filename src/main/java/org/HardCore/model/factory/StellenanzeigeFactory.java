@@ -20,6 +20,7 @@ public class StellenanzeigeFactory {
         stellenanzeige.setStudiengang(stellenanzeigeDetail.getStudiengang());
         stellenanzeige.setOrt(stellenanzeigeDetail.getOrt());
         stellenanzeige.setZeitraum(Date.valueOf(stellenanzeigeDetail.getZeitraum()));
+        stellenanzeige.setAnzahl_bewerber(stellenanzeige.getAnzahl_bewerber());
 
         return stellenanzeige;
     }

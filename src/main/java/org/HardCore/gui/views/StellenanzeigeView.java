@@ -29,7 +29,6 @@ public class StellenanzeigeView extends VerticalLayout implements View {
 
         //User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
         Unternehmen unternehmen = new Unternehmen(( (MyUI) UI.getCurrent() ).getUser());
-
         this.setUp(unternehmen);
     }
 
@@ -57,7 +56,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
         grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
         grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
-        //grid.addColumn(Stellenanzeige::getAnzahlBewerber).setCaption("Anzahl der Bewerber");
+        grid.addColumn(StellenanzeigeDetail::getAnzahl_bewerber).setCaption("Anzahl der Bewerber");
 
         //ShowButton
         Button showButton = new Button("Bearbeiten");
