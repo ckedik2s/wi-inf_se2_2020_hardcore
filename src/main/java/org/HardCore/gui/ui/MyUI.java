@@ -11,6 +11,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import org.HardCore.gui.views.*;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.services.util.Views;
@@ -38,7 +39,10 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        System.out.println(VaadinSession.getCurrent().toString());
+        final VerticalLayout layout = new VerticalLayout();
+        layout.setSizeFull();
+        layout.setStyleName("custom_background_1");
+        setContent(layout);
         Navigator navi = new Navigator(this,this);
 
         navi.addView(Views.MAIN, MainView.class);

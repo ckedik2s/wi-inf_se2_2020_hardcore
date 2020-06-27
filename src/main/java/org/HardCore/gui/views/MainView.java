@@ -37,7 +37,6 @@ public class MainView extends VerticalLayout implements View {
     }
 
     private void setUp() {
-
         User user = ( (MyUI)UI.getCurrent() ).getUser();
         //Top Layer
         this.addComponent( new TopPanel() );

@@ -48,7 +48,7 @@ public class BewerbungControl {
 
     public void createBewerbung(String bewerbungstext, User user) throws BewerbungException {
         Student student = new Student(user);
-        boolean result = BewerbungDAO.getInstance().setBewerbung(bewerbungstext, student);
+        boolean result = BewerbungDAO.getInstance().createBewerbung(bewerbungstext, student);
         if (result == false) {
             throw new BewerbungException();
         }
