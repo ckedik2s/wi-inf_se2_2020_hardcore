@@ -39,7 +39,7 @@ public class ProfileControl {
     }
 
     public boolean setBewerbung(String text, Student student) {
-        return BewerbungDAO.getInstance().setBewerbung(text, student);
+        return BewerbungDAO.getInstance().createBewerbung(text, student);
     }
 
     public Bewerbung getBewerbung(Student student) {

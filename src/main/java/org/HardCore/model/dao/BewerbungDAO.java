@@ -52,7 +52,7 @@ public class BewerbungDAO extends AbstractDAO {
         return bewerbung;
     }
 
-    public boolean setBewerbung(String text, Student student) {
+    public boolean createBewerbung(String text, Student student) {
         String sql = "INSERT INTO collhbrs.bewerbung (id, freitext) " +
                 "VALUES (?, ?); ";
         PreparedStatement statement = this.getPreparedStatement(sql);
@@ -84,7 +84,7 @@ public class BewerbungDAO extends AbstractDAO {
     }
 
     public boolean sendBewerbung(StellenanzeigeDetail stellenanzeige, User user) {
-        String sql = "INSERT into collhbrs.bewerbung_to_stellenanzeige (id_student, id_stellenanzeige) " +
+        String sql = "INSERT into collhbrs.bewerbung_to_stellenanzeige (id_bewerbung, id_stellenanzeige) " +
                 "VALUES (?, ?);";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
