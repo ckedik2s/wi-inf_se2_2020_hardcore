@@ -33,7 +33,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort" +
+            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                     "FROM collhbrs.stellenanzeige " +
                     "WHERE id = \'" + user.getId() + "\'");
         } catch (SQLException e) {
@@ -176,7 +176,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
     public List<StellenanzeigeDetail> getStellenanzeigeforStudent(Student student) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
-        List<Bewerbung> list = BewerbungDAO.getInstance().getBewerbung(student);
+        List<Bewerbung> list = BewerbungDAO.getInstance().getBewerbungenForStudent(student);
         List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
         StellenanzeigeDetail stellenanzeigeDetail = null;
         for (Bewerbung bewerbung : list) {

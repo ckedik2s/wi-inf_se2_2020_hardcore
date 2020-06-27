@@ -2,14 +2,17 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.HardCore.model.objects.dto.Bewerbung;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.process.control.BewerbungControl;
 import org.HardCore.process.control.StellenanzeigeControl;
+import org.HardCore.process.control.exceptions.BewerbungException;
 import org.HardCore.services.util.Views;
 
-public class DeleteStellenanzeigeWindowStudent extends Window {
+public class DeleteBewerbungWindow extends Window {
     //Window zum Löschen von Bewerbungen auf Stellenanzeigen
 
-    public DeleteStellenanzeigeWindowStudent(StellenanzeigeDetail stellenanzeigeDetail) {
+    public DeleteBewerbungWindow(Bewerbung bewerbung) {
 
         center();
 
@@ -25,12 +28,12 @@ public class DeleteStellenanzeigeWindowStudent extends Window {
         okButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                boolean delete = StellenanzeigeControl.getInstance().deleteBewerbung(stellenanzeigeDetail.getId_anzeige());
-                if(!delete){
+                try {
+                    BewerbungControl.getInstance().deleteBewerbung(bewerbung);
+                } catch (BewerbungException e) {
                     Notification.show("DB-Fehler", "Löschen war nicht erfolgreich!", Notification.Type.ERROR_MESSAGE);
-                }else{
-                    Notification.show( "Bewerbung gelöscht!", Notification.Type.HUMANIZED_MESSAGE);
                 }
+                Notification.show( "Bewerbung gelöscht!", Notification.Type.HUMANIZED_MESSAGE);
                 UI.getCurrent().getNavigator().navigateTo(Views.BEWERBUNG);
                 close();
             }

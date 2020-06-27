@@ -63,8 +63,7 @@ public class StellenanzeigeWindow extends Window {
 
         //BewerbenButton
         Button bewerbenButton = new Button("Bewerben");
-        BewerbungControl.getInstance().applyingIsAllowed();
-        BewerbungControl.getInstance().checkAllowed(user, bewerbenButton);
+        BewerbungControl.getInstance().checkAllowed(stellenanzeige, user, bewerbenButton);
         bewerbenButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

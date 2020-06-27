@@ -1,9 +1,9 @@
 package org.HardCore.model.dao;
 
 import org.HardCore.model.objects.dto.Bewerbung;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.services.db.JDBCConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +28,28 @@ public class BewerbungDAO extends AbstractDAO {
         return bewerbungDAO;
     }
 
-    public List<Bewerbung> getBewerbung(Student student) {
+    public Bewerbung getBewerbung(int id_bewerbung) throws DatabaseException {
+        String sql = "SELECT id_bewerbung, freitext " +
+                "FROM collhbrs.bewerbung " +
+                "WHERE id_bewerbung = ?";
+        PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
+        ResultSet rs = null;
+        Bewerbung bewerbung = null;
+        try {
+            statement.setInt(1, id_bewerbung);
+            rs = statement.executeQuery();
+            if( rs.next() ) {
+                bewerbung = new Bewerbung();
+                bewerbung.setId(id_bewerbung);
+                bewerbung.setFreitext(rs.getString(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bewerbung;
+    }
+
+    public List<Bewerbung> getBewerbungenForStudent(Student student) {
         List<Bewerbung> list = new ArrayList<>();
         Statement statement = getStatement();
         ResultSet rs = null;
@@ -72,47 +93,15 @@ public class BewerbungDAO extends AbstractDAO {
 
     }
 
-    public boolean deleteBewerbung(int id_anzeige) {
+    public boolean deleteBewerbung(Bewerbung bewerbung) {
         String sql = "DELETE " +
-                "FROM collhbrs.bewerbung_to_stellenanzeige " +
-                "WHERE id_stellenanzeige = ? ;";
+                "FROM collhbrs.bewerbung " +
+                "WHERE id_bewerbung = ?";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setInt(1, id_anzeige);
+            statement.setInt(1, bewerbung.getId());
             statement.executeUpdate();
             return true;
-
-        } catch (SQLException ex) {
-            Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
-
-    public boolean sendBewerbung(StellenanzeigeDetail stellenanzeige, User user) {
-        String sql = "INSERT into collhbrs.bewerbung_to_stellenanzeige (id_bewerbung, id_stellenanzeige) " +
-                "VALUES (?, ?);";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-        try {
-            statement.setInt(1, stellenanzeige.getId());
-            statement.setInt(2, user.getId());
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
-
-    public boolean applyingIsAllowed() {
-        String sql = "SELECT sichtbar " +
-                "FROM collhbrs.stellenanzeige_on_off " +
-                "WHERE zeile = ? ;";
-        PreparedStatement statement = this.getPreparedStatement(sql);
-        ResultSet rs = null;
-        try {
-            statement.setInt(1, 1);
-            rs = statement.executeQuery();
-            return rs.getBoolean(1);
 
         } catch (SQLException ex) {
             Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);

@@ -111,17 +111,8 @@ public class StellenanzeigeView extends VerticalLayout implements View {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 DeleteStellenanzeigeWindow window = new DeleteStellenanzeigeWindow(selektiert);
                 UI.getCurrent().addWindow(window);
-
                 deleteButton.setEnabled(false);
                 showButton.setEnabled(false);
-                grid.setItems();
-                list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmen);
-                try {
-                    grid.setItems(list);
-                } catch (Exception e) {
-                    System.out.println("Fehler 1");
-                    e.printStackTrace();
-                }
             }
         });
 

@@ -23,9 +23,11 @@ public class FreitextWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 String bewerbungstext = bewerbung.getValue();
+
                 try {
                     BewerbungControl.getInstance().createBewerbung(bewerbungstext, user);
-                    BewerbungControl.getInstance().applyForStellenanzeige(stellenanzeige, user);
+                    int id_bewerbung = BewerbungControl.getInstance().getLatestApply(user);
+                    BewerbungControl.getInstance().applyForStellenanzeige(stellenanzeige, id_bewerbung);
                 }
                 catch (DatabaseException db) {
                     Notification.show("Es ist ein Fehler bei der Bewerbung aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);

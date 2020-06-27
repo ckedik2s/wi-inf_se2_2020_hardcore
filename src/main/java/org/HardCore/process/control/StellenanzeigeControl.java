@@ -5,11 +5,9 @@ import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.dao.StellenanzeigeDAO;
 import org.HardCore.model.factory.StellenanzeigeFactory;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.*;
 import org.HardCore.model.objects.entities.Stellenanzeige;
+import org.HardCore.process.control.exceptions.BewerbungException;
 import org.HardCore.process.control.exceptions.DatabaseException;
 import org.HardCore.process.control.exceptions.NoSuchUserOrPassword;
 import org.HardCore.services.db.JDBCConnection;
@@ -95,9 +93,5 @@ public class StellenanzeigeControl {
         }
 
         return anzahl_bewerber;
-    }
-
-    public boolean deleteBewerbung(int id_anzeige) {
-        return BewerbungDAO.getInstance().deleteBewerbung(id_anzeige);
     }
 }

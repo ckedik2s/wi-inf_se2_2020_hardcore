@@ -45,6 +45,6 @@ public class ProfileControl {
     }
 
     public List<Bewerbung> getBewerbung(Student student) {
-        return BewerbungDAO.getInstance().getBewerbung(student);
+        return BewerbungDAO.getInstance().getBewerbungenForStudent(student);
     }
 }
