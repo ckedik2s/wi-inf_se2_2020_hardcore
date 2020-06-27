@@ -1,5 +1,6 @@
 package org.HardCore.model.dao;
 
+import org.HardCore.model.objects.dto.Bewerbung;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.User;
@@ -168,51 +169,33 @@ public class StellenanzeigeDAO extends AbstractDAO {
     public List<StellenanzeigeDetail> getStellenanzeigeforStudent(Student student) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
-
-        try {
-            rs = statement.executeQuery("SELECT id_student, id_stellenanzeige " +
-                    "FROM collhbrs.bewerbung_to_stellenanzeige " +
-                    "WHERE id_student = \'" + student.getId() + "\'");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (rs == null) {
-            return null;
-        }
-        List<Integer> list = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                list.add(rs.getInt(2));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        ResultSet rs2 = null;
+        List<Bewerbung> list = BewerbungDAO.getInstance().getBewerbung(student);
         List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
         StellenanzeigeDetail stellenanzeigeDetail = null;
-
-        for (int id_anzeige : list) {
+        for (Bewerbung bewerbung : list) {
+            int id_bewerbung = bewerbung.getId();
             try {
-                rs2 = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
+                rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                         "FROM collhbrs.stellenanzeige " +
-                        "WHERE id_anzeige = \'" + id_anzeige + "\'");
+                        "WHERE id_anzeige = ( SELECT id_anzeige " +
+                        "FROM collhbrs.bewerbung_to_stellenanzeige " +
+                        "WHERE id_bewerbung = \'" + id_bewerbung + "\')");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            if (rs2 == null) {
+            if (rs == null) {
                 return null;
             }
             try {
-                while (rs2.next()) {
+                while (rs.next()) {
                     stellenanzeigeDetail = new StellenanzeigeDetail();
-                    stellenanzeigeDetail.setId_anzeige(rs2.getInt(1));
-                    stellenanzeigeDetail.setBeschreibung(rs2.getString(2));
-                    stellenanzeigeDetail.setArt(rs2.getString(3));
-                    stellenanzeigeDetail.setName(rs2.getString(4));
-                    stellenanzeigeDetail.setZeitraum(rs2.getDate(5).toLocalDate());
-                    stellenanzeigeDetail.setBranche(rs2.getString(6));
-                    stellenanzeigeDetail.setStudiengang(rs2.getString(7));
+                    stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
+                    stellenanzeigeDetail.setBeschreibung(rs.getString(2));
+                    stellenanzeigeDetail.setArt(rs.getString(3));
+                    stellenanzeigeDetail.setName(rs.getString(4));
+                    stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
+                    stellenanzeigeDetail.setBranche(rs.getString(6));
+                    stellenanzeigeDetail.setStudiengang(rs.getString(7));
                     stellenanzeigeDetail.setOrt(rs.getString(8));
                     listStellenanzeige.add(stellenanzeigeDetail);
                 }

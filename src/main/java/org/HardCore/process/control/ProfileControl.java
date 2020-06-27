@@ -8,6 +8,8 @@ import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.Unternehmen;
 import org.HardCore.model.objects.dto.User;
 
+import java.util.List;
+
 public class ProfileControl {
     private static ProfileControl profileControl = null;
 
@@ -42,7 +44,7 @@ public class ProfileControl {
         return BewerbungDAO.getInstance().createBewerbung(text, student);
     }
 
-    public Bewerbung getBewerbung(Student student) {
+    public List<Bewerbung> getBewerbung(Student student) {
         return BewerbungDAO.getInstance().getBewerbung(student);
     }
 }

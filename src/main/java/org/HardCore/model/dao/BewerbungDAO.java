@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,12 +28,12 @@ public class BewerbungDAO extends AbstractDAO {
         return bewerbungDAO;
     }
 
-    public Bewerbung getBewerbung(Student student) {
-        Bewerbung bewerbung = new Bewerbung();
+    public List<Bewerbung> getBewerbung(Student student) {
+        List<Bewerbung> list = new ArrayList<>();
         Statement statement = getStatement();
         ResultSet rs = null;
         try {
-            rs = statement.executeQuery("SELECT id_anzeige, freitext " +
+            rs = statement.executeQuery("SELECT id_bewerbung, freitext " +
                     "FROM collhbrs.bewerbung " +
                     "WHERE id =\'" + student.getId() + "\';");
         } catch (SQLException ex) {
@@ -40,16 +42,19 @@ public class BewerbungDAO extends AbstractDAO {
         if (rs == null) {
             return null;
         }
+        Bewerbung bewerbung = null;
         try {
             while (rs.next()) {
+                bewerbung = new Bewerbung();
                 bewerbung.setId(rs.getInt(1));
                 bewerbung.setFreitext(rs.getString(2));
+                list.add(bewerbung);
 
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return bewerbung;
+        return list;
     }
 
     public boolean createBewerbung(String text, Student student) {
