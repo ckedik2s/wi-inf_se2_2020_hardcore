@@ -4,6 +4,8 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.Student;
 import org.HardCore.model.objects.dto.User;
 import org.HardCore.model.objects.entities.Stellenanzeige;
+import org.HardCore.process.control.StellenanzeigeControl;
+import org.HardCore.process.control.exceptions.DatabaseException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +32,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
+            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort" +
                     "FROM collhbrs.stellenanzeige " +
                     "WHERE id = \'" + user.getId() + "\'");
         } catch (SQLException e) {
@@ -55,6 +57,11 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 stellenanzeigeDetail.setBranche(rs.getString(6));
                 stellenanzeigeDetail.setStudiengang(rs.getString(7));
                 stellenanzeigeDetail.setOrt(rs.getString(8));
+                try {
+                    stellenanzeigeDetail.setAnzahl_bewerber(StellenanzeigeControl.getInstance().getAnzahlBewerber(stellenanzeigeDetail));
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
                 list.add(stellenanzeigeDetail);
             }
         } catch (SQLException e) {
