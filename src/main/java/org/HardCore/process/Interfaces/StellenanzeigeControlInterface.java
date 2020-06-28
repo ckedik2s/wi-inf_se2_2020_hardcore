@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface StellenanzeigeControlInterface {
 
-    List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO);
+    List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException;
 
     List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException;
 
@@ -21,7 +21,7 @@ public interface StellenanzeigeControlInterface {
 
     void deleteStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException;
 
-    List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter);
+    List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException;
 
     int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException;
 }

@@ -25,7 +25,7 @@ public interface BewerbungControlInterface {
 
     void createBewerbung(String bewerbungstext, UserDTO userDTO) throws BewerbungException;
 
-    BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException;
+    BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException;
 
     List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException;
 

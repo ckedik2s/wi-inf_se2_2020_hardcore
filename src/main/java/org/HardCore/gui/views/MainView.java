@@ -19,6 +19,7 @@ import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.control.SearchControl;
 import org.HardCore.process.proxy.SearchControlProxy;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class MainView extends VerticalLayout implements View {
@@ -103,7 +104,11 @@ public class MainView extends VerticalLayout implements View {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 suchtext = search.getValue();
                 if(suchtext.equals("")) {
-                    list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, comboBox.getValue());
+                    try {
+                        list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, comboBox.getValue());
+                    } catch (SQLException e) {
+                        Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+                    }
                     grid.setItems(list);
                     addComponent(grid);
                     addComponent(detailButton);
@@ -131,7 +136,11 @@ public class MainView extends VerticalLayout implements View {
         if (search.getValue().length() > 1) {
             suchtext = search.getValue();
             String filter = comboBox.getValue();
-            list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, filter);
+            try {
+                list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, filter);
+            } catch (SQLException e) {
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+            }
             grid.setItems();
             grid.setItems(list);
             addComponent(grid);

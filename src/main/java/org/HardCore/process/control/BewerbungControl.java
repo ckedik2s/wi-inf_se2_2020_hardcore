@@ -137,24 +137,19 @@ public class BewerbungControl implements BewerbungControlInterface {
     public void createBewerbung(String bewerbungstext, UserDTO userDTO) throws BewerbungException {
         StudentDTO studentDTO = new StudentDTO(userDTO);
         boolean result = BewerbungDAO.getInstance().createBewerbung(bewerbungstext, studentDTO);
-        if (result == false) {
+        if (!result) {
             throw new BewerbungException();
         }
     }
 
-    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException {
+    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException {
         List<BewerbungDTO> list = getBewerbungenForStudent(studentDTO);
         BewerbungDTO bewerbungDTO = new BewerbungDTO();
         String sql = "SELECT id_bewerbung " +
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
                 "WHERE id_anzeige = ? " +
                 "AND id_bewerbung = ? ";
-        PreparedStatement statement = null;
-        try {
-            statement = JDBCConnection.getInstance().getPreparedStatement(sql);
-        } catch (DatabaseException e) {
-            Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
-        }
+        PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
         for (BewerbungDTO bewerbung :list ) {
             try {

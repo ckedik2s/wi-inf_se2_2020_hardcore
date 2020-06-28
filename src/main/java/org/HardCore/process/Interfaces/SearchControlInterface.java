@@ -9,5 +9,5 @@ public interface SearchControlInterface {
 
     List<StellenanzeigeDetail> getAnzeigenForUser() throws SQLException;
 
-    List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter);
+    List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException;
 }

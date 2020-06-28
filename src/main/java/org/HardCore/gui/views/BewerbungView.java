@@ -13,6 +13,7 @@ import org.HardCore.gui.windows.DeleteBewerbungWindow;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
@@ -71,7 +72,6 @@ public class BewerbungView extends VerticalLayout implements View {
             public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
                 if (selection.getValue() == null) {
                     deleteButton.setEnabled(false);
-                    return;
                 }
                 else {
                     selektiert = selection.getValue();
@@ -89,6 +89,8 @@ public class BewerbungView extends VerticalLayout implements View {
                     bewerbungDTO = BewerbungControlProxy.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
                 } catch (SQLException e) {
                     Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
+                } catch (DatabaseException e) {
+                    Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
                 DeleteBewerbungWindow window = new DeleteBewerbungWindow(bewerbungDTO);
                 UI.getCurrent().addWindow(window);

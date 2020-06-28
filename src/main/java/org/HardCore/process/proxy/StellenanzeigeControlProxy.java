@@ -25,7 +25,7 @@ public class StellenanzeigeControlProxy implements StellenanzeigeControlInterfac
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) {
+    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException {
         return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
     }
 
@@ -43,7 +43,7 @@ public class StellenanzeigeControlProxy implements StellenanzeigeControlInterfac
         StellenanzeigeControl.getInstance().deleteStellenanzeige(stellenanzeigeDetail);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) {
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
         return StellenanzeigeControl.getInstance().getAnzeigenForSearch(suchtext, filter);
     }
 

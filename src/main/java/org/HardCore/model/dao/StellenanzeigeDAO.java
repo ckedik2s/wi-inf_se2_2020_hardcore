@@ -28,7 +28,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         return dao;
     }
 
-    public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(UserDTO userDTO) {
+    public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(UserDTO userDTO) throws SQLException {
         String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                 "FROM collhbrs.stellenanzeige " +
                 "WHERE id = ? ;";
@@ -43,10 +43,12 @@ public class StellenanzeigeDAO extends AbstractDAO {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         List<StellenanzeigeDetail> list = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail = null;
+        StellenanzeigeDetail stellenanzeigeDetail;
 
         try {
-            while (rs.next()) {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
                 stellenanzeigeDetail = new StellenanzeigeDetail();
                 stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
                 stellenanzeigeDetail.setBeschreibung(rs.getString(2));
@@ -65,6 +67,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
             }
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        } finally {
+            assert rs != null;
+            rs.close();
         }
         return list;
     }
@@ -132,11 +137,11 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
     }
 
-    public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext, String filter) {
+    public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext, String filter) throws SQLException {
         filter = filter.toLowerCase();
-        PreparedStatement statement = null;
+        PreparedStatement statement;
         ResultSet rs = null;
-        if(suchtext == ""){
+        if(suchtext.equals("")){
             String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
             "FROM collhbrs.stellenanzeige ;";
             statement = this.getPreparedStatement(sql);
@@ -160,15 +165,14 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
         }
-        if (rs == null) {
-            return null;
-        }
 
         List<StellenanzeigeDetail> list = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail = null;
+        StellenanzeigeDetail stellenanzeigeDetail;
 
         try {
-            while (rs.next()) {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
                 stellenanzeigeDetail = new StellenanzeigeDetail();
                 stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
                 stellenanzeigeDetail.setBeschreibung(rs.getString(2));
@@ -182,6 +186,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
             }
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        } finally {
+            assert rs != null;
+            rs.close();
         }
         return list;
     }
@@ -197,7 +204,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         ResultSet rs = null;
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail = null;
+        StellenanzeigeDetail stellenanzeigeDetail;
         for (BewerbungDTO bewerbungDTO : list) {
             int id_bewerbung = bewerbungDTO.getId();
             try {
@@ -207,7 +214,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
             try {
-                while (rs.next()) {
+                while (true) {
+                    assert rs != null;
+                    if (!rs.next()) break;
                     stellenanzeigeDetail = new StellenanzeigeDetail();
                     stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
                     stellenanzeigeDetail.setBeschreibung(rs.getString(2));
@@ -221,6 +230,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 }
             } catch (SQLException e) {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+            } finally {
+                assert rs != null;
+                rs.close();
             }
         }
         return listStellenanzeige;

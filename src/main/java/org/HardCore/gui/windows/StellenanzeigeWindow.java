@@ -8,6 +8,7 @@ import org.HardCore.process.exceptions.StellenanzeigeException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -143,14 +144,14 @@ public class StellenanzeigeWindow extends Window {
                     Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                List<StellenanzeigeDetail> list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
+                List<StellenanzeigeDetail> list = null;
                 try {
-                    grid.setItems();
-                    grid.setItems(list);
-                } catch (Exception e) {
-                    System.out.println("Fehler StellenanzeigenWindow");
-                    e.printStackTrace();
+                    list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
                 }
+                grid.setItems();
+                grid.setItems(list);
                 close();
             }
         });

@@ -25,7 +25,7 @@ public class SearchControlProxy implements SearchControlInterface {
         return SearchControl.getInstance().getAnzeigenForUser();
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) {
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
         return SearchControl.getInstance().getAnzeigenForSearch(suchtext, filter);
     }
 }

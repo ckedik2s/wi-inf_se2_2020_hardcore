@@ -33,7 +33,7 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) {
+    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException {
         return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(unternehmenDTO);
     }
 
@@ -72,7 +72,7 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
         throw new StellenanzeigeException();
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) {
+    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
         return StellenanzeigeDAO.getInstance().getStellenanzeigenForSearch(suchtext, filter);
     }
 
@@ -82,7 +82,7 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
         String sql = "SELECT count(id_bewerbung) " +
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
                 "WHERE id_anzeige = ? ;";
-        ResultSet rs = null;
+        ResultSet rs;
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         try {
             statement.setInt(1,stellenanzeigeDetail.getId_anzeige());

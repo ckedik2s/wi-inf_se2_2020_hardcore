@@ -51,7 +51,7 @@ public class BewerbungControlProxy implements BewerbungControlInterface {
         BewerbungControl.getInstance().createBewerbung(bewerbungstext, userDTO);
     }
 
-    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException {
+    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException {
         return BewerbungControl.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
     }
 
