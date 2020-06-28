@@ -3,6 +3,7 @@ package org.HardCore.model.dao;
 import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 
@@ -34,12 +35,12 @@ public class BewerbungDAO extends AbstractDAO {
                 "WHERE id_bewerbung = ?";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
-        BewerbungDTO bewerbungDTO = new BewerbungDTO();
+        BewerbungDTO bewerbungDTO = null;
         try {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
             if (rs == null) {
-                return bewerbungDTO;
+                throw new BewerbungException();
             }
             if (rs.next()) {
                 bewerbungDTO = new BewerbungDTO();
@@ -48,7 +49,10 @@ public class BewerbungDAO extends AbstractDAO {
             }
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        } catch (BewerbungException e) {
+            Notification.show("Eintrag nicht vorhanden!");
         } finally {
+            assert rs != null;
             rs.close();
         }
         return bewerbungDTO;
@@ -64,11 +68,13 @@ public class BewerbungDAO extends AbstractDAO {
         try {
             statement.setInt(1, studentDTO.getId());
             rs = statement.executeQuery();
+            if (rs == null) {
+                throw new BewerbungException();
+            }
         } catch (SQLException ex) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-        }
-        if (rs == null) {
-            return null;
+        } catch (BewerbungException e) {
+            Notification.show("Eintrag nicht vorhanden!");
         }
         BewerbungDTO bewerbungDTO = null;
         try {
