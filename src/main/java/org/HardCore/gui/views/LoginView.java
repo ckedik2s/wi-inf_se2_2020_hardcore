@@ -9,10 +9,10 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.LoginControl;
-import org.HardCore.process.control.exceptions.DatabaseException;
-import org.HardCore.process.control.exceptions.NoSuchUserOrPassword;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.proxy.LoginControlProxy;
+import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.NoSuchUserOrPassword;
 
 public class LoginView extends VerticalLayout implements View {
     @Override
@@ -31,10 +31,10 @@ public class LoginView extends VerticalLayout implements View {
         final TextField userLogin = new TextField("Email:");
         userLogin.focus();
         userLogin.setPlaceholder("beispiel@gmx.de");
-        Binder<User> binder = new Binder<>();
+        Binder<UserDTO> binder = new Binder<>();
         binder.forField(userLogin)
                 .withValidator(new EmailValidator("Bitte geben Sie eine korrekte Emailadresse ein!"))
-                .bind(User::getEmail, User::setEmail);
+                .bind(UserDTO::getEmail, UserDTO::setEmail);
         final PasswordField passwordField = new PasswordField("Passwort:");
         passwordField.setPlaceholder("Passwort");
 
@@ -48,7 +48,7 @@ public class LoginView extends VerticalLayout implements View {
                 String password = passwordField.getValue();
 
                 try {
-                    LoginControl.getInstance().checkAuthentification(email, password);
+                    LoginControlProxy.getInstance().checkAuthentification(email, password);
                 } catch (NoSuchUserOrPassword noSuchUserOrPassword) {
                     Notification.show("Benutzer-Fehler", "Login oder Passwort falsch!", Notification.Type.ERROR_MESSAGE);
                 } catch (DatabaseException e) {

@@ -3,9 +3,9 @@ package org.HardCore.gui.windows;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.LoginControl;
-import org.HardCore.process.control.RegistrationControl;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.proxy.LoginControlProxy;
+import org.HardCore.process.proxy.RegistrationControlProxy;
 import org.HardCore.services.util.Views;
 
 public class DeleteProfileWindow extends Window {
@@ -25,9 +25,9 @@ public class DeleteProfileWindow extends Window {
         okButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                User user = ((MyUI) UI.getCurrent()).getUser();
-                RegistrationControl.getInstance().deleteUser(user);
-                LoginControl.getInstance().logoutUser();
+                UserDTO userDTO = ((MyUI) UI.getCurrent()).getUserDTO();
+                RegistrationControlProxy.getInstance().deleteUser(userDTO);
+                LoginControlProxy.getInstance().logoutUser();
                 UI.getCurrent().getNavigator().navigateTo(Views.LOGIN);
                 close();
             }

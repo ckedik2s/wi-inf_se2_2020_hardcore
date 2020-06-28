@@ -9,10 +9,12 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.DeleteStellenanzeigeWindowStudent;
+import org.HardCore.gui.windows.DeleteBewerbungWindow;
+import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.process.control.StellenanzeigeControl;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.process.proxy.BewerbungControlProxy;
+import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.util.List;
 
@@ -24,12 +26,12 @@ public class BewerbungView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        Student student = new Student( ( (MyUI) UI.getCurrent() ).getUser() );
+        StudentDTO studentDTO = new StudentDTO( ( (MyUI) UI.getCurrent() ).getUserDTO() );
 
-        this.setUp(student);
+        this.setUp(studentDTO);
     }
 
-    private void setUp(Student student) {
+    private void setUp(StudentDTO studentDTO) {
 
         //Top Layer
         this.addComponent( new TopPanel() );
@@ -44,7 +46,7 @@ public class BewerbungView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = StellenanzeigeControl.getInstance().getAnzeigenForStudent(student);
+        list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
         grid.removeAllColumns();
         grid.setItems(list);
         grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
@@ -77,11 +79,12 @@ public class BewerbungView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                DeleteStellenanzeigeWindowStudent window = new DeleteStellenanzeigeWindowStudent(selektiert);
+                BewerbungDTO bewerbungDTO = BewerbungControlProxy.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
+                DeleteBewerbungWindow window = new DeleteBewerbungWindow(bewerbungDTO);
                 UI.getCurrent().addWindow(window);
                 deleteButton.setEnabled(false);
                 grid.setItems();
-                list = StellenanzeigeControl.getInstance().getAnzeigenForStudent(student);
+                list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
                 try {
                     grid.setItems(list);
                 } catch (Exception e) {
@@ -93,8 +96,6 @@ public class BewerbungView extends VerticalLayout implements View {
 
         //HorizontalLayout
         HorizontalLayout horizontalLayout = new HorizontalLayout();
-        //horizontalLayout.addComponent(showButton);
-        //horizontalLayout.addComponent(createButton);
         horizontalLayout.addComponent(deleteButton);
 
         //Darstellung

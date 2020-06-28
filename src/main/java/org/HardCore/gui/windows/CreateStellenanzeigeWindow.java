@@ -2,14 +2,15 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.process.control.StellenanzeigeControl;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.process.exceptions.StellenanzeigeException;
+import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.util.List;
 
 public class CreateStellenanzeigeWindow extends Window {
 
-    public CreateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, Unternehmen unternehmen) {
+    public CreateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, UnternehmenDTO unternehmenDTO) {
         super("Ihre Stellenanzeige");
         center();
 
@@ -55,21 +56,21 @@ public class CreateStellenanzeigeWindow extends Window {
                 stellenanzeige.setZeitraum(zeitraum.getValue());
                 stellenanzeige.setBeschreibung(beschreibung.getValue());
 
-                boolean result = StellenanzeigeControl.getInstance().createStellenanzeige(stellenanzeige);
-                if (result == true) {
-                    UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                    List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmen);
-                    try {
-                        grid.setItems();
-                        grid.setItems(list);
-                    } catch (Exception e) {
-                        System.out.println("Fehler 1");
-                        e.printStackTrace();
-                    }
-                    close();
-                } else {
+                try {
+                    StellenanzeigeControlProxy.getInstance().createStellenanzeige(stellenanzeige);
+                } catch (StellenanzeigeException e) {
                     Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
+                UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
+                List<StellenanzeigeDetail> list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
+                try {
+                    grid.setItems();
+                    grid.setItems(list);
+                } catch (Exception e) {
+                    System.out.println("Fehler 1");
+                    e.printStackTrace();
+                }
+                close();
             }
         });
 

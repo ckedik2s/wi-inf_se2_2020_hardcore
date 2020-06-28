@@ -1,7 +1,8 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
+
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 

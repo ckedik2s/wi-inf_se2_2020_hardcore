@@ -1,7 +1,7 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.model.objects.dto.UserDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ public class UnternehmenDAO extends AbstractDAO {
         return dao;
     }
 
-    public boolean updateUnternehmen(Unternehmen unternehmen) {
+    public boolean updateUnternehmen(UnternehmenDTO unternehmenDTO) {
         String sql = "UPDATE collhbrs.unternehmen " +
                 "SET name_unternehmen = ?, ansprechpartner = ?, strasse = ?, plz = ?, " +
                 "hausnr = ?, zusatz = ?, ort = ?, branche = ? " +
@@ -33,15 +33,15 @@ public class UnternehmenDAO extends AbstractDAO {
 
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setString(1, unternehmen.getName());
-            statement.setString(2, unternehmen.getAnsprechpartner());
-            statement.setString(3, unternehmen.getStrasse());
-            statement.setInt(4, unternehmen.getPlz());
-            statement.setInt(5, unternehmen.getHaus_nr());
-            statement.setString(6, unternehmen.getZusatz());
-            statement.setString(7, unternehmen.getOrt());
-            statement.setString(8, unternehmen.getBranche());
-            statement.setInt(9, unternehmen.getId());
+            statement.setString(1, unternehmenDTO.getName());
+            statement.setString(2, unternehmenDTO.getAnsprechpartner());
+            statement.setString(3, unternehmenDTO.getStrasse());
+            statement.setInt(4, unternehmenDTO.getPlz());
+            statement.setInt(5, unternehmenDTO.getHaus_nr());
+            statement.setString(6, unternehmenDTO.getZusatz());
+            statement.setString(7, unternehmenDTO.getOrt());
+            statement.setString(8, unternehmenDTO.getBranche());
+            statement.setInt(9, unternehmenDTO.getId());
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -49,20 +49,20 @@ public class UnternehmenDAO extends AbstractDAO {
         }
     }
 
-    public Unternehmen getAllDataUnternehmen(User user) {
+    public UnternehmenDTO getAllDataUnternehmen(UserDTO userDTO) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
-        System.out.println(user.getId());
+        System.out.println(userDTO.getId());
         try {
             rs = statement.executeQuery("SELECT * " +
                     "FROM collhbrs.unternehmen " +
-                    "WHERE collhbrs.unternehmen.id = \'" + user.getId() + "\';");
+                    "WHERE collhbrs.unternehmen.id = \'" + userDTO.getId() + "\';");
 
         } catch (SQLException ex) {
             Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
             return null;
         }
-        Unternehmen un = new Unternehmen(user);
+        UnternehmenDTO un = new UnternehmenDTO(userDTO);
         try {
             while (rs.next()) {
 

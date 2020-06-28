@@ -2,11 +2,12 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.exceptions.DatabaseException;
-import org.HardCore.process.control.exceptions.NoSuchUserOrPassword;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.Interfaces.LoginControlInterface;
+import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.NoSuchUserOrPassword;
 import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
@@ -14,9 +15,8 @@ import org.HardCore.services.util.Views;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 
-public class LoginControl {
+public class LoginControl implements LoginControlInterface {
     private static LoginControl loginControl = null;
 
     private LoginControl(){
@@ -43,18 +43,18 @@ public class LoginControl {
             throw new DatabaseException("Fehler im SQL-Befehl: Bitte den Programmierer informieren!");
         }
 
-        User user = null;
+        UserDTO userDTO = null;
 
         try {
             if( rs.next() ) {
-                user = new User();
-                user.setId(rs.getInt(1));
-                user.setEmail(email);
-                if ( user.hasRole(Roles.STUDENT) ) {
-                    user = ProfileControl.getInstance().getStudent(new Student(user));
+                userDTO = new UserDTO();
+                userDTO.setId(rs.getInt(1));
+                userDTO.setEmail(email);
+                if ( userDTO.hasRole(Roles.STUDENT) ) {
+                    userDTO = ProfileControl.getInstance().getStudent(new StudentDTO(userDTO));
                 }
                 else {
-                    user = ProfileControl.getInstance().getUnternehmen(new Unternehmen(user));
+                    userDTO = ProfileControl.getInstance().getUnternehmen(new UnternehmenDTO(userDTO));
                 }
             }
             else {
@@ -67,7 +67,7 @@ public class LoginControl {
             JDBCConnection.getInstance().closeConnection();
         }
         //UI.getCurrent().getSession().setAttribute(user);
-        ((MyUI) UI.getCurrent() ).setUser(user); //Mockito zum Testen
+        ((MyUI) UI.getCurrent() ).setUserDTO(userDTO); //Mockito zum Testen
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }
 

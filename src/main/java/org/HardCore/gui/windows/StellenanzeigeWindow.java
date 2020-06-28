@@ -2,18 +2,18 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.BewerbungControl;
-import org.HardCore.process.control.StellenanzeigeControl;
-import org.HardCore.services.util.Roles;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.exceptions.StellenanzeigeException;
+import org.HardCore.process.proxy.BewerbungControlProxy;
+import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class StellenanzeigeWindow extends Window {
 
-    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, User user) {
+    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, UserDTO userDTO) {
         super(stellenanzeige.getName());
         center();
 
@@ -63,12 +63,11 @@ public class StellenanzeigeWindow extends Window {
 
         //BewerbenButton
         Button bewerbenButton = new Button("Bewerben");
-        BewerbungControl.getInstance().applyingIsAllowed();
-        BewerbungControl.getInstance().checkAllowed(user, bewerbenButton);
+        BewerbungControlProxy.getInstance().checkAllowed(stellenanzeige, userDTO, bewerbenButton);
         bewerbenButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new FreitextWindow(stellenanzeige, user));
+                UI.getCurrent().addWindow(new FreitextWindow(stellenanzeige, userDTO));
                 close();
             }
         });
@@ -93,7 +92,7 @@ public class StellenanzeigeWindow extends Window {
         setContent(verticalLayout);
     }
 
-    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, Unternehmen unternehmen) {
+    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, UnternehmenDTO unternehmenDTO) {
         super(stellenanzeige.getName());
         center();
 
@@ -137,21 +136,22 @@ public class StellenanzeigeWindow extends Window {
                 stellenanzeige.setOrt(ort.getValue());
                 stellenanzeige.setZeitraum(zeitraum.getValue());
                 stellenanzeige.setBeschreibung(beschreibung.getValue());
-                boolean result = StellenanzeigeControl.getInstance().updateStellenanzeige(stellenanzeige);
-                if (result == true) {
-                    UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                    List<StellenanzeigeDetail> list = StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmen);
-                    try {
-                        grid.setItems();
-                        grid.setItems(list);
-                    } catch (Exception e) {
-                        System.out.println("Fehler StellenanzeigenWindow");
-                        e.printStackTrace();
-                    }
-                    close();
-                } else {
+
+                try {
+                    StellenanzeigeControlProxy.getInstance().updateStellenanzeige(stellenanzeige);
+                } catch (StellenanzeigeException e) {
                     Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
+                UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
+                List<StellenanzeigeDetail> list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
+                try {
+                    grid.setItems();
+                    grid.setItems(list);
+                } catch (Exception e) {
+                    System.out.println("Fehler StellenanzeigenWindow");
+                    e.printStackTrace();
+                }
+                close();
             }
         });
 

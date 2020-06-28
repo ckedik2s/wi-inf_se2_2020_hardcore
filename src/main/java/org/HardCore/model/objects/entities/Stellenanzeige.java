@@ -13,6 +13,7 @@ public class Stellenanzeige {
     private String branche;
     private String studiengang;
     private String ort;
+    private int anzahl_bewerber;
 
     public int getId_anzeige() {
         return id_anzeige;
@@ -96,5 +97,13 @@ public class Stellenanzeige {
                 "Branche: "+ this.getBranche() + "\n" +
                 "Studiengang: "+ this.getStudiengang() + "\n" +
                 "Ort: " + this.getOrt() + "\n";
+    }
+
+    public int getAnzahl_bewerber() {
+        return anzahl_bewerber;
+    }
+
+    public void setAnzahl_bewerber(int anzahl_bewerber) {
+        this.anzahl_bewerber = anzahl_bewerber;
     }
 }

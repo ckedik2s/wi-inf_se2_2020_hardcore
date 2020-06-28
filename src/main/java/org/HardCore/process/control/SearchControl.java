@@ -3,14 +3,15 @@ package org.HardCore.process.control;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.Unternehmen;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UnternehmenDTO;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.Interfaces.SearchControlInterface;
 import org.HardCore.services.util.Roles;
 
 import java.util.List;
 
-public class SearchControl {
+public class SearchControl implements SearchControlInterface {
     private static SearchControl search = null;
 
     public static SearchControl getInstance() {
@@ -25,13 +26,13 @@ public class SearchControl {
     }
 
     public List<StellenanzeigeDetail> getAnzeigenForUser() {
-        User user = ( (MyUI)UI.getCurrent() ).getUser();
-        if (user.hasRole(Roles.STUDENT)) {
-            Student student = new Student(user);
-            return StellenanzeigeControl.getInstance().getAnzeigenForStudent(student);
+        UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
+        if (userDTO.hasRole(Roles.STUDENT)) {
+            StudentDTO studentDTO = new StudentDTO(userDTO);
+            return StellenanzeigeControl.getInstance().getAnzeigenForStudent(studentDTO);
         }
-        Unternehmen unternehmen = new Unternehmen(user);
-        return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmen);
+        UnternehmenDTO unternehmenDTO = new UnternehmenDTO(userDTO);
+        return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
     }
 
     public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) {
