@@ -10,6 +10,7 @@ import org.HardCore.process.control.BewerbungControl;
 import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class BewerbungControlProxy implements BewerbungControlInterface {
@@ -26,7 +27,7 @@ public class BewerbungControlProxy implements BewerbungControlInterface {
         return bewerbungControl;
     }
 
-    public int getLatestApply(UserDTO userDTO) throws DatabaseException {
+    public int getLatestApply(UserDTO userDTO) throws DatabaseException, SQLException {
         return BewerbungControl.getInstance().getLatestApply(userDTO);
     }
 
@@ -34,11 +35,11 @@ public class BewerbungControlProxy implements BewerbungControlInterface {
         BewerbungControl.getInstance().applyForStellenanzeige(stellenanzeige, id_bewerbung);
     }
 
-    public void applyingIsAllowed() throws DatabaseException, BewerbungException {
+    public void applyingIsAllowed() throws DatabaseException, BewerbungException, SQLException {
         BewerbungControl.getInstance().applyingIsAllowed();
     }
 
-    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException {
+    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException, SQLException {
         BewerbungControl.getInstance().checkAlreadyApplied(stellenanzeigeDetail, userDTO);
 
     }
@@ -50,7 +51,7 @@ public class BewerbungControlProxy implements BewerbungControlInterface {
         BewerbungControl.getInstance().createBewerbung(bewerbungstext, userDTO);
     }
 
-    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) {
+    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException {
         return BewerbungControl.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
     }
 

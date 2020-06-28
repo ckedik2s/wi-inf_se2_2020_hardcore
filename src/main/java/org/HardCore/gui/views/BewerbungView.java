@@ -16,6 +16,7 @@ import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class BewerbungView extends VerticalLayout implements View {
@@ -79,7 +80,12 @@ public class BewerbungView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                BewerbungDTO bewerbungDTO = BewerbungControlProxy.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
+                BewerbungDTO bewerbungDTO = null;
+                try {
+                    bewerbungDTO = BewerbungControlProxy.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
+                }
                 DeleteBewerbungWindow window = new DeleteBewerbungWindow(bewerbungDTO);
                 UI.getCurrent().addWindow(window);
                 deleteButton.setEnabled(false);
