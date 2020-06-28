@@ -39,9 +39,6 @@ public class BewerbungDAO extends AbstractDAO {
         try {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
-            if (rs == null) {
-                throw new BewerbungException();
-            }
             if (rs.next()) {
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(id_bewerbung);
@@ -49,8 +46,6 @@ public class BewerbungDAO extends AbstractDAO {
             }
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-        } catch (BewerbungException e) {
-            Notification.show("Eintrag nicht vorhanden!");
         } finally {
             assert rs != null;
             rs.close();
