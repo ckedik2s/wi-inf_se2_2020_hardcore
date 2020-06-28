@@ -29,13 +29,16 @@ public class StellenanzeigeDAO extends AbstractDAO {
     }
 
     public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(UserDTO userDTO) {
-        Statement statement = this.getStatement();
+        String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
+                "FROM collhbrs.stellenanzeige " +
+                "WHERE id = ? ;";
+        PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
-                    "FROM collhbrs.stellenanzeige " +
-                    "WHERE id = \'" + userDTO.getId() + "\'");
+            statement.setInt(1,userDTO.getId());
+            rs = statement.executeQuery();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,11 +125,13 @@ public class StellenanzeigeDAO extends AbstractDAO {
 
     //Löscht eine Stellenanzeige aus der Datenbank
     public boolean deleteStellenanzeige(Stellenanzeige stellenanzeige) {
-        Statement statement = this.getStatement();
+        String sql = "DELETE " +
+                "FROM collhbrs.stellenanzeige " +
+                "WHERE collhbrs.stellenanzeige.id_anzeige = ? ;";
+        PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.executeQuery("DELETE " +
-                    "FROM collhbrs.stellenanzeige " +
-                    "WHERE collhbrs.stellenanzeige.id_anzeige = \'" + stellenanzeige.getId_anzeige() + "\';");
+            statement.setInt(1,stellenanzeige.getId_anzeige());
+            statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
             return false;
@@ -134,18 +139,33 @@ public class StellenanzeigeDAO extends AbstractDAO {
     }
 
     public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext, String filter) {
-        filter.toLowerCase();
-        Statement statement = this.getStatement();
+        filter = filter.toLowerCase();
+        PreparedStatement statement = null;
         ResultSet rs = null;
-
-        try {
-            rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
-                    "FROM collhbrs.stellenanzeige " +
-                    "WHERE " + filter + " like \'%" + suchtext + "%\'");
-        } catch (SQLException e) {
+        if(suchtext == ""){
+            String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
+            "FROM collhbrs.stellenanzeige ;";
+            statement = this.getPreparedStatement(sql);
+            try {
+                rs = statement.executeQuery();
+            } catch (SQLException e) {
             e.printStackTrace();
+            }
         }
+        else {
+            String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
+                    "FROM collhbrs.stellenanzeige " +
+                    "WHERE " + filter +" like ? ;";
+            statement = this.getPreparedStatement(sql);
 
+
+            try {
+                statement.setString(1, "%" + suchtext + "%");
+                rs = statement.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         if (rs == null) {
             return null;
         }
