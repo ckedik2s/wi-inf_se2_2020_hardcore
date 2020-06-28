@@ -28,13 +28,12 @@ public class LoginControl implements LoginControlInterface {
         return loginControl;
     }
 
-    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
+    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException, SQLException {
         String sql = "SELECT id " +
                     "FROM collhbrs.user " +
                     "WHERE email = ? "+
                     "AND password = ? ;";
-        //DB User abfrage
-        ResultSet rs = null;
+        ResultSet rs;
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         try {
             statement.setString(1, email);
@@ -67,6 +66,7 @@ public class LoginControl implements LoginControlInterface {
         }
         finally {
             JDBCConnection.getInstance().closeConnection();
+            rs.close();
         }
         ((MyUI) UI.getCurrent() ).setUserDTO(userDTO); //Mockito zum Testen
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);

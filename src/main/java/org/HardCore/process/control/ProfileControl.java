@@ -43,11 +43,11 @@ public class ProfileControl implements ProfileControlInterface {
         throw new ProfileException();
     }
 
-    public StudentDTO getStudent(UserDTO userDTO) {
+    public StudentDTO getStudent(UserDTO userDTO) throws SQLException {
         return StudentDAO.getInstance().getAllDataStudent(userDTO);
     }
 
-    public UnternehmenDTO getUnternehmen(UserDTO userDTO) {
+    public UnternehmenDTO getUnternehmen(UserDTO userDTO) throws SQLException {
         return UnternehmenDAO.getInstance().getAllDataUnternehmen(userDTO);
     }
 

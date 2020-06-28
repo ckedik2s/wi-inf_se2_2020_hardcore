@@ -42,19 +42,18 @@ public class StudentDAO extends AbstractDAO {
             statement.setInt(9, studentDTO.getId());
             statement.executeUpdate();
             return true;
-
         } catch (SQLException ex) {
             return false;
         }
     }
 
-    public StudentDTO getAllDataStudent(UserDTO userDTO) {
+    public StudentDTO getAllDataStudent(UserDTO userDTO) throws SQLException {
         String sql = "SELECT * " +
                 "FROM collhbrs.student " +
                 "WHERE collhbrs.student.id = ? ;";
 
         PreparedStatement statement = this.getPreparedStatement(sql);
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             statement.setInt(1,userDTO.getId());
             rs = statement.executeQuery();
@@ -71,7 +70,7 @@ public class StudentDAO extends AbstractDAO {
                 studentDTO.setVorname(rs.getString(3));
                 studentDTO.setName(rs.getString(4));
                 studentDTO.setHochschule(rs.getString(5));
-                studentDTO.setSemester((Integer) rs.getInt(6));
+                studentDTO.setSemester(rs.getInt(6));
                 studentDTO.setGebDatum(rs.getDate(7).toLocalDate());
                 studentDTO.setKenntnisse(rs.getString(8));
                 studentDTO.setStudiengang(rs.getString(9));
@@ -80,6 +79,8 @@ public class StudentDAO extends AbstractDAO {
         } catch (SQLException ex) {
             Logger.getLogger((StudentDAO.class.getName())).log(Level.SEVERE, null, ex);
             return null;
+        } finally {
+            rs.close();
         }
 
 

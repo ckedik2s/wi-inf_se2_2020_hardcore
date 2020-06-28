@@ -1,5 +1,6 @@
 package org.HardCore.process.control;
 
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.dao.StellenanzeigeDAO;
@@ -76,7 +77,7 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
         return StellenanzeigeDAO.getInstance().getStellenanzeigenForSearch(suchtext, filter);
     }
 
-    public int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException {
+    public int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException, SQLException {
 
         int anzahl_bewerber = 0;
         String sql = "SELECT count(id_bewerbung) " +
@@ -88,7 +89,6 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
             statement.setInt(1,stellenanzeigeDetail.getId_anzeige());
             rs = statement.executeQuery();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL-Befehl: Bitte den Programmierer informieren!");
         }
         try {
@@ -96,9 +96,10 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
                 anzahl_bewerber = rs.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         } finally {
             JDBCConnection.getInstance().closeConnection();
+            rs.close();
         }
 
         return anzahl_bewerber;

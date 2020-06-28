@@ -14,6 +14,8 @@ import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.NoSuchUserOrPassword;
 import org.HardCore.process.proxy.LoginControlProxy;
 
+import java.sql.SQLException;
+
 public class LoginView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -53,6 +55,8 @@ public class LoginView extends VerticalLayout implements View {
                     Notification.show("Benutzer-Fehler", "Login oder Passwort falsch!", Notification.Type.ERROR_MESSAGE);
                 } catch (DatabaseException e) {
                     Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
                 }
             }
         });

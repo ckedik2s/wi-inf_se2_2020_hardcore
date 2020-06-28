@@ -15,6 +15,7 @@ import org.HardCore.process.exceptions.ProfileException;
 import org.HardCore.process.proxy.ProfileControlProxy;
 import org.HardCore.services.util.Roles;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class ProfileView extends VerticalLayout implements View {
@@ -93,7 +94,12 @@ public class ProfileView extends VerticalLayout implements View {
 
         if (userDTO.hasRole(Roles.STUDENT)) {
             //Werte einsetzen
-            StudentDTO studentDTO = ProfileControlProxy.getInstance().getStudent(userDTO);
+            StudentDTO studentDTO = new StudentDTO(userDTO);
+            try {
+                studentDTO = ProfileControlProxy.getInstance().getStudent(userDTO);
+            } catch (SQLException e) {
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
+            }
             if (studentDTO.getAnrede() != null) {
                 anrede.setValue(studentDTO.getAnrede());
             }
@@ -120,7 +126,12 @@ public class ProfileView extends VerticalLayout implements View {
             }
         } else {
             //Werte Setzen
-            UnternehmenDTO unternehmenDTO = ProfileControlProxy.getInstance().getUnternehmen(userDTO);
+            UnternehmenDTO unternehmenDTO = new UnternehmenDTO(userDTO);
+            try {
+                unternehmenDTO = ProfileControlProxy.getInstance().getUnternehmen(userDTO);
+            } catch (SQLException e) {
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
+            }
             if (unternehmenDTO.getName() != null) {
                 firmenname.setValue(unternehmenDTO.getName());
             }

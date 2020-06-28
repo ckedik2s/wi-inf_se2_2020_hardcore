@@ -24,7 +24,7 @@ public class RoleDAO extends AbstractDAO{
         return dao;
     }
 
-    public List<RoleDTO> getRolesForUser(UserDTO userDTO) {
+    public List<RoleDTO> getRolesForUser(UserDTO userDTO) throws SQLException {
         String sql = "SELECT rolle " +
                 "FROM collhbrs.user_to_rolle " +
                 "WHERE id = ? ";
@@ -39,22 +39,22 @@ public class RoleDAO extends AbstractDAO{
             throwables.printStackTrace();
         }
 
-
-        if (rs == null) {
-            return null;
-        }
-
         List<RoleDTO> liste = new ArrayList<>();
-        RoleDTO role = null;
+        RoleDTO role;
 
         try {
-            while (rs.next()) {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
                 role = new RoleDTO();
                 role.setBezeichnung(rs.getString(1));
                 liste.add(role);
             }
         } catch (SQLException ex) {
             return null;
+        } finally {
+            assert rs != null;
+            rs.close();
         }
         return liste;
     }

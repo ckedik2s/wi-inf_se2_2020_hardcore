@@ -47,7 +47,7 @@ public class StellenanzeigeControlProxy implements StellenanzeigeControlInterfac
         return StellenanzeigeControl.getInstance().getAnzeigenForSearch(suchtext, filter);
     }
 
-    public int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException {
+    public int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException, SQLException {
         return StellenanzeigeControl.getInstance().getAnzahlBewerber(stellenanzeigeDetail);
     }
 }

@@ -15,9 +15,9 @@ public interface ProfileControlInterface {
 
     void updateUnternehmenData(UnternehmenDTO unternehmenDTO) throws ProfileException;
 
-    StudentDTO getStudent(UserDTO userDTO);
+    StudentDTO getStudent(UserDTO userDTO) throws SQLException;
 
-    UnternehmenDTO getUnternehmen(UserDTO userDTO);
+    UnternehmenDTO getUnternehmen(UserDTO userDTO) throws SQLException;
 
     void setBewerbung(String text, StudentDTO studentDTO) throws ProfileException;
 

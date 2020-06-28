@@ -33,11 +33,11 @@ public class ProfileControlProxy implements ProfileControlInterface {
         ProfileControl.getInstance().updateUnternehmenData(unternehmenDTO);
     }
 
-    public StudentDTO getStudent(UserDTO userDTO) {
+    public StudentDTO getStudent(UserDTO userDTO) throws SQLException {
         return ProfileControl.getInstance().getStudent(userDTO);
     }
 
-    public UnternehmenDTO getUnternehmen(UserDTO userDTO) {
+    public UnternehmenDTO getUnternehmen(UserDTO userDTO) throws SQLException {
         return ProfileControl.getInstance().getUnternehmen(userDTO);
     }
 

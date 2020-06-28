@@ -23,5 +23,5 @@ public interface StellenanzeigeControlInterface {
 
     List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException;
 
-    int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException;
+    int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException, SQLException;
 }

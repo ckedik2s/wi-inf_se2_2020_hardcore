@@ -1,5 +1,6 @@
 package org.HardCore.process.control;
 
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.ConfirmationWindow;
@@ -33,7 +34,7 @@ public class RegistrationControl implements RegistrationControlInterface {
         return registration;
     }
 
-    public void checkValid(String email, boolean emailBool, String password1, String password2, boolean password1Bool, boolean password2Bool, boolean checkBox) throws NoEqualPasswordException, DatabaseException, EmailInUseException, EmptyFieldException {
+    public void checkValid(String email, boolean emailBool, String password1, String password2, boolean password1Bool, boolean password2Bool, boolean checkBox) throws NoEqualPasswordException, DatabaseException, EmailInUseException, EmptyFieldException, SQLException {
 
         //Eingabecheck
         if (!emailBool || !password1Bool  || !password2Bool || !checkBox) {
@@ -56,16 +57,19 @@ public class RegistrationControl implements RegistrationControlInterface {
             statement.setString(1,email);
             rs = statement.executeQuery();
         } catch (SQLException throwables) {
-
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
 
         try {
+            assert rs != null;
             if (rs.next()) {
                 throw new EmailInUseException("Die Email wird bereits benutzt!");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             throw new DatabaseException("Fehler bei set: Bitte den Programmierer informieren!");
+        } finally {
+            assert rs != null;
+            rs.close();
         }
     }
 
@@ -74,18 +78,19 @@ public class RegistrationControl implements RegistrationControlInterface {
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(email);
         userDTO.setPassword(password);
-        boolean registerUser = RegisterDAO.getInstance().addUser(userDTO);
+        boolean registerUser;
+        RegisterDAO.getInstance().addUser(userDTO);
         userDTO.setId(UserDAO.getInstance().getMaxID());
 
         if (regAs.equals(Roles.STUDENT)) {
-            registerUser = RegisterDAO.getInstance().addStudent(userDTO);
+            RegisterDAO.getInstance().addStudent(userDTO);
             registerUser = RoleDAO.getInstance().setRolesForStudent(userDTO);
         } else {
-            registerUser = RegisterDAO.getInstance().addUnternehmen(userDTO);
+            RegisterDAO.getInstance().addUnternehmen(userDTO);
             registerUser = RoleDAO.getInstance().setRolesForUnternehmen(userDTO);
         }
 
-        if (registerUser == true) {
+        if (registerUser) {
             UI.getCurrent().addWindow( new ConfirmationWindow("Registration erfolgreich!") );
             ( (MyUI)UI.getCurrent() ).setUserDTO(userDTO);
             UI.getCurrent().getNavigator().navigateTo(Views.MAIN);

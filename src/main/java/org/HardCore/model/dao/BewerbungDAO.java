@@ -68,7 +68,9 @@ public class BewerbungDAO extends AbstractDAO {
         }
         BewerbungDTO bewerbungDTO;
         try {
-            while (rs.next()) {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(rs.getInt(1));
                 bewerbungDTO.setFreitext(rs.getString(2));

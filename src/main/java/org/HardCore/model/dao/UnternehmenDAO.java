@@ -48,12 +48,12 @@ public class UnternehmenDAO extends AbstractDAO {
         }
     }
 
-    public UnternehmenDTO getAllDataUnternehmen(UserDTO userDTO) {
+    public UnternehmenDTO getAllDataUnternehmen(UserDTO userDTO) throws SQLException {
         String sql = "SELECT * " +
                 "FROM collhbrs.unternehmen " +
                 "WHERE collhbrs.unternehmen.id = ? ;";
         PreparedStatement statement = this.getPreparedStatement(sql);
-        ResultSet rs = null;
+        ResultSet rs;
 
         try {
             statement.setInt(1,userDTO.getId());
@@ -70,17 +70,18 @@ public class UnternehmenDAO extends AbstractDAO {
                 un.setName(rs.getString(2));
                 un.setAnsprechpartner(rs.getString(3));
                 un.setStrasse(rs.getString(4));
-                un.setPlz((Integer) rs.getInt(5));
-                un.setHaus_nr((Integer) rs.getInt(6));
+                un.setPlz(rs.getInt(5));
+                un.setHaus_nr(rs.getInt(6));
                 un.setZusatz(rs.getString(7));
                 un.setOrt(rs.getString(8));
                 un.setBranche(rs.getString(9));
-
             }
 
         } catch (SQLException ex) {
             Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
             return null;
+        } finally {
+            rs.close();
         }
         return un;
     }
