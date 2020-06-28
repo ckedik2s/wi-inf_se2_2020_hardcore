@@ -167,29 +167,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
 
         List<StellenanzeigeDetail> list = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail;
 
-        try {
-            while (true) {
-                assert rs != null;
-                if (!rs.next()) break;
-                stellenanzeigeDetail = new StellenanzeigeDetail();
-                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
-                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
-                stellenanzeigeDetail.setArt(rs.getString(3));
-                stellenanzeigeDetail.setName(rs.getString(4));
-                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
-                stellenanzeigeDetail.setBranche(rs.getString(6));
-                stellenanzeigeDetail.setStudiengang(rs.getString(7));
-                stellenanzeigeDetail.setOrt(rs.getString(8));
-                list.add(stellenanzeigeDetail);
-            }
-        } catch (SQLException e) {
-            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-        } finally {
-            assert rs != null;
-            rs.close();
-        }
+        assert rs != null;
+        buildList(rs, list);
         return list;
     }
 
@@ -204,7 +184,6 @@ public class StellenanzeigeDAO extends AbstractDAO {
         ResultSet rs = null;
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail;
         for (BewerbungDTO bewerbungDTO : list) {
             int id_bewerbung = bewerbungDTO.getId();
             try {
@@ -213,29 +192,35 @@ public class StellenanzeigeDAO extends AbstractDAO {
             } catch (SQLException e) {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
-            try {
-                while (true) {
-                    assert rs != null;
-                    if (!rs.next()) break;
-                    stellenanzeigeDetail = new StellenanzeigeDetail();
-                    stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
-                    stellenanzeigeDetail.setBeschreibung(rs.getString(2));
-                    stellenanzeigeDetail.setArt(rs.getString(3));
-                    stellenanzeigeDetail.setName(rs.getString(4));
-                    stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
-                    stellenanzeigeDetail.setBranche(rs.getString(6));
-                    stellenanzeigeDetail.setStudiengang(rs.getString(7));
-                    stellenanzeigeDetail.setOrt(rs.getString(8));
-                    listStellenanzeige.add(stellenanzeigeDetail);
-                }
-            } catch (SQLException e) {
-                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-            } finally {
-                assert rs != null;
-                rs.close();
-            }
+            assert rs != null;
+            buildList(rs, listStellenanzeige);
         }
         return listStellenanzeige;
+    }
+
+    private void buildList(ResultSet rs, List<StellenanzeigeDetail> listStellenanzeige) throws SQLException {
+        StellenanzeigeDetail stellenanzeigeDetail;
+        try {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
+                stellenanzeigeDetail = new StellenanzeigeDetail();
+                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
+                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
+                stellenanzeigeDetail.setArt(rs.getString(3));
+                stellenanzeigeDetail.setName(rs.getString(4));
+                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
+                stellenanzeigeDetail.setBranche(rs.getString(6));
+                stellenanzeigeDetail.setStudiengang(rs.getString(7));
+                stellenanzeigeDetail.setOrt(rs.getString(8));
+                listStellenanzeige.add(stellenanzeigeDetail);
+            }
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        } finally {
+            assert rs != null;
+            rs.close();
+        }
     }
 
 

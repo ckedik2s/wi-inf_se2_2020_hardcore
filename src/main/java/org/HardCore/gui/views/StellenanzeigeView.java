@@ -9,7 +9,6 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
 import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
@@ -80,7 +79,6 @@ public class StellenanzeigeView extends VerticalLayout implements View {
                 if (selection.getValue() == null) {
                     showButton.setEnabled(false);
                     deleteButton.setEnabled(false);
-                    return;
                 }
                 else {
                     System.out.println("Zeile selektiert: " + selection.getValue());
@@ -104,7 +102,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         createButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail(), grid, unternehmenDTO);
+                StellenanzeigeWindow window = new StellenanzeigeWindow(new StellenanzeigeDetail(), grid, unternehmenDTO);
                 UI.getCurrent().addWindow(window);
             }
         });

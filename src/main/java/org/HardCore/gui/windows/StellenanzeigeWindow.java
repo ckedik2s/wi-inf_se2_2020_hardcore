@@ -13,33 +13,39 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class StellenanzeigeWindow extends Window {
+    private TextField name;
+    private TextField art;
+    private TextField branche;
+    private TextField studiengang;
+    private TextField ort;
+    private TextArea beschreibung;
 
     public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, UserDTO userDTO) {
         super(stellenanzeige.getName());
         center();
 
         //Name
-        TextField name = new TextField("Titel");
+        name = new TextField("Titel");
         name.setValue(stellenanzeige.getName());
         name.setReadOnly(true);
 
         //Art
-        TextField art = new TextField("Art");
+        art = new TextField("Art");
         art.setValue(stellenanzeige.getArt());
         art.setReadOnly(true);
 
         //Branche
-        TextField branche = new TextField("Branche");
+        branche = new TextField("Branche");
         branche.setValue(stellenanzeige.getBranche());
         branche.setReadOnly(true);
 
         //Studiengang
-        TextField studiengang = new TextField("Studiengang");
+        studiengang = new TextField("Studiengang");
         studiengang.setValue(stellenanzeige.getStudiengang());
         studiengang.setReadOnly(true);
 
         //Ort
-        TextField ort = new TextField("Ort");
+        ort = new TextField("Ort");
         ort.setValue(stellenanzeige.getOrt());
         ort.setReadOnly(true);
 
@@ -49,7 +55,7 @@ public class StellenanzeigeWindow extends Window {
         zeitraum.setReadOnly(true);
 
         //Beschreibung
-        TextArea beschreibung = new TextArea("Beschreibung");
+        beschreibung = new TextArea("Beschreibung");
         beschreibung.setValue(stellenanzeige.getBeschreibung());
         beschreibung.setReadOnly(true);
 
@@ -98,23 +104,23 @@ public class StellenanzeigeWindow extends Window {
         center();
 
         //Name
-        TextField name = new TextField("Titel");
+        name = new TextField("Titel");
         name.setValue(stellenanzeige.getName());
 
         //Art
-        TextField art = new TextField("Art");
+        art = new TextField("Art");
         art.setValue(stellenanzeige.getArt());
 
         //Branche
-        TextField branche = new TextField("Branche");
+        branche = new TextField("Branche");
         branche.setValue(stellenanzeige.getBranche());
 
         //Studiengang
-        TextField studiengang = new TextField("Studiengang");
+        studiengang = new TextField("Studiengang");
         studiengang.setValue(stellenanzeige.getStudiengang());
 
         //Ort
-        TextField ort = new TextField("Ort");
+        ort = new TextField("Ort");
         ort.setValue(stellenanzeige.getOrt());
 
         //Zeitraum
@@ -122,7 +128,7 @@ public class StellenanzeigeWindow extends Window {
         zeitraum.setValue(stellenanzeige.getZeitraum());
 
         //Beschreibung
-        TextArea beschreibung = new TextArea("Beschreibung");
+        beschreibung = new TextArea("Beschreibung");
         beschreibung.setValue(stellenanzeige.getBeschreibung());
 
         //SaveButton
