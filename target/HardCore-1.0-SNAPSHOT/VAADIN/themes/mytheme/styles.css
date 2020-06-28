@@ -15213,3 +15213,18 @@ div.v-layout.v-horizontal.v-widget {
 	width: 19px;
 	overflow: hidden;
 }
+
+.hintergrundbild {
+	background-image: url("Berge2.jpg");
+	background-position: left top;
+	background-size: cover;
+}
+
+.schrift-willkommen{
+	font-family: Lato, Helvetica, Roboto, sans-serif;
+	font-size: larger;
+}
+
+.pointer-cursor {
+	cursor: pointer;
+}

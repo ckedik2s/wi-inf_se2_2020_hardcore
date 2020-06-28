@@ -7,6 +7,7 @@ import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -26,7 +27,6 @@ public class MainView extends VerticalLayout implements View {
     private String suchtext;
 
 
-
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
@@ -43,6 +43,9 @@ public class MainView extends VerticalLayout implements View {
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
+
+        //Hintergrund Top Layer
+        //this.setStyleName("startseitebild");
 
         //Tabelle
         final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Treffer");
