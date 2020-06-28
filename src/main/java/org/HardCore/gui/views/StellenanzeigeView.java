@@ -16,6 +16,7 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.process.proxy.SearchControlProxy;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StellenanzeigeView extends VerticalLayout implements View {
@@ -46,7 +47,11 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = SearchControlProxy.getInstance().getAnzeigenForUser();
+        try {
+            list = SearchControlProxy.getInstance().getAnzeigenForUser();
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        }
         grid.removeAllColumns();
         grid.setItems(list);
         grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");

@@ -8,6 +8,7 @@ import org.HardCore.process.control.StellenanzeigeControl;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.StellenanzeigeException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StellenanzeigeControlProxy implements StellenanzeigeControlInterface {
@@ -28,7 +29,7 @@ public class StellenanzeigeControlProxy implements StellenanzeigeControlInterfac
         return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) {
+    public List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException {
         return StellenanzeigeControl.getInstance().getAnzeigenForStudent(studentDTO);
     }
     public void createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {

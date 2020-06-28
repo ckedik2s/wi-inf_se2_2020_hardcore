@@ -55,7 +55,7 @@ public class BewerbungControlProxy implements BewerbungControlInterface {
         return BewerbungControl.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
     }
 
-    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException {
         return BewerbungControl.getInstance().getBewerbungenForStudent(studentDTO);
     }
 

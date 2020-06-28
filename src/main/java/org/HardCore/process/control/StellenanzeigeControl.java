@@ -37,7 +37,7 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
         return StellenanzeigeDAO.getInstance().getStellenanzeigenForUnternehmen(unternehmenDTO);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) {
+    public List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException {
         return StellenanzeigeDAO.getInstance().getStellenanzeigeforStudent(studentDTO);
 
     }
@@ -91,11 +91,6 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL-Befehl: Bitte den Programmierer informieren!");
         }
-
-        if (rs == null) {
-            return anzahl_bewerber;
-        }
-
         try {
             if (rs.next()) {
                 anzahl_bewerber = rs.getInt(1);

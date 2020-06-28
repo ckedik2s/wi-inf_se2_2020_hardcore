@@ -4,6 +4,7 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.process.Interfaces.SearchControlInterface;
 import org.HardCore.process.control.SearchControl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class SearchControlProxy implements SearchControlInterface {
@@ -20,7 +21,7 @@ public class SearchControlProxy implements SearchControlInterface {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUser() {
+    public List<StellenanzeigeDetail> getAnzeigenForUser() throws SQLException {
         return SearchControl.getInstance().getAnzeigenForUser();
     }
 

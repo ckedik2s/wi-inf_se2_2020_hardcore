@@ -16,6 +16,8 @@ import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
 import org.HardCore.process.proxy.RegistrationControlProxy;
 
+import java.sql.SQLException;
+
 public class RegistrationView extends VerticalLayout implements View {
 
     @Override
@@ -119,6 +121,8 @@ public class RegistrationView extends VerticalLayout implements View {
                     Notification.show("Email-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
                 } catch (EmptyFieldException e) {
                     Notification.show("Es sind ein oder mehrere Eingabefehler aufgetreten!", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
                 }
             }
         });

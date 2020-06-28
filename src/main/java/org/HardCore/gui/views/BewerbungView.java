@@ -47,7 +47,11 @@ public class BewerbungView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
+        try {
+            list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        }
         grid.removeAllColumns();
         grid.setItems(list);
         grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
@@ -90,13 +94,13 @@ public class BewerbungView extends VerticalLayout implements View {
                 UI.getCurrent().addWindow(window);
                 deleteButton.setEnabled(false);
                 grid.setItems();
-                list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
                 try {
+                    list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
                     grid.setItems(list);
-                } catch (Exception e) {
-                    System.out.println("Fehler 1");
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
                 }
+
             }
         });
 

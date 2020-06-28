@@ -44,9 +44,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         try {
             statement.setInt(1, userDTO.getId());
             rs = statement.executeQuery();
-            if (rs == null) {
-                return id_bewerbung;
-            }
+
             if (rs.next()) {
                 id_bewerbung = rs.getInt(1);
             }
@@ -78,9 +76,6 @@ public class BewerbungControl implements BewerbungControlInterface {
         ResultSet rs = null;
         try {
             rs = statement.executeQuery();
-            if (rs == null) {
-                return;
-            }
             if ( rs.next() ) {
                 if (rs.getBoolean(1)) {
                     return;
@@ -109,9 +104,6 @@ public class BewerbungControl implements BewerbungControlInterface {
                 statement.setInt(1, id_bewerbung);
                 statement.setInt(2, stellenanzeigeDetail.getId_anzeige());
                 rs = statement.executeQuery();
-                if (rs == null) {
-                    return;
-                }
                 if (rs.next()) {
                     throw new BewerbungException();
                 }
@@ -150,6 +142,7 @@ public class BewerbungControl implements BewerbungControlInterface {
 
     public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException {
         List<BewerbungDTO> list = getBewerbungenForStudent(studentDTO);
+        BewerbungDTO bewerbungDTO = new BewerbungDTO();
         String sql = "SELECT id_bewerbung " +
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
                 "WHERE id_anzeige = ? " +
@@ -161,13 +154,14 @@ public class BewerbungControl implements BewerbungControlInterface {
             Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
         }
         ResultSet rs = null;
-        for (BewerbungDTO bewerbungDTO : list) {
+        for (BewerbungDTO bewerbung :list ) {
             try {
                 statement.setInt(1, selektiert.getId_anzeige());
                 statement.setInt(2, bewerbungDTO.getId());
                 rs = statement.executeQuery();
                 if ( rs.next() ) {
-                    return bewerbungDTO;
+                    bewerbungDTO = bewerbung;
+                    break;
                 }
             } catch (SQLException e) {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
@@ -175,10 +169,10 @@ public class BewerbungControl implements BewerbungControlInterface {
                 rs.close();
             }
         }
-        return null;
+        return bewerbungDTO;
     }
 
-    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException {
         return BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
     }
 

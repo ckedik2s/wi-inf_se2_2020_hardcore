@@ -70,7 +70,7 @@ public class RegistrationControl implements RegistrationControlInterface {
     }
 
     //User registrieren
-    public void registerUser( String email, String password, String regAs ) throws DatabaseException {
+    public void registerUser( String email, String password, String regAs ) throws DatabaseException, SQLException {
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(email);
         userDTO.setPassword(password);

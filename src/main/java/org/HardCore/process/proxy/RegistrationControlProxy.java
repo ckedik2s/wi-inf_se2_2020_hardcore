@@ -8,6 +8,8 @@ import org.HardCore.process.exceptions.EmailInUseException;
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
 
+import java.sql.SQLException;
+
 public class RegistrationControlProxy implements RegistrationControlInterface {
 
     private static RegistrationControlProxy registration = null;
@@ -26,7 +28,7 @@ public class RegistrationControlProxy implements RegistrationControlInterface {
     }
 
     //User registrieren
-    public void registerUser( String email, String password, String regAs ) throws DatabaseException {
+    public void registerUser( String email, String password, String regAs ) throws DatabaseException, SQLException {
         RegistrationControl.getInstance().registerUser(email, password, regAs);
     }
 

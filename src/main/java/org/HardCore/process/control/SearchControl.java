@@ -9,6 +9,7 @@ import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.Interfaces.SearchControlInterface;
 import org.HardCore.services.util.Roles;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class SearchControl implements SearchControlInterface {
@@ -25,7 +26,7 @@ public class SearchControl implements SearchControlInterface {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUser() {
+    public List<StellenanzeigeDetail> getAnzeigenForUser() throws SQLException {
         UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
         if (userDTO.hasRole(Roles.STUDENT)) {
             StudentDTO studentDTO = new StudentDTO(userDTO);

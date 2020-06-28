@@ -1,5 +1,6 @@
 package org.HardCore.model.dao;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
@@ -39,13 +40,8 @@ public class StellenanzeigeDAO extends AbstractDAO {
             rs = statement.executeQuery();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
-
-        if (rs == null) {
-            return null;
-        }
-
         List<StellenanzeigeDetail> list = new ArrayList<>();
         StellenanzeigeDetail stellenanzeigeDetail = null;
 
@@ -63,12 +59,12 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 try {
                     stellenanzeigeDetail.setAnzahl_bewerber(StellenanzeigeControlProxy.getInstance().getAnzahlBewerber(stellenanzeigeDetail));
                 } catch (DatabaseException e) {
-                    e.printStackTrace();
+                    Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte informieren Sie einen Administrator!");
                 }
                 list.add(stellenanzeigeDetail);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         return list;
     }
@@ -92,7 +88,6 @@ public class StellenanzeigeDAO extends AbstractDAO {
             statement.setString(8, stellenanzeige.getOrt());
             statement.executeUpdate();
             return true;
-
         } catch (SQLException ex) {
             return false;
         }
@@ -148,7 +143,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
             try {
                 rs = statement.executeQuery();
             } catch (SQLException e) {
-            e.printStackTrace();
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
         }
         else {
@@ -162,7 +157,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 statement.setString(1, "%" + suchtext + "%");
                 rs = statement.executeQuery();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
         }
         if (rs == null) {
@@ -186,13 +181,13 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 list.add(stellenanzeigeDetail);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         return list;
     }
 
     //Zeigt alle Stellenanzeigen an, auf die sich ein Student beworben hat
-    public List<StellenanzeigeDetail> getStellenanzeigeforStudent(StudentDTO studentDTO) {
+    public List<StellenanzeigeDetail> getStellenanzeigeforStudent(StudentDTO studentDTO) throws SQLException {
         String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                     "FROM collhbrs.stellenanzeige " +
                     "WHERE id_anzeige = ( SELECT id_anzeige " +
@@ -209,10 +204,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 statement.setInt(1,id_bewerbung);
                 rs = statement.executeQuery();
             } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            if (rs == null) {
-                return null;
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
             try {
                 while (rs.next()) {
@@ -228,7 +220,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
                     listStellenanzeige.add(stellenanzeigeDetail);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
         }
         return listStellenanzeige;

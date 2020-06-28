@@ -27,7 +27,7 @@ public interface BewerbungControlInterface {
 
     BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException;
 
-    List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO);
+    List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException;
 
     void deleteBewerbung(BewerbungDTO bewerbungDTO) throws BewerbungException;
 }

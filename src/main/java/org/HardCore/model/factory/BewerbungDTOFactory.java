@@ -14,10 +14,14 @@ public class BewerbungDTOFactory {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(obj instanceof BewerbungDTO) {
+            return true;
+        }
+        return false;
+
     }
 
-    public Object clone() {
-        return null;
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException("Dieses Object kann nicht geclont werden!");
     }
 }

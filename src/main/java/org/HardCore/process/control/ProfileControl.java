@@ -10,6 +10,7 @@ import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.Interfaces.ProfileControlInterface;
 import org.HardCore.process.exceptions.ProfileException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProfileControl implements ProfileControlInterface {
@@ -58,7 +59,7 @@ public class ProfileControl implements ProfileControlInterface {
         throw new ProfileException();
     }
 
-    public List<BewerbungDTO> getBewerbung(StudentDTO studentDTO) {
+    public List<BewerbungDTO> getBewerbung(StudentDTO studentDTO) throws SQLException {
         return BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
     }
 }

@@ -1,5 +1,6 @@
 package org.HardCore.model.dao;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.process.exceptions.DatabaseException;
@@ -27,7 +28,7 @@ public class BewerbungDAO extends AbstractDAO {
         return bewerbungDAO;
     }
 
-    public BewerbungDTO getBewerbung(int id_bewerbung) throws DatabaseException {
+    public BewerbungDTO getBewerbung(int id_bewerbung) throws DatabaseException, SQLException {
         String sql = "SELECT id_bewerbung, freitext " +
                 "FROM collhbrs.bewerbung " +
                 "WHERE id_bewerbung = ?";
@@ -43,13 +44,14 @@ public class BewerbungDAO extends AbstractDAO {
                 bewerbungDTO.setFreitext(rs.getString(2));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         } finally {
-            return bewerbungDTO;
+            rs.close();
         }
+        return bewerbungDTO;
     }
 
-    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException {
         String sql = "SELECT id_bewerbung, freitext " +
                 "FROM collhbrs.bewerbung " +
                 "WHERE id = ? ;";
@@ -60,7 +62,7 @@ public class BewerbungDAO extends AbstractDAO {
             statement.setInt(1, studentDTO.getId());
             rs = statement.executeQuery();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         if (rs == null) {
             return null;
@@ -75,12 +77,12 @@ public class BewerbungDAO extends AbstractDAO {
 
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         finally{
-            return list;
+            rs.close();
         }
-
+        return list;
     }
 
     public boolean createBewerbung(String text, StudentDTO studentDTO) {
