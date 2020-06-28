@@ -6,7 +6,6 @@ import org.HardCore.model.objects.dto.UserDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,13 +49,15 @@ public class UnternehmenDAO extends AbstractDAO {
     }
 
     public UnternehmenDTO getAllDataUnternehmen(UserDTO userDTO) {
-        Statement statement = this.getStatement();
+        String sql = "SELECT * " +
+                "FROM collhbrs.unternehmen " +
+                "WHERE collhbrs.unternehmen.id = ? ;";
+        PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
-        System.out.println(userDTO.getId());
+
         try {
-            rs = statement.executeQuery("SELECT * " +
-                    "FROM collhbrs.unternehmen " +
-                    "WHERE collhbrs.unternehmen.id = \'" + userDTO.getId() + "\';");
+            statement.setInt(1,userDTO.getId());
+            rs = statement.executeQuery();
 
         } catch (SQLException ex) {
             Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
