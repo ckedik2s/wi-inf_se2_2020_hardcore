@@ -37,26 +37,27 @@ public class BewerbungDAO extends AbstractDAO {
         try {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
-            if( rs.next() ) {
+            if (rs.next()) {
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(id_bewerbung);
                 bewerbungDTO.setFreitext(rs.getString(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            return bewerbungDTO;
         }
-        return bewerbungDTO;
     }
 
     public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
-        String sql =    "SELECT id_bewerbung, freitext " +
-                        "FROM collhbrs.bewerbung " +
-                        "WHERE id = ? ;";
+        String sql = "SELECT id_bewerbung, freitext " +
+                "FROM collhbrs.bewerbung " +
+                "WHERE id = ? ;";
         List<BewerbungDTO> list = new ArrayList<>();
         PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
-            statement.setInt(1,studentDTO.getId());
+            statement.setInt(1, studentDTO.getId());
             rs = statement.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -76,7 +77,10 @@ public class BewerbungDAO extends AbstractDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return list;
+        finally{
+            return list;
+        }
+
     }
 
     public boolean createBewerbung(String text, StudentDTO studentDTO) {
