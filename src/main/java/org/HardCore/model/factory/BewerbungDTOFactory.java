@@ -12,12 +12,8 @@ public class BewerbungDTOFactory {
         return bewerbungDTO;
     }
 
-    @Override
     public boolean equals(Object obj) {
-        if(obj instanceof BewerbungDTO) {
-            return true;
-        }
-        return false;
+        return obj instanceof BewerbungDTO;
 
     }
 

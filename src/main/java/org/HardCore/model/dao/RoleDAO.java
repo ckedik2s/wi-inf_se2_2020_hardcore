@@ -1,5 +1,6 @@
 package org.HardCore.model.dao;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.RoleDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.services.util.Roles;
@@ -36,7 +37,7 @@ public class RoleDAO extends AbstractDAO{
             statement.setInt(1,userDTO.getId());
             rs = statement.executeQuery();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
 
         List<RoleDTO> liste = new ArrayList<>();

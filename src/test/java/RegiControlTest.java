@@ -1,6 +1,7 @@
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
 import org.HardCore.process.proxy.RegistrationControlProxy;
+import org.HardCore.services.util.SafeString;
 import org.junit.Test;
 
 import static org.junit.Assert.assertThrows;
@@ -18,8 +19,8 @@ public class RegiControlTest {
     @Test
     public void EqualPasswordTest() {
         email = "Pfill@test.de";
-        password1 = "!ABC123";
-        password2 = "!ABC1234";
+        password1 = SafeString.PASSWORD1;
+        password2 = SafeString.PASSWORD2;
         emailBool = true;
         password1Bool = true;
         password2Bool = true;
@@ -31,8 +32,8 @@ public class RegiControlTest {
     @Test
     public void emptyFieldTest() {
         email = "Pfill";
-        password1 = "!ABC123";
-        password2 = "!ABC1234";
+        password1 = SafeString.PASSWORD1;
+        password2 = SafeString.PASSWORD2;
         emailBool = false;
         password1Bool = true;
         password2Bool = true;

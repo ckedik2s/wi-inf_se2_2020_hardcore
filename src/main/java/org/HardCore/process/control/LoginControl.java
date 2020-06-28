@@ -1,5 +1,6 @@
 package org.HardCore.process.control;
 
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.objects.dto.StudentDTO;
@@ -40,7 +41,6 @@ public class LoginControl implements LoginControlInterface {
             statement.setString(2, password);
             rs = statement.executeQuery();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL-Befehl: Bitte den Programmierer informieren!");
         }
 
@@ -62,7 +62,7 @@ public class LoginControl implements LoginControlInterface {
                 throw new NoSuchUserOrPassword();
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
         finally {
             JDBCConnection.getInstance().closeConnection();

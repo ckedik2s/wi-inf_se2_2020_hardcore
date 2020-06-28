@@ -33,11 +33,13 @@ public class UserDAO extends AbstractDAO {
         int currentValue = 0;
 
         try {
+            assert rs != null;
             rs.next();
             currentValue = rs.getInt(1);
         } catch (SQLException throwables) {
             System.out.println("Fehler 2 bei addStudent");
         } finally {
+            assert rs != null;
             rs.close();
         }
         return currentValue;
