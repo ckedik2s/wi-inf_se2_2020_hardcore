@@ -44,9 +44,6 @@ public class MainView extends VerticalLayout implements View {
         this.addComponent(line);
         line.setSizeFull();
 
-        //Hintergrund Top Layer
-        //this.setStyleName("startseitebild");
-
         //Tabelle
         final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Treffer");
         grid.setSizeFull();
