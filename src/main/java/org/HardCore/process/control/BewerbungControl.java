@@ -1,6 +1,7 @@
 package org.HardCore.process.control;
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
@@ -33,7 +34,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         return bewerbungControl;
     }
 
-    public int getLatestApply(UserDTO userDTO) throws DatabaseException {
+    public int getLatestApply(UserDTO userDTO) throws DatabaseException, SQLException {
         int id_bewerbung = 0;
         String sql = "SELECT max(id_bewerbung) " +
                 "FROM collhbrs.bewerbung " +
@@ -51,6 +52,8 @@ public class BewerbungControl implements BewerbungControlInterface {
             }
         } catch (SQLException ex) {
             Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
+        } finally {
+            rs.close();
         }
         return id_bewerbung;
     }
@@ -68,7 +71,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         }
     }
 
-    public void applyingIsAllowed() throws DatabaseException, BewerbungException {
+    public void applyingIsAllowed() throws DatabaseException, BewerbungException, SQLException {
         String sql = "SELECT sichtbar " +
                 "FROM collhbrs.stellenanzeige_on_off";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
@@ -86,10 +89,12 @@ public class BewerbungControl implements BewerbungControlInterface {
             }
         } catch (SQLException ex) {
             Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
+        } finally {
+            rs.close();
         }
     }
 
-    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException {
+    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException, SQLException {
         StudentDTO studentDTO = new StudentDTO(userDTO);
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         String sql = "SELECT id_anzeige " +
@@ -111,7 +116,9 @@ public class BewerbungControl implements BewerbungControlInterface {
                     throw new BewerbungException();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
+            } finally {
+                rs.close();
             }
         }
 
@@ -125,9 +132,11 @@ public class BewerbungControl implements BewerbungControlInterface {
             applyingIsAllowed();
             checkAlreadyApplied(stellenanzeige, userDTO);
         } catch (DatabaseException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
         } catch (BewerbungException e) {
             bewerbenButton.setVisible(false);
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
         }
     }
 
@@ -139,7 +148,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         }
     }
 
-    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) {
+    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException {
         List<BewerbungDTO> list = getBewerbungenForStudent(studentDTO);
         String sql = "SELECT id_bewerbung " +
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
@@ -149,7 +158,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         try {
             statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         } catch (DatabaseException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
         }
         ResultSet rs = null;
         for (BewerbungDTO bewerbungDTO : list) {
@@ -161,7 +170,9 @@ public class BewerbungControl implements BewerbungControlInterface {
                     return bewerbungDTO;
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
+            } finally {
+                rs.close();
             }
         }
         return null;

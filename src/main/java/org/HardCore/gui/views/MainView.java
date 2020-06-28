@@ -16,6 +16,7 @@ import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.control.SearchControl;
 import org.HardCore.process.proxy.SearchControlProxy;
 
 import java.util.List;
@@ -100,10 +101,16 @@ public class MainView extends VerticalLayout implements View {
         searchButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                suchtext = search.getValue();
                 if(suchtext.equals("")) {
-                    return;
+                    list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, comboBox.getValue());
+                    grid.setItems(list);
+                    addComponent(grid);
+                    addComponent(detailButton);
+                    setComponentAlignment(detailButton, Alignment.MIDDLE_CENTER);
+                } else {
+                    search(search, comboBox, grid, detailButton);
                 }
-                search(search, comboBox, grid, detailButton);
             }
         });
 
@@ -120,7 +127,7 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
     }
 
-    private void search(TextField search, ComboBox<String> comboBox, Grid<StellenanzeigeDetail> grid, Button showButton) {
+    private void search(TextField search, ComboBox<String> comboBox, Grid<StellenanzeigeDetail> grid, Button detailButton) {
         if (search.getValue().length() > 1) {
             suchtext = search.getValue();
             String filter = comboBox.getValue();
@@ -128,11 +135,11 @@ public class MainView extends VerticalLayout implements View {
             grid.setItems();
             grid.setItems(list);
             addComponent(grid);
-            addComponent(showButton);
-            setComponentAlignment(showButton, Alignment.MIDDLE_CENTER);
+            addComponent(detailButton);
+            setComponentAlignment(detailButton, Alignment.MIDDLE_CENTER);
         } else {
             removeComponent(grid);
-            removeComponent(showButton);
+            removeComponent(detailButton);
         }
     }
 
