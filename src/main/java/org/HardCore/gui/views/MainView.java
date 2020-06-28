@@ -103,6 +103,9 @@ public class MainView extends VerticalLayout implements View {
         searchButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                if(suchtext.equals("")) {
+                    return;
+                }
                 search(search, comboBox, grid, detailButton);
             }
         });
