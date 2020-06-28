@@ -12,9 +12,9 @@ import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class LoginControl implements LoginControlInterface {
     private static LoginControl loginControl = null;
@@ -29,15 +29,17 @@ public class LoginControl implements LoginControlInterface {
     }
 
     public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
-
+        String sql = "SELECT id " +
+                    "FROM collhbrs.user " +
+                    "WHERE email = ? "+
+                    "AND password = ? ;";
         //DB User abfrage
         ResultSet rs = null;
-        Statement statement = JDBCConnection.getInstance().getStatement();
+        PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         try {
-            rs = statement.executeQuery("SELECT id " +
-                    "FROM collhbrs.user " +
-                    "WHERE email = \'" + email + "\' " +
-                    "AND password = \'" + password + "\'");
+            statement.setString(1, email);
+            statement.setString(2, password);
+            rs = statement.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL-Befehl: Bitte den Programmierer informieren!");
@@ -66,7 +68,6 @@ public class LoginControl implements LoginControlInterface {
         finally {
             JDBCConnection.getInstance().closeConnection();
         }
-        //UI.getCurrent().getSession().setAttribute(user);
         ((MyUI) UI.getCurrent() ).setUserDTO(userDTO); //Mockito zum Testen
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }
