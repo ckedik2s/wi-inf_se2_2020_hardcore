@@ -10,9 +10,9 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.model.objects.dto.UserDTO;
-import org.HardCore.process.proxy.LoginControlProxy;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.NoSuchUserOrPassword;
+import org.HardCore.process.proxy.LoginControlProxy;
 
 public class LoginView extends VerticalLayout implements View {
     @Override

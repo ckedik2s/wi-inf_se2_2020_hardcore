@@ -9,7 +9,6 @@ import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.Interfaces.ProfileControlInterface;
 import org.HardCore.process.exceptions.ProfileException;
-import org.HardCore.process.exceptions.StellenanzeigeException;
 
 import java.util.List;
 

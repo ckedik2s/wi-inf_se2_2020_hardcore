@@ -3,8 +3,8 @@ package org.HardCore.gui.windows;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.HardCore.model.objects.dto.BewerbungDTO;
-import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.exceptions.BewerbungException;
+import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.services.util.Views;
 
 public class DeleteBewerbungWindow extends Window {

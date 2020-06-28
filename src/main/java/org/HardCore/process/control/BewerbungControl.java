@@ -117,15 +117,16 @@ public class BewerbungControl implements BewerbungControlInterface {
 
     }
     public void checkAllowed(StellenanzeigeDetail stellenanzeige, UserDTO userDTO, Button bewerbenButton) {
+        if (userDTO == null || !userDTO.hasRole(Roles.STUDENT)) {
+            bewerbenButton.setVisible(false);
+            return;
+        }
         try {
             applyingIsAllowed();
             checkAlreadyApplied(stellenanzeige, userDTO);
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (BewerbungException e) {
-            bewerbenButton.setVisible(false);
-        }
-        if (userDTO == null || !userDTO.hasRole(Roles.STUDENT)) {
             bewerbenButton.setVisible(false);
         }
     }

@@ -10,11 +10,11 @@ import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.model.objects.dto.UserDTO;
-import org.HardCore.process.proxy.RegistrationControlProxy;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.EmailInUseException;
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
+import org.HardCore.process.proxy.RegistrationControlProxy;
 
 public class RegistrationView extends VerticalLayout implements View {
 

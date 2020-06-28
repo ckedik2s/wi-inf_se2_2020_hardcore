@@ -1,7 +1,6 @@
 package org.HardCore.process.proxy;
 
 import com.vaadin.ui.Button;
-import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
@@ -10,15 +9,8 @@ import org.HardCore.process.Interfaces.BewerbungControlInterface;
 import org.HardCore.process.control.BewerbungControl;
 import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
-import org.HardCore.services.db.JDBCConnection;
-import org.HardCore.services.util.Roles;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class BewerbungControlProxy implements BewerbungControlInterface {
     private static BewerbungControlProxy bewerbungControl = null;

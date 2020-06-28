@@ -1,11 +1,5 @@
 package org.HardCore.process.proxy;
 
-import com.vaadin.ui.UI;
-import org.HardCore.gui.ui.MyUI;
-import org.HardCore.gui.windows.ConfirmationWindow;
-import org.HardCore.model.dao.RegisterDAO;
-import org.HardCore.model.dao.RoleDAO;
-import org.HardCore.model.dao.UserDAO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.Interfaces.RegistrationControlInterface;
 import org.HardCore.process.control.RegistrationControl;
@@ -13,13 +7,6 @@ import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.EmailInUseException;
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
-import org.HardCore.services.db.JDBCConnection;
-import org.HardCore.services.util.Roles;
-import org.HardCore.services.util.Views;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class RegistrationControlProxy implements RegistrationControlInterface {
 
