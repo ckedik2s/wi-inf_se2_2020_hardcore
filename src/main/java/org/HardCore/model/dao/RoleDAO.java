@@ -7,7 +7,6 @@ import org.HardCore.services.util.Roles;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +25,16 @@ public class RoleDAO extends AbstractDAO{
     }
 
     public List<RoleDTO> getRolesForUser(UserDTO userDTO) {
-        Statement statement = getStatement();
+        String sql = "SELECT rolle " +
+                "FROM collhbrs.user_to_rolle " +
+                "WHERE id = ? ";
+        PreparedStatement statement = getPreparedStatement(sql);
 
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT rolle " +
-                    "FROM collhbrs.user_to_rolle " +
-                    "WHERE id = \'" + userDTO.getId() + "\'");
+            statement.setInt(1,userDTO.getId());
+            rs = statement.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

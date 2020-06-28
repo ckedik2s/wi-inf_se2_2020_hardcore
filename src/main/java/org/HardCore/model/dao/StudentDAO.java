@@ -50,12 +50,15 @@ public class StudentDAO extends AbstractDAO {
     }
 
     public StudentDTO getAllDataStudent(UserDTO userDTO) {
-        Statement statement = this.getStatement();
+        String sql = "SELECT * " +
+                "FROM collhbrs.student " +
+                "WHERE collhbrs.student.id = ? ;";
+
+        PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
-            rs = statement.executeQuery("SELECT * " +
-                    "FROM collhbrs.student " +
-                    "WHERE collhbrs.student.id = \'" + userDTO.getId() + "\';");
+            statement.setInt(1,userDTO.getId());
+            rs = statement.executeQuery();
 
         } catch (SQLException ex) {
             Logger.getLogger((StudentDAO.class.getName())).log(Level.SEVERE, null, ex);

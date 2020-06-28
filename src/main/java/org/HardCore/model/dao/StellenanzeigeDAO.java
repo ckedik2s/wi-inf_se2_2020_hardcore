@@ -5,13 +5,12 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.model.objects.entities.Stellenanzeige;
-import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,7 +193,12 @@ public class StellenanzeigeDAO extends AbstractDAO {
 
     //Zeigt alle Stellenanzeigen an, auf die sich ein Student beworben hat
     public List<StellenanzeigeDetail> getStellenanzeigeforStudent(StudentDTO studentDTO) {
-        Statement statement = this.getStatement();
+        String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
+                    "FROM collhbrs.stellenanzeige " +
+                    "WHERE id_anzeige = ( SELECT id_anzeige " +
+                    "FROM collhbrs.bewerbung_to_stellenanzeige " +
+                    "WHERE id_bewerbung = ? );";
+        PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
@@ -202,11 +206,8 @@ public class StellenanzeigeDAO extends AbstractDAO {
         for (BewerbungDTO bewerbungDTO : list) {
             int id_bewerbung = bewerbungDTO.getId();
             try {
-                rs = statement.executeQuery("SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
-                        "FROM collhbrs.stellenanzeige " +
-                        "WHERE id_anzeige = ( SELECT id_anzeige " +
-                        "FROM collhbrs.bewerbung_to_stellenanzeige " +
-                        "WHERE id_bewerbung = \'" + id_bewerbung + "\')");
+                statement.setInt(1,id_bewerbung);
+                rs = statement.executeQuery();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

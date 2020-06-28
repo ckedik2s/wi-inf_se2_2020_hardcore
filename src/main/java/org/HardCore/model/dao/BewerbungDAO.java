@@ -8,7 +8,6 @@ import org.HardCore.services.db.JDBCConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,13 +49,15 @@ public class BewerbungDAO extends AbstractDAO {
     }
 
     public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+        String sql =    "SELECT id_bewerbung, freitext " +
+                        "FROM collhbrs.bewerbung " +
+                        "WHERE id = ? ;";
         List<BewerbungDTO> list = new ArrayList<>();
-        Statement statement = getStatement();
+        PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
-            rs = statement.executeQuery("SELECT id_bewerbung, freitext " +
-                    "FROM collhbrs.bewerbung " +
-                    "WHERE id =\'" + studentDTO.getId() + "\';");
+            statement.setInt(1,studentDTO.getId());
+            rs = statement.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
