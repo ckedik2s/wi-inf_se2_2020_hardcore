@@ -16,9 +16,9 @@ import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class RegistrationControl implements RegistrationControlInterface {
 
@@ -46,19 +46,21 @@ public class RegistrationControl implements RegistrationControlInterface {
         }
 
         //DB Zugriff Emailcheck
-        ResultSet set = null;
-        Statement statement = JDBCConnection.getInstance().getStatement();
+        String sql = "SELECT email " +
+                     "FROM collhbrs.user " +
+                     "WHERE email = ? ;";
+        ResultSet rs = null;
+        PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
 
         try {
-            set = statement.executeQuery("SELECT email " +
-                    "FROM collhbrs.user " +
-                    "WHERE email = \'" + email + "\'");
+            statement.setString(1,email);
+            rs = statement.executeQuery();
         } catch (SQLException throwables) {
 
         }
 
         try {
-            if (set.next()) {
+            if (rs.next()) {
                 throw new EmailInUseException("Die Email wird bereits benutzt!");
             }
         } catch (SQLException throwables) {
