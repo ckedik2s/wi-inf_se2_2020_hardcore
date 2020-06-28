@@ -5,8 +5,8 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.model.objects.entities.Stellenanzeige;
-import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

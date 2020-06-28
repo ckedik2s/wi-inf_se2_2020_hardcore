@@ -1,23 +1,13 @@
 package org.HardCore.process.proxy;
 
-import com.vaadin.ui.UI;
-import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.dao.StellenanzeigeDAO;
-import org.HardCore.model.factory.StellenanzeigeFactory;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
-import org.HardCore.model.objects.dto.UserDTO;
-import org.HardCore.model.objects.entities.Stellenanzeige;
 import org.HardCore.process.Interfaces.StellenanzeigeControlInterface;
 import org.HardCore.process.control.StellenanzeigeControl;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.StellenanzeigeException;
-import org.HardCore.services.db.JDBCConnection;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public class StellenanzeigeControlProxy implements StellenanzeigeControlInterface {

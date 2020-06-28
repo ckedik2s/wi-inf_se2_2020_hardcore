@@ -1,8 +1,5 @@
 package org.HardCore.process.proxy;
 
-import org.HardCore.model.dao.BewerbungDAO;
-import org.HardCore.model.dao.StudentDAO;
-import org.HardCore.model.dao.UnternehmenDAO;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;

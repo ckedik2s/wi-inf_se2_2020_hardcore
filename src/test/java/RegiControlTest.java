@@ -1,6 +1,6 @@
-import org.HardCore.process.proxy.RegistrationControlProxy;
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
+import org.HardCore.process.proxy.RegistrationControlProxy;
 import org.junit.Test;
 
 import static org.junit.Assert.assertThrows;
