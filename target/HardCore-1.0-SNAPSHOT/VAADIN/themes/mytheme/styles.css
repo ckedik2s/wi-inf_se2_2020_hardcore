@@ -1075,7 +1075,9 @@
 /**
  * @group valo-menu
  */
-
+.HomeButtonStyle {
+	cursor: pointer;
+}
 .v-vaadin-version:after {
 	content: "8.9.4";
 }
