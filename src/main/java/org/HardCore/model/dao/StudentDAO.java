@@ -1,7 +1,7 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.Student;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.model.objects.dto.UserDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,22 +25,22 @@ public class StudentDAO extends AbstractDAO {
         return dao;
     }
 
-    public boolean updateStudent(Student student) {
+    public boolean updateStudent(StudentDTO studentDTO) {
         String sql = "UPDATE collhbrs.student " +
                 "SET anrede = ?, vorname = ?, name = ?, hochschule = ?, " +
                 "semester = ?, gebdatum = ?, kenntnisse = ?, studiengang = ?" +
                 "WHERE collhbrs.student.id = ?;";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setString(1, student.getAnrede());
-            statement.setString(2, student.getVorname());
-            statement.setString(3, student.getName());
-            statement.setString(4, student.getHochschule());
-            statement.setInt(5, student.getSemester());
-            statement.setObject(6, student.getGebDatum());
-            statement.setString(7, student.getKenntnisse());
-            statement.setString(8, student.getStudiengang());
-            statement.setInt(9, student.getId());
+            statement.setString(1, studentDTO.getAnrede());
+            statement.setString(2, studentDTO.getVorname());
+            statement.setString(3, studentDTO.getName());
+            statement.setString(4, studentDTO.getHochschule());
+            statement.setInt(5, studentDTO.getSemester());
+            statement.setObject(6, studentDTO.getGebDatum());
+            statement.setString(7, studentDTO.getKenntnisse());
+            statement.setString(8, studentDTO.getStudiengang());
+            statement.setInt(9, studentDTO.getId());
             statement.executeUpdate();
             return true;
 
@@ -49,13 +49,13 @@ public class StudentDAO extends AbstractDAO {
         }
     }
 
-    public Student getAllDataStudent(User user) {
+    public StudentDTO getAllDataStudent(UserDTO userDTO) {
         Statement statement = this.getStatement();
         ResultSet rs = null;
         try {
             rs = statement.executeQuery("SELECT * " +
                     "FROM collhbrs.student " +
-                    "WHERE collhbrs.student.id = \'" + user.getId() + "\';");
+                    "WHERE collhbrs.student.id = \'" + userDTO.getId() + "\';");
 
         } catch (SQLException ex) {
             Logger.getLogger((StudentDAO.class.getName())).log(Level.SEVERE, null, ex);
@@ -63,18 +63,18 @@ public class StudentDAO extends AbstractDAO {
         }
 
         try {
-            Student student = new Student(user);
+            StudentDTO studentDTO = new StudentDTO(userDTO);
             while (rs.next()) {
-                student.setAnrede(rs.getString(2));
-                student.setVorname(rs.getString(3));
-                student.setName(rs.getString(4));
-                student.setHochschule(rs.getString(5));
-                student.setSemester((Integer) rs.getInt(6));
-                student.setGebDatum(rs.getDate(7).toLocalDate());
-                student.setKenntnisse(rs.getString(8));
-                student.setStudiengang(rs.getString(9));
+                studentDTO.setAnrede(rs.getString(2));
+                studentDTO.setVorname(rs.getString(3));
+                studentDTO.setName(rs.getString(4));
+                studentDTO.setHochschule(rs.getString(5));
+                studentDTO.setSemester((Integer) rs.getInt(6));
+                studentDTO.setGebDatum(rs.getDate(7).toLocalDate());
+                studentDTO.setKenntnisse(rs.getString(8));
+                studentDTO.setStudiengang(rs.getString(9));
             }
-            return student;
+            return studentDTO;
         } catch (SQLException ex) {
             Logger.getLogger((StudentDAO.class.getName())).log(Level.SEVERE, null, ex);
             return null;

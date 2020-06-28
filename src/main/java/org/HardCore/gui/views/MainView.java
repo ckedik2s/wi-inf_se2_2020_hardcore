@@ -1,6 +1,7 @@
 package org.HardCore.gui.views;
 
 import com.vaadin.data.HasValue;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.selection.SelectionEvent;
 import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.icons.VaadinIcons;
@@ -13,8 +14,8 @@ import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
-import org.HardCore.model.objects.dto.User;
-import org.HardCore.process.control.SearchControl;
+import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.proxy.SearchControlProxy;
 
 import java.util.List;
 
@@ -24,17 +25,19 @@ public class MainView extends VerticalLayout implements View {
     private List<StellenanzeigeDetail> list;
     private String suchtext;
 
+
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         //User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
-        User user = ( (MyUI)UI.getCurrent() ).getUser();
+        UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
 
         this.setUp();
     }
 
     private void setUp() {
-        User user = ( (MyUI)UI.getCurrent() ).getUser();
+        UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
         //Top Layer
         this.addComponent( new TopPanel() );
         Label line = new Label("<hr>", ContentMode.HTML);
@@ -60,12 +63,13 @@ public class MainView extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 selektiert = selection.getValue();
-                UI.getCurrent().addWindow( new StellenanzeigeWindow(selektiert, user) );
+                UI.getCurrent().addWindow( new StellenanzeigeWindow(selektiert, userDTO) );
             }
         });
 
         //SearchButton
         Button searchButton = new Button("Suchen", VaadinIcons.SEARCH);
+        searchButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         //Combobox
         final ComboBox<String> comboBox = new ComboBox<>();
@@ -84,6 +88,7 @@ public class MainView extends VerticalLayout implements View {
 
         //Suchfeld
         final TextField search = new TextField();
+        search.setWidth("300");
         search.addValueChangeListener(new HasValue.ValueChangeListener<String>() {
             @Override
             public void valueChange(HasValue.ValueChangeEvent<String> valueChangeEvent) {
@@ -116,7 +121,7 @@ public class MainView extends VerticalLayout implements View {
         if (search.getValue().length() > 1) {
             suchtext = search.getValue();
             String filter = comboBox.getValue();
-            list = SearchControl.getInstance().getAnzeigenForSearch(suchtext, filter);
+            list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, filter);
             grid.setItems();
             grid.setItems(list);
             addComponent(grid);

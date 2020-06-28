@@ -8,6 +8,7 @@ F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\process\control\exc
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\model\objects\dto\User.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\gui\windows\DeleteStellenanzeigeWindow.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\model\dao\BewerbungDAO.java
+F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\gui\windows\FreitextWindow.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\model\dao\RegisterDAO.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\process\control\ProfileControl.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\process\control\LoginControl.java
@@ -39,6 +40,7 @@ F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\gui\windows\DeleteP
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\model\dao\StellenanzeigeDAO.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\process\control\RegistrationControl.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\model\objects\dto\Student.java
+F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\process\control\exceptions\BewerbungException.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\services\util\Roles.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\services\util\Views.java
 F:\Uni\4. Semester\SE II\HardCore\src\main\java\org\HardCore\gui\windows\DeleteStellenanzeigeWindowStudent.java

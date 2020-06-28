@@ -1,4 +1,4 @@
-import org.HardCore.process.control.exceptions.DatabaseException;
+import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 import org.junit.Test;
 

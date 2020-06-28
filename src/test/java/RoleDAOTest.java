@@ -1,5 +1,5 @@
 import org.HardCore.model.dao.RoleDAO;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNotNull;
 public class RoleDAOTest {
 
     private static RoleDAO roleDAO;
-    private User user;
+    private UserDTO userDTO;
 
     @Test
     public void testCreate() {

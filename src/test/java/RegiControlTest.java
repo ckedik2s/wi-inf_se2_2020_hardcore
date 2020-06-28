@@ -1,7 +1,6 @@
-import org.HardCore.process.control.RegistrationControl;
-import org.HardCore.process.control.exceptions.EmptyFieldException;
-
-import org.HardCore.process.control.exceptions.NoEqualPasswordException;
+import org.HardCore.process.exceptions.EmptyFieldException;
+import org.HardCore.process.exceptions.NoEqualPasswordException;
+import org.HardCore.process.proxy.RegistrationControlProxy;
 import org.junit.Test;
 
 import static org.junit.Assert.assertThrows;
@@ -26,7 +25,7 @@ public class RegiControlTest {
         password2Bool = true;
         checkBox = true;
         assertThrows(NoEqualPasswordException.class,
-                () -> RegistrationControl.getInstance().checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
+                () -> RegistrationControlProxy.getInstance().checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
     }
 
     @Test
@@ -39,6 +38,6 @@ public class RegiControlTest {
         password2Bool = true;
         checkBox = true;
         assertThrows(EmptyFieldException.class,
-                () -> RegistrationControl.getInstance().checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
+                () -> RegistrationControlProxy.getInstance().checkValid(email, emailBool, password1, password2, password1Bool, password2Bool, checkBox));
     }
 }

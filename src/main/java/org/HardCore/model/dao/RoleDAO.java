@@ -1,7 +1,7 @@
 package org.HardCore.model.dao;
 
-import org.HardCore.model.objects.dto.Role;
-import org.HardCore.model.objects.dto.User;
+import org.HardCore.model.objects.dto.RoleDTO;
+import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.services.util.Roles;
 
 import java.sql.PreparedStatement;
@@ -25,7 +25,7 @@ public class RoleDAO extends AbstractDAO{
         return dao;
     }
 
-    public List<Role> getRolesForUser(User user) {
+    public List<RoleDTO> getRolesForUser(UserDTO userDTO) {
         Statement statement = getStatement();
 
         ResultSet rs = null;
@@ -33,7 +33,7 @@ public class RoleDAO extends AbstractDAO{
         try {
             rs = statement.executeQuery("SELECT rolle " +
                     "FROM collhbrs.user_to_rolle " +
-                    "WHERE id = \'" + user.getId() + "\'");
+                    "WHERE id = \'" + userDTO.getId() + "\'");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -43,12 +43,12 @@ public class RoleDAO extends AbstractDAO{
             return null;
         }
 
-        List<Role> liste = new ArrayList<>();
-        Role role = null;
+        List<RoleDTO> liste = new ArrayList<>();
+        RoleDTO role = null;
 
         try {
             while (rs.next()) {
-                role = new Role();
+                role = new RoleDTO();
                 role.setBezeichnung(rs.getString(1));
                 liste.add(role);
             }
@@ -58,12 +58,12 @@ public class RoleDAO extends AbstractDAO{
         return liste;
     }
 
-    public boolean setRolesForStudent(User user) {
+    public boolean setRolesForStudent(UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.user_to_rolle VALUES (?,?)";
         PreparedStatement statement = this.getPreparedStatement(sql);
 
         try {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDTO.getId());
             statement.setString(2, Roles.STUDENT);
             statement.executeUpdate();
             return true;
@@ -71,12 +71,12 @@ public class RoleDAO extends AbstractDAO{
             return false;
         }
     }
-    public boolean setRolesForUnternehmen(User user) {
+    public boolean setRolesForUnternehmen(UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.user_to_rolle VALUES (?,?)";
         PreparedStatement statement = this.getPreparedStatement(sql);
 
         try {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDTO.getId());
             statement.setString(2, Roles.UNTERNEHMEN);
             statement.executeUpdate();
             return true;
