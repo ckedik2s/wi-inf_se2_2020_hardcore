@@ -39,7 +39,7 @@ public class JDBCConnection {
         try {
             Properties props = new Properties();
             props.setProperty(SafeString.USER, login);
-            props.setProperty(SafeString.PASSWORD, passwort);
+            props.setProperty(SafeString.PW, passwort);
             this.conn = DriverManager.getConnection(this.url, props);
         } catch (SQLException throwables) {
             throw new DatabaseException("Fehler bei Zugriff auf die DB! Sichere Verbindung vorhanden?");

@@ -19,8 +19,8 @@ public class RegiControlTest {
     @Test
     public void EqualPasswordTest() {
         email = "Pfill@test.de";
-        password1 = SafeString.PASSWORD1;
-        password2 = SafeString.PASSWORD2;
+        password1 = SafeString.PW1;
+        password2 = SafeString.PW2;
         emailBool = true;
         password1Bool = true;
         password2Bool = true;
@@ -32,8 +32,8 @@ public class RegiControlTest {
     @Test
     public void emptyFieldTest() {
         email = "Pfill";
-        password1 = SafeString.PASSWORD1;
-        password2 = SafeString.PASSWORD2;
+        password1 = SafeString.PW1;
+        password2 = SafeString.PW2;
         emailBool = false;
         password1Bool = true;
         password2Bool = true;

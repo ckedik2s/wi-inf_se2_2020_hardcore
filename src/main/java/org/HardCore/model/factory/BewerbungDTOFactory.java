@@ -12,11 +12,6 @@ public class BewerbungDTOFactory {
         return bewerbungDTO;
     }
 
-    public boolean equals(Object obj) {
-        return obj instanceof BewerbungDTO;
-
-    }
-
     public Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException("Dieses Object kann nicht geclont werden!");
     }
