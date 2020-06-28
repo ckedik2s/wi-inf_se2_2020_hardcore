@@ -34,3 +34,19 @@
   @include valo;
   // Insert your own theme rules here
 }
+
+.hintergrundbild {
+  background-image: url("Berge2.jpg");
+  background-position: left top;
+  background-size: cover;
+}
+
+.schrift-willkommen{
+  font-family: Lato, Helvetica, Roboto, sans-serif;
+  font-size: larger;
+  color: #ffffff;
+}
+
+.HomeButtonStyle{
+  cursor: pointer;
+}
