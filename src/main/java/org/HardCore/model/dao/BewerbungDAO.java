@@ -68,9 +68,6 @@ public class BewerbungDAO extends AbstractDAO {
         }
         BewerbungDTO bewerbungDTO;
         try {
-            if (rs == null) {
-                throw new SQLException();
-            }
             while (rs.next()) {
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(rs.getInt(1));
