@@ -34,10 +34,13 @@ public class BewerbungDAO extends AbstractDAO {
                 "WHERE id_bewerbung = ?";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
-        BewerbungDTO bewerbungDTO = null;
+        BewerbungDTO bewerbungDTO = new BewerbungDTO();
         try {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
+            if (rs == null) {
+                return bewerbungDTO;
+            }
             if (rs.next()) {
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(id_bewerbung);

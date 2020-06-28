@@ -44,7 +44,9 @@ public class BewerbungControl implements BewerbungControlInterface {
         try {
             statement.setInt(1, userDTO.getId());
             rs = statement.executeQuery();
-
+            if (rs == null) {
+                throw new DatabaseException("Eintrag nicht gefunden!");
+            }
             if (rs.next()) {
                 id_bewerbung = rs.getInt(1);
             }
@@ -69,13 +71,16 @@ public class BewerbungControl implements BewerbungControlInterface {
         }
     }
 
-    public void applyingIsAllowed() throws DatabaseException, BewerbungException, SQLException {
+    public void applyingIsAllowed() throws DatabaseException, SQLException, BewerbungException {
         String sql = "SELECT sichtbar " +
                 "FROM collhbrs.stellenanzeige_on_off";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             rs = statement.executeQuery();
+            if (rs == null) {
+                return;
+            }
             if ( rs.next() ) {
                 if (rs.getBoolean(1)) {
                     return;
@@ -84,12 +89,13 @@ public class BewerbungControl implements BewerbungControlInterface {
             }
         } catch (SQLException ex) {
             Logger.getLogger((BewerbungDAO.class.getName())).log(Level.SEVERE, null, ex);
-        } finally {
+        }
+            finally {
             rs.close();
         }
     }
 
-    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException, SQLException {
+    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws DatabaseException, SQLException, BewerbungException {
         StudentDTO studentDTO = new StudentDTO(userDTO);
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         String sql = "SELECT id_anzeige " +
@@ -104,6 +110,9 @@ public class BewerbungControl implements BewerbungControlInterface {
                 statement.setInt(1, id_bewerbung);
                 statement.setInt(2, stellenanzeigeDetail.getId_anzeige());
                 rs = statement.executeQuery();
+                if (rs == null) {
+                    return;
+                }
                 if (rs.next()) {
                     throw new BewerbungException();
                 }
@@ -159,13 +168,18 @@ public class BewerbungControl implements BewerbungControlInterface {
                 statement.setInt(1, selektiert.getId_anzeige());
                 statement.setInt(2, bewerbungDTO.getId());
                 rs = statement.executeQuery();
+                if (rs == null) {
+                    throw new BewerbungException();
+                }
                 if ( rs.next() ) {
                     bewerbungDTO = bewerbung;
                     break;
                 }
             } catch (SQLException e) {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
-            } finally {
+            } catch (BewerbungException e) {
+                Notification.show("Eintrag nicht vorhanden!", Notification.Type.ERROR_MESSAGE);
+            } finally{
                 rs.close();
             }
         }
