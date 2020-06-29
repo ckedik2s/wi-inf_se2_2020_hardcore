@@ -10,6 +10,7 @@ import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.DeleteBewerbungWindow;
+import org.HardCore.gui.windows.DeleteWindow;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
@@ -87,7 +88,8 @@ public class BewerbungView extends VerticalLayout implements View {
                 } catch (DatabaseException e) {
                     Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
-                UI.getCurrent().addWindow(new DeleteBewerbungWindow(bewerbungDTO));
+                DeleteBewerbungWindow deleteBewerbungWindow = new DeleteBewerbungWindow(bewerbungDTO);
+                UI.getCurrent().addWindow( new DeleteWindow(deleteBewerbungWindow) );
             }
         });
 

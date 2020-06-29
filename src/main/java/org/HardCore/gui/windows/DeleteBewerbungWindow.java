@@ -11,22 +11,14 @@ import org.HardCore.process.proxy.LoginControlProxy;
 import org.HardCore.process.proxy.RegistrationControlProxy;
 import org.HardCore.services.util.Views;
 
-public class DeleteBewerbungWindow extends Window {
+public class DeleteBewerbungWindow extends DeleteWindow {
     //Window zum Löschen von Bewerbungen auf Stellenanzeigen
 
     public DeleteBewerbungWindow(BewerbungDTO bewerbungDTO) {
-        center();
-
-        VerticalLayout verticalLayout = new VerticalLayout();
-        Panel panel = new Panel();
-        panel.setWidth("700");
-        panel.setContent(new Label( "Sind Sie sicher, dass Sie Ihre Bewerbung auf diese Stellenanzeige löschen wollen? <br>" +
-                "Dieser Vorgang ist unumkehrbar!", ContentMode.HTML));
-        verticalLayout.addComponent(panel);
-
-        //OK Button
-        Button okButton = new Button("Ok");
-        okButton.addClickListener(new Button.ClickListener() {
+        this.setText("Sind Sie sicher, dass Sie Ihre Bewerbung auf diese Stellenanzeige löschen wollen? <br>" +
+                "Dieser Vorgang ist unumkehrbar!");
+        this.setDto(bewerbungDTO);
+        this.setListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 try {
@@ -34,27 +26,13 @@ public class DeleteBewerbungWindow extends Window {
                 } catch (BewerbungException e) {
                     Notification.show("DB-Fehler", "Löschen war nicht erfolgreich!", Notification.Type.ERROR_MESSAGE);
                 }
-                Notification.show( "Bewerbung gelöscht!", Notification.Type.HUMANIZED_MESSAGE);
+                Notification.show("Bewerbung gelöscht!", Notification.Type.HUMANIZED_MESSAGE);
                 UI.getCurrent().getNavigator().navigateTo(Views.BEWERBUNG);
-                close();
+                for (Window w : UI.getCurrent().getWindows()) {
+                    w.close();
+                }
             }
         });
-
-        //Abbruch Button
-        Button abortButton = new Button("Abbrechen");
-        abortButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                close();
-            }
-        });
-
-        HorizontalLayout horizontalLayout = new HorizontalLayout();
-        horizontalLayout.addComponent(okButton);
-        horizontalLayout.addComponent(abortButton);
-        verticalLayout.addComponent(horizontalLayout);
-        verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-        setContent(verticalLayout);
     }
 }
 
