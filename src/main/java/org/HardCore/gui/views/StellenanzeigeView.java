@@ -11,6 +11,7 @@ import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
 import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
+import org.HardCore.gui.windows.DeleteWindow;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
@@ -107,7 +108,8 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new DeleteStellenanzeigeWindow(selektiert));
+                DeleteStellenanzeigeWindow deleteStellenanzeigeWindow = new DeleteStellenanzeigeWindow(selektiert);
+                UI.getCurrent().addWindow( new DeleteWindow(deleteStellenanzeigeWindow) );
             }
         });
 

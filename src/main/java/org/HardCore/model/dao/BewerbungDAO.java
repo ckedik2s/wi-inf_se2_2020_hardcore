@@ -1,9 +1,9 @@
 package org.HardCore.model.dao;
 
 import com.vaadin.ui.Notification;
+import org.HardCore.model.factory.BewerbungDTOFactory;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
-import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 
@@ -40,9 +40,9 @@ public class BewerbungDAO extends AbstractDAO {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
             if (rs.next()) {
-                bewerbungDTO = new BewerbungDTO();
-                bewerbungDTO.setId(id_bewerbung);
-                bewerbungDTO.setFreitext(rs.getString(2));
+                int id = rs.getInt(1);
+                String text = rs.getString(2);
+                bewerbungDTO = BewerbungDTOFactory.createBewerbungDTO(id, text);
             }
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
@@ -71,9 +71,9 @@ public class BewerbungDAO extends AbstractDAO {
             while (true) {
                 assert rs != null;
                 if (!rs.next()) break;
-                bewerbungDTO = new BewerbungDTO();
-                bewerbungDTO.setId(rs.getInt(1));
-                bewerbungDTO.setFreitext(rs.getString(2));
+                int id = rs.getInt(1);
+                String text = rs.getString(2);
+                bewerbungDTO = BewerbungDTOFactory.createBewerbungDTO(id, text);
                 list.add(bewerbungDTO);
 
             }

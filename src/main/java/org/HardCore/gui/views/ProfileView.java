@@ -162,7 +162,8 @@ public class ProfileView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new DeleteProfileWindow());
+                DeleteProfileWindow deleteProfileWindow = new DeleteProfileWindow();
+                UI.getCurrent().addWindow( new DeleteWindow(deleteProfileWindow) );
             }
         });
 
