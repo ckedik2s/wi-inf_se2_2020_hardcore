@@ -1639,6 +1639,11 @@ div.v-layout.v-horizontal.v-widget {
 	color: #ffffff;
 }
 
+.schrift-profil {
+	font-family: Lato, Helvetica, Roboto, sans-serif;
+	color: #ffffff;
+}
+
 .HomeButtonStyle {
 	cursor: pointer;
 }
