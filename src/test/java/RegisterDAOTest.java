@@ -26,6 +26,7 @@ public class RegisterDAOTest {
     }
     @Test
     public void AddUserTest() {
+        userDTO.setId(1);
         assertTrue(RegisterDAO.getInstance().addUser(userDTO));
         regiDAO.deleteUser(userDTO);
     }
