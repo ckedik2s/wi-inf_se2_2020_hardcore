@@ -14,12 +14,4 @@ public class UserDAOTest {
         userDAO =  UserDAO.getInstance();
         assertNotNull(userDAO);
     }
-    @Test
-    public void testReadID() {
-        try {
-            assertNotNull(UserDAO.getInstance().getMaxID());
-        } catch (SQLException e) {
-
-        }
-    }
 }
