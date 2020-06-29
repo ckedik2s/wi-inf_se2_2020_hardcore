@@ -2,10 +2,9 @@ package org.HardCore.model.dao;
 
 import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.BewerbungDTO;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
-import org.HardCore.model.objects.entities.Stellenanzeige;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
@@ -28,55 +27,27 @@ public class StellenanzeigeDAO extends AbstractDAO {
         return dao;
     }
 
-    public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(UserDTO userDTO) throws SQLException {
+    //Erzeugt die Stellenanezeigen, die ein Unternehmen erstellt hat
+    public List<StellenanzeigeDTO> getStellenanzeigenForUnternehmen(UserDTO userDTO) throws SQLException {
         String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                 "FROM collhbrs.stellenanzeige " +
                 "WHERE id = ? ;";
         PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
-
         try {
-            statement.setInt(1,userDTO.getId());
+            statement.setInt(1, userDTO.getId());
             rs = statement.executeQuery();
-
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
-        List<StellenanzeigeDetail> list = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail;
-
-        try {
-            while (true) {
-                assert rs != null;
-                if (!rs.next()) break;
-                stellenanzeigeDetail = new StellenanzeigeDetail();
-                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
-                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
-                stellenanzeigeDetail.setArt(rs.getString(3));
-                stellenanzeigeDetail.setName(rs.getString(4));
-                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
-                stellenanzeigeDetail.setBranche(rs.getString(6));
-                stellenanzeigeDetail.setStudiengang(rs.getString(7));
-                stellenanzeigeDetail.setOrt(rs.getString(8));
-                try {
-                    stellenanzeigeDetail.setAnzahl_bewerber(StellenanzeigeControlProxy.getInstance().getAnzahlBewerber(stellenanzeigeDetail));
-                } catch (DatabaseException e) {
-                    Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte informieren Sie einen Administrator!");
-                }
-                list.add(stellenanzeigeDetail);
-            }
-        } catch (SQLException e) {
-            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-        } finally {
-            assert rs != null;
-            rs.close();
-        }
+        List<StellenanzeigeDTO> list = new ArrayList<>();
+        buildList(rs, list);
         return list;
     }
 
 
     //Erstellt eine neue Stellenanzeige in der Datenbank
-    public boolean createStellenanzeige(Stellenanzeige stellenanzeige, UserDTO userDTO) {
+    public boolean createStellenanzeige(StellenanzeigeDTO stellenanzeige, UserDTO userDTO) {
         String sql = "INSERT INTO collhbrs.stellenanzeige(id, beschreibung, art, name, zeitraum, branche, studiengang, ort)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -100,7 +71,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
     }
 
     //Verändert eine bestehende Stellenanzeige in der Datenbank
-    public boolean updateStellenanzeige(Stellenanzeige stellenanzeige) {
+    public boolean updateStellenanzeige(StellenanzeigeDTO stellenanzeige) {
         String sql = "UPDATE collhbrs.stellenanzeige " +
                 "SET beschreibung = ?, art = ?,  name = ?, zeitraum = ?, branche = ?, studiengang = ?, ort = ?  " +
                 "WHERE collhbrs.stellenanzeige.id_anzeige = ? ;";
@@ -123,13 +94,13 @@ public class StellenanzeigeDAO extends AbstractDAO {
 
 
     //Löscht eine Stellenanzeige aus der Datenbank
-    public boolean deleteStellenanzeige(Stellenanzeige stellenanzeige) {
+    public boolean deleteStellenanzeige(StellenanzeigeDTO stellenanzeige) {
         String sql = "DELETE " +
                 "FROM collhbrs.stellenanzeige " +
                 "WHERE collhbrs.stellenanzeige.id_anzeige = ? ;";
         PreparedStatement statement = this.getPreparedStatement(sql);
         try {
-            statement.setInt(1,stellenanzeige.getId_anzeige());
+            statement.setInt(1, stellenanzeige.getId_anzeige());
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -137,24 +108,23 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
     }
 
-    public List<StellenanzeigeDetail> getStellenanzeigenForSearch(String suchtext, String filter) throws SQLException {
+    public List<StellenanzeigeDTO> getStellenanzeigenForSearch(String suchtext, String filter) throws SQLException {
         filter = filter.toLowerCase();
         PreparedStatement statement;
         ResultSet rs = null;
-        if(suchtext.equals("")){
+        if (suchtext.equals("")) {
             String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
-            "FROM collhbrs.stellenanzeige ;";
+                    "FROM collhbrs.stellenanzeige ;";
             statement = this.getPreparedStatement(sql);
             try {
                 rs = statement.executeQuery();
             } catch (SQLException e) {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
             }
-        }
-        else {
+        } else {
             String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                     "FROM collhbrs.stellenanzeige " +
-                    "WHERE " + filter +" like ? ;";
+                    "WHERE " + filter + " like ? ;";
             statement = this.getPreparedStatement(sql);
 
 
@@ -166,7 +136,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
             }
         }
 
-        List<StellenanzeigeDetail> list = new ArrayList<>();
+        List<StellenanzeigeDTO> list = new ArrayList<>();
 
         assert rs != null;
         buildList(rs, list);
@@ -174,20 +144,20 @@ public class StellenanzeigeDAO extends AbstractDAO {
     }
 
     //Zeigt alle Stellenanzeigen an, auf die sich ein Student beworben hat
-    public List<StellenanzeigeDetail> getStellenanzeigeforStudent(StudentDTO studentDTO) throws SQLException {
+    public List<StellenanzeigeDTO> getStellenanzeigeforStudent(StudentDTO studentDTO) throws SQLException {
         String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
-                    "FROM collhbrs.stellenanzeige " +
-                    "WHERE id_anzeige = ( SELECT id_anzeige " +
-                    "FROM collhbrs.bewerbung_to_stellenanzeige " +
-                    "WHERE id_bewerbung = ? );";
+                "FROM collhbrs.stellenanzeige " +
+                "WHERE id_anzeige = ( SELECT id_anzeige " +
+                "FROM collhbrs.bewerbung_to_stellenanzeige " +
+                "WHERE id_bewerbung = ? );";
         PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
-        List<StellenanzeigeDetail> listStellenanzeige = new ArrayList<>();
+        List<StellenanzeigeDTO> listStellenanzeige = new ArrayList<>();
         for (BewerbungDTO bewerbungDTO : list) {
             int id_bewerbung = bewerbungDTO.getId();
             try {
-                statement.setInt(1,id_bewerbung);
+                statement.setInt(1, id_bewerbung);
                 rs = statement.executeQuery();
             } catch (SQLException e) {
                 Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
@@ -198,22 +168,31 @@ public class StellenanzeigeDAO extends AbstractDAO {
         return listStellenanzeige;
     }
 
-    private void buildList(ResultSet rs, List<StellenanzeigeDetail> listStellenanzeige) throws SQLException {
-        StellenanzeigeDetail stellenanzeigeDetail;
+    private void buildList(ResultSet rs, List<StellenanzeigeDTO> listStellenanzeige) throws SQLException {
+        StellenanzeigeDTO stellenanzeigeDTO;
         try {
             while (true) {
                 assert rs != null;
                 if (!rs.next()) break;
-                stellenanzeigeDetail = new StellenanzeigeDetail();
-                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
-                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
-                stellenanzeigeDetail.setArt(rs.getString(3));
-                stellenanzeigeDetail.setName(rs.getString(4));
-                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
-                stellenanzeigeDetail.setBranche(rs.getString(6));
-                stellenanzeigeDetail.setStudiengang(rs.getString(7));
-                stellenanzeigeDetail.setOrt(rs.getString(8));
-                listStellenanzeige.add(stellenanzeigeDetail);
+                stellenanzeigeDTO = new StellenanzeigeDTO();
+                stellenanzeigeDTO.setId_anzeige(rs.getInt(1));
+                stellenanzeigeDTO.setBeschreibung(rs.getString(2));
+                stellenanzeigeDTO.setArt(rs.getString(3));
+                stellenanzeigeDTO.setName(rs.getString(4));
+                stellenanzeigeDTO.setZeitraum(rs.getDate(5).toLocalDate());
+                stellenanzeigeDTO.setBranche(rs.getString(6));
+                stellenanzeigeDTO.setStudiengang(rs.getString(7));
+                stellenanzeigeDTO.setOrt(rs.getString(8));
+                try {
+
+                    stellenanzeigeDTO.setAnzahl_bewerber(StellenanzeigeControlProxy.getInstance().getAnzahlBewerber(stellenanzeigeDTO));
+
+                } catch (DatabaseException e) {
+
+                    Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte informieren Sie einen Administrator!");
+
+                }
+                listStellenanzeige.add(stellenanzeigeDTO);
             }
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");

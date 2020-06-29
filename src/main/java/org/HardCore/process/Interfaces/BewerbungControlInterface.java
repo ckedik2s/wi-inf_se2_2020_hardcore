@@ -2,7 +2,7 @@ package org.HardCore.process.Interfaces;
 
 import com.vaadin.ui.Button;
 import org.HardCore.model.objects.dto.BewerbungDTO;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.exceptions.BewerbungException;
@@ -15,17 +15,17 @@ public interface BewerbungControlInterface {
 
     int getLatestApply(UserDTO userDTO) throws DatabaseException, SQLException;
 
-    void applyForStellenanzeige(StellenanzeigeDetail stellenanzeige, int id_bewerbung) throws DatabaseException;
+    void applyForStellenanzeige(StellenanzeigeDTO stellenanzeige, int id_bewerbung) throws DatabaseException;
 
     void applyingIsAllowed() throws DatabaseException, BewerbungException, SQLException;
 
-    void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws BewerbungException, DatabaseException, SQLException;
+    void checkAlreadyApplied(StellenanzeigeDTO stellenanzeigeDTO, UserDTO userDTO) throws BewerbungException, DatabaseException, SQLException;
 
-    void checkAllowed(StellenanzeigeDetail stellenanzeige, UserDTO userDTO, Button bewerbenButton);
+    void checkAllowed(StellenanzeigeDTO stellenanzeige, UserDTO userDTO, Button bewerbenButton);
 
     void createBewerbung(String bewerbungstext, UserDTO userDTO) throws BewerbungException;
 
-    BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException;
+    BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDTO selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException;
 
     List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException;
 

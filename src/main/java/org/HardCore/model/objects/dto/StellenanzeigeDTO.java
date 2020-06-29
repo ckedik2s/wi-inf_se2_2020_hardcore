@@ -2,7 +2,7 @@ package org.HardCore.model.objects.dto;
 
 import java.time.LocalDate;
 
-public class StellenanzeigeDetail extends AbstractDTO {
+public class StellenanzeigeDTO extends AbstractDTO {
     private int id ;
     private int id_anzeige;
     private String beschreibung = "";
@@ -12,7 +12,7 @@ public class StellenanzeigeDetail extends AbstractDTO {
     private String branche = "";
     private String studiengang = "";
     private String ort = "";
-    private int anzahl_bewerber = 3;
+    private int anzahl_bewerber = 0;
 
     public int getId() {
         return id;

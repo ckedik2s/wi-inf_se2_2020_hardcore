@@ -2,7 +2,7 @@ package org.HardCore.process.control;
 
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.model.objects.dto.UserDTO;
@@ -26,7 +26,7 @@ public class SearchControl implements SearchControlInterface {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUser() throws SQLException {
+    public List<StellenanzeigeDTO> getAnzeigenForUser() throws SQLException {
         UserDTO userDTO = ( (MyUI)UI.getCurrent() ).getUserDTO();
         if (userDTO.hasRole(Roles.STUDENT)) {
             StudentDTO studentDTO = new StudentDTO(userDTO);
@@ -36,7 +36,7 @@ public class SearchControl implements SearchControlInterface {
         return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
+    public List<StellenanzeigeDTO> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
         if (filter == null) {
             filter = "name";
         }

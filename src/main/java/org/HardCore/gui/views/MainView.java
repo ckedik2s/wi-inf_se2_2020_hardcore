@@ -7,16 +7,14 @@ import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.UserDTO;
-import org.HardCore.process.control.SearchControl;
 import org.HardCore.process.proxy.SearchControlProxy;
 import org.HardCore.services.util.BuildGrid;
 
@@ -25,8 +23,8 @@ import java.util.List;
 
 public class MainView extends VerticalLayout implements View {
 
-    private StellenanzeigeDetail selektiert = null;
-    private List<StellenanzeigeDetail> list;
+    private StellenanzeigeDTO selektiert = null;
+    private List<StellenanzeigeDTO> list;
     private String suchtext;
 
 
@@ -48,11 +46,11 @@ public class MainView extends VerticalLayout implements View {
         line.setSizeFull();
 
         //Tabelle
-        final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Treffer");
+        final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Treffer");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
         BuildGrid.buildGrid(grid);
-        SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
+        SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
 
         //DetailButton
         Button detailButton = new Button("Details", VaadinIcons.ENTER);
@@ -78,9 +76,9 @@ public class MainView extends VerticalLayout implements View {
         comboBox.setItems("Name", "Art", "Branche", "Studiengang", "Ort");
 
         //SelectionListener Tabelle
-        grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
+        grid.addSelectionListener(new SelectionListener<StellenanzeigeDTO>() {
             @Override
-            public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
+            public void selectionChange(SelectionEvent<StellenanzeigeDTO> event) {
                 if (selection.getValue() == null) {
                     detailButton.setEnabled(false);
                 } else {
@@ -135,7 +133,7 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
     }
 
-    private void search(TextField search, ComboBox<String> comboBox, Grid<StellenanzeigeDetail> grid, Button detailButton) {
+    private void search(TextField search, ComboBox<String> comboBox, Grid<StellenanzeigeDTO> grid, Button detailButton) {
         if (search.getValue().length() > 1) {
             suchtext = search.getValue();
             String filter = comboBox.getValue();
