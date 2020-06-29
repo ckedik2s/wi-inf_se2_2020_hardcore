@@ -1,7 +1,7 @@
 package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.process.exceptions.StellenanzeigeException;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CreateStellenanzeigeWindow extends Window {
 
-    public CreateStellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, UnternehmenDTO unternehmenDTO) {
+    public CreateStellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Grid<StellenanzeigeDTO> grid, UnternehmenDTO unternehmenDTO) {
         super("Ihre Stellenanzeige");
         center();
 
@@ -63,7 +63,7 @@ public class CreateStellenanzeigeWindow extends Window {
                     Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                List<StellenanzeigeDetail> list = null;
+                List<StellenanzeigeDTO> list = null;
                 try {
                     list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
                 } catch (SQLException e) {

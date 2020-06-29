@@ -11,8 +11,9 @@ import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.CreateStellenanzeigeWindow;
 import org.HardCore.gui.windows.DeleteStellenanzeigeWindow;
+import org.HardCore.gui.windows.DeleteWindow;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.process.proxy.SearchControlProxy;
 import org.HardCore.services.util.BuildGrid;
@@ -22,8 +23,8 @@ import java.util.List;
 
 public class StellenanzeigeView extends VerticalLayout implements View {
 
-    private StellenanzeigeDetail selektiert;
-    private List<StellenanzeigeDetail> list;
+    private StellenanzeigeDTO selektiert;
+    private List<StellenanzeigeDTO> list;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -42,10 +43,10 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         line.setSizeFull();
 
         //Tabelle
-        final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Stellenanzeigen");
+        final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Stellenanzeigen");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
-        SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
+        SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
 
         //Tabelle füllen
         try {
@@ -54,7 +55,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         BuildGrid.buildGrid(grid);
-        grid.addColumn(StellenanzeigeDetail::getAnzahl_bewerber).setCaption("Anzahl der Bewerber");
+        grid.addColumn(StellenanzeigeDTO::getAnzahl_bewerber).setCaption("Anzahl der Bewerber");
         grid.setItems(list);
 
         //ShowButton
@@ -69,9 +70,9 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         deleteButton.setEnabled(false);
 
         //Tabellen Select Config
-        grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
+        grid.addSelectionListener(new SelectionListener<StellenanzeigeDTO>() {
             @Override
-            public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
+            public void selectionChange(SelectionEvent<StellenanzeigeDTO> event) {
                 if (selection.getValue() == null) {
                     showButton.setEnabled(false);
                     deleteButton.setEnabled(false);
@@ -98,7 +99,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         createButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDetail(), grid, unternehmenDTO);
+                CreateStellenanzeigeWindow window = new CreateStellenanzeigeWindow(new StellenanzeigeDTO(), grid, unternehmenDTO);
                 UI.getCurrent().addWindow(window);
             }
         });
@@ -107,7 +108,8 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new DeleteStellenanzeigeWindow(selektiert));
+                DeleteStellenanzeigeWindow deleteStellenanzeigeWindow = new DeleteStellenanzeigeWindow(selektiert);
+                UI.getCurrent().addWindow( new DeleteWindow(deleteStellenanzeigeWindow) );
             }
         });
 

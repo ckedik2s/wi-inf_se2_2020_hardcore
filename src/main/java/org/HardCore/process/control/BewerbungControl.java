@@ -4,7 +4,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import org.HardCore.model.dao.BewerbungDAO;
 import org.HardCore.model.objects.dto.BewerbungDTO;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.Interfaces.BewerbungControlInterface;
@@ -56,7 +56,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         return id_bewerbung;
     }
 
-    public void applyForStellenanzeige(StellenanzeigeDetail stellenanzeige, int id_bewerbung) throws DatabaseException {
+    public void applyForStellenanzeige(StellenanzeigeDTO stellenanzeige, int id_bewerbung) throws DatabaseException {
         String sql = "INSERT INTO collhbrs.bewerbung_to_stellenanzeige (id_bewerbung, id_anzeige) " +
                 "VALUES (?, ?);";
         PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
@@ -90,7 +90,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         }
     }
 
-    public void checkAlreadyApplied(StellenanzeigeDetail stellenanzeigeDetail, UserDTO userDTO) throws DatabaseException, SQLException, BewerbungException {
+    public void checkAlreadyApplied(StellenanzeigeDTO stellenanzeigeDTO, UserDTO userDTO) throws DatabaseException, SQLException, BewerbungException {
         StudentDTO studentDTO = new StudentDTO(userDTO);
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         String sql = "SELECT id_anzeige " +
@@ -103,7 +103,7 @@ public class BewerbungControl implements BewerbungControlInterface {
             int id_bewerbung = bewerbungDTO.getId();
             try {
                 statement.setInt(1, id_bewerbung);
-                statement.setInt(2, stellenanzeigeDetail.getId_anzeige());
+                statement.setInt(2, stellenanzeigeDTO.getId_anzeige());
                 rs = statement.executeQuery();
                 if (rs.next()) {
                     throw new BewerbungException();
@@ -117,7 +117,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         }
 
     }
-    public void checkAllowed(StellenanzeigeDetail stellenanzeige, UserDTO userDTO, Button bewerbenButton) {
+    public void checkAllowed(StellenanzeigeDTO stellenanzeige, UserDTO userDTO, Button bewerbenButton) {
         if (userDTO == null || !userDTO.hasRole(Roles.STUDENT)) {
             bewerbenButton.setVisible(false);
             return;
@@ -142,7 +142,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         }
     }
 
-    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDetail selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException {
+    public BewerbungDTO getBewerbungForStellenanzeige(StellenanzeigeDTO selektiert, StudentDTO studentDTO) throws SQLException, DatabaseException {
         List<BewerbungDTO> list = getBewerbungenForStudent(studentDTO);
         BewerbungDTO bewerbungDTO = new BewerbungDTO();
         String sql = "SELECT id_bewerbung " +

@@ -1,7 +1,7 @@
 package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.exceptions.StellenanzeigeException;
@@ -20,7 +20,7 @@ public class StellenanzeigeWindow extends Window {
     private TextField ort;
     private TextArea beschreibung;
 
-    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, UserDTO userDTO) {
+    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, UserDTO userDTO) {
         super(stellenanzeige.getName());
         center();
 
@@ -50,8 +50,8 @@ public class StellenanzeigeWindow extends Window {
         ort.setReadOnly(true);
 
         //Zeitraum
-        TextField zeitraum = new TextField("Ende der Ausschreibung");
-        zeitraum.setValue(stellenanzeige.getZeitraum().format(DateTimeFormatter.ofPattern("dd.MM.yy")));
+        DateField zeitraum = new DateField("Ende der Ausschreibung");
+        zeitraum.setValue(stellenanzeige.getZeitraum());
         zeitraum.setReadOnly(true);
 
         //Beschreibung
@@ -86,20 +86,11 @@ public class StellenanzeigeWindow extends Window {
 
         //Vertikal
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.addComponent(name);
-        verticalLayout.addComponent(art);
-        verticalLayout.addComponent(branche);
-        verticalLayout.addComponent(studiengang);
-        verticalLayout.addComponent(ort);
-        verticalLayout.addComponent(zeitraum);
-        verticalLayout.addComponent(beschreibung);
-        verticalLayout.addComponent(horizontalLayout);
-        verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-
+        verticalLayout = this.buildVerticalLayout(verticalLayout, name, art, branche, studiengang, ort, zeitraum, beschreibung, horizontalLayout);
         setContent(verticalLayout);
     }
 
-    public StellenanzeigeWindow(StellenanzeigeDetail stellenanzeige, Grid<StellenanzeigeDetail> grid, UnternehmenDTO unternehmenDTO) {
+    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Grid<StellenanzeigeDTO> grid, UnternehmenDTO unternehmenDTO) {
         super(stellenanzeige.getName());
         center();
 
@@ -150,7 +141,7 @@ public class StellenanzeigeWindow extends Window {
                     Notification.show("Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Stellenanzeige erfolgreich gespeichert"));
-                List<StellenanzeigeDetail> list = null;
+                List<StellenanzeigeDTO> list = null;
                 try {
                     list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
                 } catch (SQLException e) {
@@ -178,6 +169,11 @@ public class StellenanzeigeWindow extends Window {
 
         //Vertikal
         VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout = this.buildVerticalLayout(verticalLayout, name, art, branche, studiengang, ort, zeitraum, beschreibung, horizontalLayout);
+        setContent(verticalLayout);
+    }
+    public VerticalLayout buildVerticalLayout(VerticalLayout verticalLayout, TextField name, TextField art, TextField branche, TextField studiengang,
+                                              TextField ort, DateField zeitraum, TextArea beschreibung, HorizontalLayout horizontalLayout ){
         verticalLayout.addComponent(name);
         verticalLayout.addComponent(art);
         verticalLayout.addComponent(branche);
@@ -187,7 +183,6 @@ public class StellenanzeigeWindow extends Window {
         verticalLayout.addComponent(beschreibung);
         verticalLayout.addComponent(horizontalLayout);
         verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-
-        setContent(verticalLayout);
+        return verticalLayout;
     }
 }

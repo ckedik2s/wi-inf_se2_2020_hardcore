@@ -1,6 +1,6 @@
 package org.HardCore.process.proxy;
 
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.process.Interfaces.StellenanzeigeControlInterface;
@@ -25,29 +25,29 @@ public class StellenanzeigeControlProxy implements StellenanzeigeControlInterfac
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException {
+    public List<StellenanzeigeDTO> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException {
         return StellenanzeigeControl.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException {
+    public List<StellenanzeigeDTO> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException {
         return StellenanzeigeControl.getInstance().getAnzeigenForStudent(studentDTO);
     }
-    public void createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {
-        StellenanzeigeControl.getInstance().createStellenanzeige(stellenanzeigeDetail);
+    public void createStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) throws StellenanzeigeException {
+        StellenanzeigeControl.getInstance().createStellenanzeige(stellenanzeigeDTO);
     }
-    public void updateStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {
-        StellenanzeigeControl.getInstance().updateStellenanzeige(stellenanzeigeDetail);
-    }
-
-    public void deleteStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException {
-        StellenanzeigeControl.getInstance().deleteStellenanzeige(stellenanzeigeDetail);
+    public void updateStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) throws StellenanzeigeException {
+        StellenanzeigeControl.getInstance().updateStellenanzeige(stellenanzeigeDTO);
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
+    public void deleteStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) throws StellenanzeigeException {
+        StellenanzeigeControl.getInstance().deleteStellenanzeige(stellenanzeigeDTO);
+    }
+
+    public List<StellenanzeigeDTO> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
         return StellenanzeigeControl.getInstance().getAnzeigenForSearch(suchtext, filter);
     }
 
-    public int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException, SQLException {
-        return StellenanzeigeControl.getInstance().getAnzahlBewerber(stellenanzeigeDetail);
+    public int getAnzahlBewerber(StellenanzeigeDTO stellenanzeigeDTO) throws DatabaseException, SQLException {
+        return StellenanzeigeControl.getInstance().getAnzahlBewerber(stellenanzeigeDTO);
     }
 }

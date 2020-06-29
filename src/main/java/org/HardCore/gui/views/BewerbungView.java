@@ -10,8 +10,9 @@ import com.vaadin.ui.*;
 import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.DeleteBewerbungWindow;
+import org.HardCore.gui.windows.DeleteWindow;
 import org.HardCore.model.objects.dto.BewerbungDTO;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
@@ -23,8 +24,8 @@ import java.util.List;
 
 public class BewerbungView extends VerticalLayout implements View {
 
-    private StellenanzeigeDetail selektiert;
-    private List<StellenanzeigeDetail> list;
+    private StellenanzeigeDTO selektiert;
+    private List<StellenanzeigeDTO> list;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -43,10 +44,10 @@ public class BewerbungView extends VerticalLayout implements View {
         line.setSizeFull();
 
         //Tabelle
-        final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Bewerbungen");
+        final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Bewerbungen");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
-        SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
+        SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
 
         //Tabelle füllen
         try {
@@ -62,9 +63,9 @@ public class BewerbungView extends VerticalLayout implements View {
         deleteButton.setEnabled(false);
 
         //Tabellen Select Config
-        grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
+        grid.addSelectionListener(new SelectionListener<StellenanzeigeDTO>() {
             @Override
-            public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
+            public void selectionChange(SelectionEvent<StellenanzeigeDTO> event) {
                 if (selection.getValue() == null) {
                     deleteButton.setEnabled(false);
                 }
@@ -87,7 +88,8 @@ public class BewerbungView extends VerticalLayout implements View {
                 } catch (DatabaseException e) {
                     Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
-                UI.getCurrent().addWindow(new DeleteBewerbungWindow(bewerbungDTO));
+                DeleteBewerbungWindow deleteBewerbungWindow = new DeleteBewerbungWindow(bewerbungDTO);
+                UI.getCurrent().addWindow( new DeleteWindow(deleteBewerbungWindow) );
             }
         });
 

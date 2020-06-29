@@ -6,7 +6,6 @@ public class BewerbungDTOFactory {
 
     public static BewerbungDTO createBewerbungDTO(int id, String text) {
         BewerbungDTO bewerbungDTO = new BewerbungDTO();
-
         bewerbungDTO.setId(id);
         bewerbungDTO.setFreitext(text);
         return bewerbungDTO;

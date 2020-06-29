@@ -1,7 +1,7 @@
 package org.HardCore.gui.windows;
 
 import com.vaadin.ui.*;
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class FreitextWindow extends Window {
 
-    public FreitextWindow(StellenanzeigeDetail stellenanzeige, UserDTO userDTO) {
+    public FreitextWindow(StellenanzeigeDTO stellenanzeige, UserDTO userDTO) {
         super(stellenanzeige.getName());
         center();
 
