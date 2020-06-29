@@ -18,6 +18,7 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.control.SearchControl;
 import org.HardCore.process.proxy.SearchControlProxy;
+import org.HardCore.services.util.BuildGrid;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -50,12 +51,7 @@ public class MainView extends VerticalLayout implements View {
         final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Treffer");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
-        grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
-        grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
-        grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
-        grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
-        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
-        grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
+        BuildGrid.buildGrid(grid);
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //DetailButton
@@ -64,6 +60,9 @@ public class MainView extends VerticalLayout implements View {
         detailButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                if (selection.getValue() == null) {
+                    detailButton.setEnabled(false);
+                }
                 selektiert = selection.getValue();
                 UI.getCurrent().addWindow( new StellenanzeigeWindow(selektiert, userDTO) );
             }
@@ -82,9 +81,13 @@ public class MainView extends VerticalLayout implements View {
         grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
             @Override
             public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
-                System.out.println("Zeile selektiert: " + selection.getValue());
-                selektiert = selection.getValue();
-                detailButton.setEnabled(true);
+                if (selection.getValue() == null) {
+                    detailButton.setEnabled(false);
+                } else {
+                    System.out.println("Zeile selektiert: " + selection.getValue());
+                    selektiert = selection.getValue();
+                    detailButton.setEnabled(true);
+                }
             }
         });
 

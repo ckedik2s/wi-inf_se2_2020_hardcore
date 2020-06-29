@@ -1,6 +1,6 @@
 package org.HardCore.model.objects.dto;
 
-public class BewerbungDTO {
+public class BewerbungDTO extends AbstractDTO {
     private String text;
     private int id;
 

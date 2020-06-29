@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDTO implements Serializable {
+public class UserDTO extends AbstractDTO implements Serializable {
     private int id;
     private String vorname;
     private String name;

@@ -2,6 +2,7 @@ package org.HardCore.gui.windows;
 
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.HardCore.model.objects.dto.AbstractDTO;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
@@ -9,8 +10,8 @@ import org.HardCore.services.util.Views;
 
 import javax.swing.plaf.basic.BasicOptionPaneUI;
 
-public abstract class DeleteWindow extends Window {
-    public DeleteWindow(String text, Object dto, Button.ClickListener listener) {
+public class DeleteWindow extends Window {
+    public DeleteWindow(String text, AbstractDTO dto, Button.ClickListener listener) {
         center();
 
         VerticalLayout verticalLayout = new VerticalLayout();

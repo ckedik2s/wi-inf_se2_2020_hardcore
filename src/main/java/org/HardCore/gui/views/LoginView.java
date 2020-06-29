@@ -13,6 +13,7 @@ import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.NoSuchUserOrPassword;
 import org.HardCore.process.proxy.LoginControlProxy;
+import org.HardCore.services.util.Views;
 
 import java.sql.SQLException;
 
@@ -61,11 +62,25 @@ public class LoginView extends VerticalLayout implements View {
             }
         });
 
+        //RegisterButton
+        Button registerButton = new Button("Zur Registration");
+        registerButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().getNavigator().navigateTo(Views.REGISTRATION);
+            }
+        });
+
+        //HorizontalLayout
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.addComponent(loginButton);
+        horizontalLayout.addComponent(registerButton);
+
         //Vertical Layout
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponent(userLogin);
         verticalLayout.addComponent(passwordField);
-        verticalLayout.addComponent(loginButton);
+        verticalLayout.addComponent(horizontalLayout);
 
         //Login Panel
         Panel panel = new Panel( "Bitte Login-Daten eingeben:");

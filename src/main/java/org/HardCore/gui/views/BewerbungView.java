@@ -16,6 +16,7 @@ import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
+import org.HardCore.services.util.BuildGrid;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -53,14 +54,8 @@ public class BewerbungView extends VerticalLayout implements View {
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
-        grid.removeAllColumns();
+        BuildGrid.buildGrid(grid);
         grid.setItems(list);
-        grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
-        grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
-        grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
-        grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
-        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
-        grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
 
         //DeleteButton
         Button deleteButton = new Button("Löschen");
@@ -92,17 +87,7 @@ public class BewerbungView extends VerticalLayout implements View {
                 } catch (DatabaseException e) {
                     Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
-                DeleteBewerbungWindow window = new DeleteBewerbungWindow(bewerbungDTO);
-                UI.getCurrent().addWindow(window);
-                deleteButton.setEnabled(false);
-                grid.setItems();
-                try {
-                    list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
-                    grid.setItems(list);
-                } catch (SQLException e) {
-                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-                }
-
+                UI.getCurrent().addWindow(new DeleteBewerbungWindow(bewerbungDTO));
             }
         });
 
@@ -115,5 +100,4 @@ public class BewerbungView extends VerticalLayout implements View {
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
     }
-
 }

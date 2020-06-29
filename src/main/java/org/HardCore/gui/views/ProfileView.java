@@ -8,6 +8,7 @@ import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.ConfirmationWindow;
 import org.HardCore.gui.windows.DeleteProfileWindow;
+import org.HardCore.gui.windows.DeleteWindow;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.model.objects.dto.UserDTO;
@@ -35,8 +36,6 @@ public class ProfileView extends VerticalLayout implements View {
 
         UserDTO userDTO = ((MyUI) UI.getCurrent()).getUserDTO();
 
-        //TODO alle Felder müssen eingabencheck haben für fehleingaben
-        //TODO keine Textfelder bei Hausnummern
         //Felder Student erzeugen
         final NativeSelect<String> anrede = new NativeSelect<>("Anrede");
         anrede.setItems("Herr", "Frau");
@@ -112,7 +111,7 @@ public class ProfileView extends VerticalLayout implements View {
             if (studentDTO.getHochschule() != null) {
                 hochschule.setValue(studentDTO.getHochschule());
             }
-            if (studentDTO.getSemester() != null) {
+            if (studentDTO.getSemester() != 0) {
                 semester.setValue(String.valueOf(studentDTO.getSemester()));
             }
             if (studentDTO.getGebDatum() != null) {
@@ -179,7 +178,11 @@ public class ProfileView extends VerticalLayout implements View {
                     studentDTO.setVorname(vorname.getValue());
                     studentDTO.setName(name.getValue());
                     studentDTO.setHochschule(hochschule.getValue());
-                    studentDTO.setSemester(Integer.valueOf(semester.getValue()));
+                    try {
+                        studentDTO.setSemester(Integer.valueOf(semester.getValue()));
+                    } catch (NumberFormatException e) {
+                        studentDTO.setSemester(0);
+                    }
                     studentDTO.setGebDatum(gebDatum.getValue());
                     studentDTO.setKenntnisse(kenntnisse.getValue());
                     studentDTO.setStudiengang(studiengang.getValue());

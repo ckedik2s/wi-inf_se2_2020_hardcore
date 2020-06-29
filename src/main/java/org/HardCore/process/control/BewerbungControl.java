@@ -154,7 +154,7 @@ public class BewerbungControl implements BewerbungControlInterface {
         for (BewerbungDTO bewerbung :list ) {
             try {
                 statement.setInt(1, selektiert.getId_anzeige());
-                statement.setInt(2, bewerbungDTO.getId());
+                statement.setInt(2, bewerbung.getId());
                 rs = statement.executeQuery();
                 if ( rs.next() ) {
                     bewerbungDTO = bewerbung;
