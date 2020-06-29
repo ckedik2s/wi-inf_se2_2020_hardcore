@@ -5,6 +5,7 @@ public class BewerbungDTO extends AbstractDTO {
     private int id;
 
     public void setFreitext(String text){
+
         this.text = text;
     }
     public String getFreitext(){

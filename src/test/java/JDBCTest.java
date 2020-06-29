@@ -2,14 +2,19 @@ import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 
 public class JDBCTest {
 
+
     @Test
-    public void testStatement() throws DatabaseException { //Throwt Exception, da diese in jdbc klasse ebenso geworfen wird
+    public void createTest() throws DatabaseException {
+        JDBCConnection jdbc = JDBCConnection.getInstance();
+        assertNotNull(jdbc);
+    }
+    @Test
+    public void readStatementTest() throws DatabaseException { //Throwt Exception, da diese in jdbc klasse ebenso geworfen wird
         JDBCConnection con = JDBCConnection.getInstance();
         try {
             con.initConnection();
@@ -17,8 +22,15 @@ public class JDBCTest {
             e.printStackTrace();
         }
         assertNotNull(con.getStatement()); // Checkt, ob Statement nicht null
-        con.closeConnection();
-        con = null;
-        assertNull(con);
     }
+    @Test
+    public void deleteCon() throws DatabaseException {
+        JDBCConnection con = JDBCConnection.getInstance();
+        con.initConnection();
+        con.closeConnection();
+        assertNotNull(con);
+    }
+
+
+
 }

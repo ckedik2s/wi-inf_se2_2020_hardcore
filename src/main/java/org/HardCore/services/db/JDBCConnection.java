@@ -55,7 +55,6 @@ public class JDBCConnection {
         } catch (SQLException throwables) {
             return null;
         }
-
     }
 
     public PreparedStatement getPreparedStatement(String sql ) throws DatabaseException {
