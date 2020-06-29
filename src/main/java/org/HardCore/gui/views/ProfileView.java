@@ -35,7 +35,7 @@ public class ProfileView extends VerticalLayout implements View {
         line.setSizeFull();
 
         UserDTO userDTO = ((MyUI) UI.getCurrent()).getUserDTO();
-
+        setStyleName("schrift-profil");
         //Felder Student erzeugen
         final NativeSelect<String> anrede = new NativeSelect<>("Anrede");
         anrede.setItems("Herr", "Frau");
