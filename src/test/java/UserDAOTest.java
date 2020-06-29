@@ -12,17 +12,8 @@ public class UserDAOTest {
         userDAO =  UserDAO.getInstance();
         assertNotNull(userDAO);
     }
-//    @Test
-//    void testRead() {
-//        assertNotNull(userDAO.getMaxID());
-//    }
     @Test
-    public void testUpdate() {
-
+    public void testReadID() {
+        assertNotNull(UserDAO.getInstance().getMaxID());
     }
-    @Test
-    public void testDelete() {
-
-    }
-
 }

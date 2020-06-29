@@ -55,7 +55,6 @@ public class JDBCConnection {
             throwables.printStackTrace();
             return null;
         }
-
     }
 
     public PreparedStatement getPreparedStatement(String sql ) throws DatabaseException {

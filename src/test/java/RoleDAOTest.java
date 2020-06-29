@@ -2,12 +2,11 @@ import org.HardCore.model.dao.RoleDAO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class RoleDAOTest {
 
-    private static RoleDAO roleDAO;
-    private UserDTO userDTO;
+    private RoleDAO roleDAO;
 
     @Test
     public void testCreate() {
@@ -15,12 +14,15 @@ public class RoleDAOTest {
         assertNotNull(roleDAO);
     }
     @Test
-    public void testRead() {
+    public void setStudent() {
+        UserDTO userDTO = new UserDTO();
+        assertFalse(RoleDAO.getInstance().setRolesForStudent(userDTO));
 
     }
     @Test
-    public void testUpdate() {
-
+    public void setUnternehmen() {
+        UserDTO userDTO = new UserDTO();
+        assertFalse(RoleDAO.getInstance().setRolesForUnternehmen(userDTO));
     }
     @Test
     public void testDelete() {

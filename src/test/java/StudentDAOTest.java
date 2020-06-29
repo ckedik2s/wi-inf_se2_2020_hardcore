@@ -1,32 +1,21 @@
 import org.HardCore.model.dao.StudentDAO;
+import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class StudentDAOTest {
 
-    private static StudentDAO studDAO;
-    private UserDTO userDTO;
-    private Object stud;
+    private StudentDAO studDAO;
 
     @Test
     public void testCreate() {
         studDAO =  StudentDAO.getInstance();
         assertNotNull(studDAO);
     }
-//    @Test
-//    void testRead() {
-//        user = new User();
-//        studDAO.getAllDataStudent(user);
-//        assertEquals((Unternehmen)stud,(Unternehmen)stud);
-//    }
     @Test
-    public void testUpdate() {
-
-    }
-    @Test
-    public void testDelete() {
+    public void testRead() {
 
     }
 }
