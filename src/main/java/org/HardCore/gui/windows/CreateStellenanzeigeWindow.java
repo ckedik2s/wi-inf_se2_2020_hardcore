@@ -67,7 +67,7 @@ public class CreateStellenanzeigeWindow extends Window {
                 try {
                     list = StellenanzeigeControlProxy.getInstance().getAnzeigenForUnternehmen(unternehmenDTO);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
                 }
                 grid.setItems();
                 grid.setItems(list);
