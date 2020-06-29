@@ -197,7 +197,6 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 listStellenanzeige.add(stellenanzeigeDTO);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             Notification.show("Es ist ein schwerer SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         } finally{
             assert rs != null;
