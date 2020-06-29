@@ -1,6 +1,6 @@
 package org.HardCore.process.Interfaces;
 
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.process.exceptions.DatabaseException;
@@ -11,17 +11,17 @@ import java.util.List;
 
 public interface StellenanzeigeControlInterface {
 
-    List<StellenanzeigeDetail> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException;
+    List<StellenanzeigeDTO> getAnzeigenForUnternehmen(UnternehmenDTO unternehmenDTO) throws SQLException;
 
-    List<StellenanzeigeDetail> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException;
+    List<StellenanzeigeDTO> getAnzeigenForStudent(StudentDTO studentDTO) throws SQLException;
 
-    void createStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException;
+    void createStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) throws StellenanzeigeException;
 
-    void updateStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException;
+    void updateStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) throws StellenanzeigeException;
 
-    void deleteStellenanzeige(StellenanzeigeDetail stellenanzeigeDetail) throws StellenanzeigeException;
+    void deleteStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) throws StellenanzeigeException;
 
-    List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException;
+    List<StellenanzeigeDTO> getAnzeigenForSearch(String suchtext, String filter) throws SQLException;
 
-    int getAnzahlBewerber(StellenanzeigeDetail stellenanzeigeDetail) throws DatabaseException, SQLException;
+    int getAnzahlBewerber(StellenanzeigeDTO stellenanzeigeDTO) throws DatabaseException, SQLException;
 }

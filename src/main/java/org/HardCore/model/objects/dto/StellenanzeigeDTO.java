@@ -2,7 +2,7 @@ package org.HardCore.model.objects.dto;
 
 import java.time.LocalDate;
 
-public class StellenanzeigeDetail extends AbstractDTO {
+public class StellenanzeigeDTO extends AbstractDTO {
     private int id ;
     private int id_anzeige;
     private String beschreibung = "";

@@ -1,6 +1,6 @@
 package org.HardCore.process.proxy;
 
-import org.HardCore.model.objects.dto.StellenanzeigeDetail;
+import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.process.Interfaces.SearchControlInterface;
 import org.HardCore.process.control.SearchControl;
 
@@ -21,11 +21,11 @@ public class SearchControlProxy implements SearchControlInterface {
 
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForUser() throws SQLException {
+    public List<StellenanzeigeDTO> getAnzeigenForUser() throws SQLException {
         return SearchControl.getInstance().getAnzeigenForUser();
     }
 
-    public List<StellenanzeigeDetail> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
+    public List<StellenanzeigeDTO> getAnzeigenForSearch(String suchtext, String filter) throws SQLException {
         return SearchControl.getInstance().getAnzeigenForSearch(suchtext, filter);
     }
 }
