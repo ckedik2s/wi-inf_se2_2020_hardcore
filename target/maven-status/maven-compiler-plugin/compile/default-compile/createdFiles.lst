@@ -31,6 +31,7 @@ org\HardCore\gui\windows\StellenanzeigeWindow$2.class
 org\HardCore\gui\components\TopPanel$3.class
 org\HardCore\gui\views\BewerbungView.class
 org\HardCore\gui\views\MainView$3.class
+org\HardCore\gui\views\LoginView$2.class
 org\HardCore\gui\windows\CreateStellenanzeigeWindow.class
 org\HardCore\model\objects\dto\RoleDTO.class
 org\HardCore\gui\windows\CreateStellenanzeigeWindow$2.class
@@ -57,11 +58,13 @@ org\HardCore\gui\views\RegistrationView$2.class
 org\HardCore\model\dao\UnternehmenDAO.class
 org\HardCore\process\proxy\BewerbungControlProxy.class
 org\HardCore\gui\views\BewerbungView$2.class
+org\HardCore\gui\windows\DeleteWindow.class
 org\HardCore\gui\views\MainView$1.class
 org\HardCore\process\control\SearchControl.class
 org\HardCore\model\dao\UserDAO.class
 org\HardCore\gui\windows\FreitextWindow$1.class
 org\HardCore\process\proxy\SearchControlProxy.class
+org\HardCore\model\objects\dto\AbstractDTO.class
 org\HardCore\gui\components\TopPanel$1.class
 org\HardCore\gui\windows\StellenanzeigeWindow$3.class
 org\HardCore\gui\components\TopPanel$4.class
@@ -70,6 +73,7 @@ org\HardCore\gui\views\StellenanzeigeView.class
 org\HardCore\gui\windows\StellenanzeigeWindow.class
 org\HardCore\model\factory\StellenanzeigeFactory.class
 org\HardCore\process\Interfaces\RegistrationControlInterface.class
+org\HardCore\gui\windows\DeleteWindow$1.class
 org\HardCore\gui\windows\ConfirmationWindow$1.class
 org\HardCore\process\proxy\StellenanzeigeControlProxy.class
 org\HardCore\gui\views\ProfileView$2.class
@@ -83,6 +87,7 @@ org\HardCore\gui\windows\DeleteProfileWindow$2.class
 org\HardCore\process\control\LoginControl.class
 org\HardCore\process\proxy\ProfileControlProxy.class
 org\HardCore\process\exceptions\StellenanzeigeException.class
+org\HardCore\gui\views\RegistrationView$4.class
 org\HardCore\gui\components\TopPanel$6.class
 org\HardCore\gui\views\ProfileView$1.class
 org\HardCore\services\db\JDBCConnection.class
@@ -95,6 +100,8 @@ org\HardCore\model\objects\dto\StudentDTO.class
 org\HardCore\gui\windows\DeleteProfileWindow$1.class
 org\HardCore\process\Interfaces\BewerbungControlInterface.class
 org\HardCore\process\Interfaces\SearchControlInterface.class
+org\HardCore\services\util\SafeString.class
 org\HardCore\gui\views\StellenanzeigeView$4.class
+org\HardCore\services\util\BuildGrid.class
 org\HardCore\gui\windows\DeleteStellenanzeigeWindow$2.class
 org\HardCore\gui\windows\DeleteBewerbungWindow.class

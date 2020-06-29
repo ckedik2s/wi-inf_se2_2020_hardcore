@@ -19,7 +19,7 @@ public class UserDAOTest {
         try {
             assertNotNull(UserDAO.getInstance().getMaxID());
         } catch (SQLException e) {
-            
+
         }
     }
 }
