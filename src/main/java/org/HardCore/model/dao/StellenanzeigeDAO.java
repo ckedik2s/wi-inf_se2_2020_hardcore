@@ -6,8 +6,6 @@ import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.model.objects.entities.Stellenanzeige;
-import org.HardCore.process.exceptions.DatabaseException;
-import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +25,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
         }
         return dao;
     }
-
+    //Erzeugt die Stellenanezeigen, die ein Unternehmen erstellt hat
     public List<StellenanzeigeDetail> getStellenanzeigenForUnternehmen(UserDTO userDTO) throws SQLException {
         String sql = "SELECT id_anzeige, beschreibung, art, name, zeitraum, branche, studiengang, ort " +
                 "FROM collhbrs.stellenanzeige " +
@@ -42,35 +40,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
-        List<StellenanzeigeDetail> list = new ArrayList<>();
-        StellenanzeigeDetail stellenanzeigeDetail;
 
-        try {
-            while (true) {
-                assert rs != null;
-                if (!rs.next()) break;
-                stellenanzeigeDetail = new StellenanzeigeDetail();
-                stellenanzeigeDetail.setId_anzeige(rs.getInt(1));
-                stellenanzeigeDetail.setBeschreibung(rs.getString(2));
-                stellenanzeigeDetail.setArt(rs.getString(3));
-                stellenanzeigeDetail.setName(rs.getString(4));
-                stellenanzeigeDetail.setZeitraum(rs.getDate(5).toLocalDate());
-                stellenanzeigeDetail.setBranche(rs.getString(6));
-                stellenanzeigeDetail.setStudiengang(rs.getString(7));
-                stellenanzeigeDetail.setOrt(rs.getString(8));
-                try {
-                    stellenanzeigeDetail.setAnzahl_bewerber(StellenanzeigeControlProxy.getInstance().getAnzahlBewerber(stellenanzeigeDetail));
-                } catch (DatabaseException e) {
-                    Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte informieren Sie einen Administrator!");
-                }
-                list.add(stellenanzeigeDetail);
-            }
-        } catch (SQLException e) {
-            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-        } finally {
-            assert rs != null;
-            rs.close();
-        }
+        List<StellenanzeigeDetail> list = new ArrayList<>();
+        buildList(rs, list);
         return list;
     }
 
