@@ -1,8 +1,8 @@
 package org.HardCore.model.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class UserDAO extends AbstractDAO {
     private static UserDAO dao = null;
@@ -18,13 +18,14 @@ public class UserDAO extends AbstractDAO {
         return dao;
     }
 
-    public int getMaxID() {
-        Statement statement = getStatement();
+    public int getMaxID() throws SQLException {
+        String sql = "SELECT max(id) " +
+        "FROM collhbrs.user ;";
+        PreparedStatement statement = getPreparedStatement(sql);
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT max(id)" +
-                    "FROM collhbrs.user");
+            rs = statement.executeQuery();
         } catch (SQLException throwables) {
             System.out.println("Fehler 1 bei addStudent");
         }
@@ -32,10 +33,14 @@ public class UserDAO extends AbstractDAO {
         int currentValue = 0;
 
         try {
+            assert rs != null;
             rs.next();
             currentValue = rs.getInt(1);
         } catch (SQLException throwables) {
             System.out.println("Fehler 2 bei addStudent");
+        } finally {
+            assert rs != null;
+            rs.close();
         }
         return currentValue;
     }

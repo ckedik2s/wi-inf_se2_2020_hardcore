@@ -7,17 +7,16 @@ import org.HardCore.process.exceptions.StellenanzeigeException;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 import org.HardCore.services.util.Views;
 
-public class DeleteStellenanzeigeWindow extends Window {
+public class DeleteStellenanzeigeWindow extends Window{
     //Window zum Löschen von Stellenanzeigen
 
     public DeleteStellenanzeigeWindow(StellenanzeigeDetail stellenanzeigeDetail) {
-
         center();
 
         VerticalLayout verticalLayout = new VerticalLayout();
         Panel panel = new Panel();
         panel.setWidth("700");
-        panel.setContent(new Label( "Sind Sie sicher, dass Sie die Stellenanzeige löschen wollen? <br>" +
+        panel.setContent(new Label("Sind Sie sicher, dass Sie die Stellenanzeige löschen wollen? <br>" +
                 "Dieser Vorgang ist unumkehrbar!", ContentMode.HTML));
         verticalLayout.addComponent(panel);
 

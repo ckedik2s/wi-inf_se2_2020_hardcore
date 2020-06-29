@@ -38,10 +38,9 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setSizeFull();
-        layout.setStyleName("custom_background_1");
-        setContent(layout);
+        //Hintergrundbild
+        setStyleName("hintergrundbild");
+
         Navigator navi = new Navigator(this,this);
 
         navi.addView(Views.MAIN, MainView.class);

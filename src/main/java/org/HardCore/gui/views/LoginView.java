@@ -13,6 +13,9 @@ import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.NoSuchUserOrPassword;
 import org.HardCore.process.proxy.LoginControlProxy;
+import org.HardCore.services.util.Views;
+
+import java.sql.SQLException;
 
 public class LoginView extends VerticalLayout implements View {
     @Override
@@ -53,15 +56,31 @@ public class LoginView extends VerticalLayout implements View {
                     Notification.show("Benutzer-Fehler", "Login oder Passwort falsch!", Notification.Type.ERROR_MESSAGE);
                 } catch (DatabaseException e) {
                     Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
                 }
             }
         });
+
+        //RegisterButton
+        Button registerButton = new Button("Zur Registration");
+        registerButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().getNavigator().navigateTo(Views.REGISTRATION);
+            }
+        });
+
+        //HorizontalLayout
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.addComponent(loginButton);
+        horizontalLayout.addComponent(registerButton);
 
         //Vertical Layout
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponent(userLogin);
         verticalLayout.addComponent(passwordField);
-        verticalLayout.addComponent(loginButton);
+        verticalLayout.addComponent(horizontalLayout);
 
         //Login Panel
         Panel panel = new Panel( "Bitte Login-Daten eingeben:");

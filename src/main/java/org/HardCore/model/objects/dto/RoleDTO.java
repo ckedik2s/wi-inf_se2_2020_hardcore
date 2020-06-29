@@ -1,6 +1,6 @@
 package org.HardCore.model.objects.dto;
 
-public class RoleDTO {
+public class RoleDTO extends AbstractDTO {
     private String bezeichnung = null;
 
 

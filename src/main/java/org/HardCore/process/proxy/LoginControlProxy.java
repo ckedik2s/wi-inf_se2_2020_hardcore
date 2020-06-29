@@ -5,6 +5,8 @@ import org.HardCore.process.control.LoginControl;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.NoSuchUserOrPassword;
 
+import java.sql.SQLException;
+
 public class LoginControlProxy implements LoginControlInterface {
     private static LoginControlProxy loginControl = null;
 
@@ -17,7 +19,7 @@ public class LoginControlProxy implements LoginControlInterface {
         return loginControl;
     }
 
-    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
+    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException, SQLException {
         LoginControl.getInstance().checkAuthentification(email, password);
     }
 

@@ -8,6 +8,7 @@ import org.HardCore.gui.components.TopPanel;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.ConfirmationWindow;
 import org.HardCore.gui.windows.DeleteProfileWindow;
+import org.HardCore.gui.windows.DeleteWindow;
 import org.HardCore.model.objects.dto.StudentDTO;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.model.objects.dto.UserDTO;
@@ -15,6 +16,7 @@ import org.HardCore.process.exceptions.ProfileException;
 import org.HardCore.process.proxy.ProfileControlProxy;
 import org.HardCore.services.util.Roles;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class ProfileView extends VerticalLayout implements View {
@@ -34,8 +36,6 @@ public class ProfileView extends VerticalLayout implements View {
 
         UserDTO userDTO = ((MyUI) UI.getCurrent()).getUserDTO();
 
-        //TODO alle Felder müssen eingabencheck haben für fehleingaben
-        //TODO keine Textfelder bei Hausnummern
         //Felder Student erzeugen
         final NativeSelect<String> anrede = new NativeSelect<>("Anrede");
         anrede.setItems("Herr", "Frau");
@@ -93,7 +93,12 @@ public class ProfileView extends VerticalLayout implements View {
 
         if (userDTO.hasRole(Roles.STUDENT)) {
             //Werte einsetzen
-            StudentDTO studentDTO = ProfileControlProxy.getInstance().getStudent(userDTO);
+            StudentDTO studentDTO = new StudentDTO(userDTO);
+            try {
+                studentDTO = ProfileControlProxy.getInstance().getStudent(userDTO);
+            } catch (SQLException e) {
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
+            }
             if (studentDTO.getAnrede() != null) {
                 anrede.setValue(studentDTO.getAnrede());
             }
@@ -106,7 +111,7 @@ public class ProfileView extends VerticalLayout implements View {
             if (studentDTO.getHochschule() != null) {
                 hochschule.setValue(studentDTO.getHochschule());
             }
-            if (studentDTO.getSemester() != null) {
+            if (studentDTO.getSemester() != 0) {
                 semester.setValue(String.valueOf(studentDTO.getSemester()));
             }
             if (studentDTO.getGebDatum() != null) {
@@ -120,7 +125,12 @@ public class ProfileView extends VerticalLayout implements View {
             }
         } else {
             //Werte Setzen
-            UnternehmenDTO unternehmenDTO = ProfileControlProxy.getInstance().getUnternehmen(userDTO);
+            UnternehmenDTO unternehmenDTO = new UnternehmenDTO(userDTO);
+            try {
+                unternehmenDTO = ProfileControlProxy.getInstance().getUnternehmen(userDTO);
+            } catch (SQLException e) {
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
+            }
             if (unternehmenDTO.getName() != null) {
                 firmenname.setValue(unternehmenDTO.getName());
             }
@@ -168,7 +178,11 @@ public class ProfileView extends VerticalLayout implements View {
                     studentDTO.setVorname(vorname.getValue());
                     studentDTO.setName(name.getValue());
                     studentDTO.setHochschule(hochschule.getValue());
-                    studentDTO.setSemester(Integer.valueOf(semester.getValue()));
+                    try {
+                        studentDTO.setSemester(Integer.valueOf(semester.getValue()));
+                    } catch (NumberFormatException e) {
+                        studentDTO.setSemester(0);
+                    }
                     studentDTO.setGebDatum(gebDatum.getValue());
                     studentDTO.setKenntnisse(kenntnisse.getValue());
                     studentDTO.setStudiengang(studiengang.getValue());

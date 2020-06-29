@@ -6,7 +6,6 @@ import org.HardCore.model.objects.dto.UserDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,14 +48,16 @@ public class UnternehmenDAO extends AbstractDAO {
         }
     }
 
-    public UnternehmenDTO getAllDataUnternehmen(UserDTO userDTO) {
-        Statement statement = this.getStatement();
-        ResultSet rs = null;
-        System.out.println(userDTO.getId());
+    public UnternehmenDTO getAllDataUnternehmen(UserDTO userDTO) throws SQLException {
+        String sql = "SELECT * " +
+                "FROM collhbrs.unternehmen " +
+                "WHERE collhbrs.unternehmen.id = ? ;";
+        PreparedStatement statement = this.getPreparedStatement(sql);
+        ResultSet rs;
+
         try {
-            rs = statement.executeQuery("SELECT * " +
-                    "FROM collhbrs.unternehmen " +
-                    "WHERE collhbrs.unternehmen.id = \'" + userDTO.getId() + "\';");
+            statement.setInt(1,userDTO.getId());
+            rs = statement.executeQuery();
 
         } catch (SQLException ex) {
             Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
@@ -69,17 +70,18 @@ public class UnternehmenDAO extends AbstractDAO {
                 un.setName(rs.getString(2));
                 un.setAnsprechpartner(rs.getString(3));
                 un.setStrasse(rs.getString(4));
-                un.setPlz((Integer) rs.getInt(5));
-                un.setHaus_nr((Integer) rs.getInt(6));
+                un.setPlz(rs.getInt(5));
+                un.setHaus_nr(rs.getInt(6));
                 un.setZusatz(rs.getString(7));
                 un.setOrt(rs.getString(8));
                 un.setBranche(rs.getString(9));
-
             }
 
         } catch (SQLException ex) {
             Logger.getLogger((UnternehmenDAO.class.getName())).log(Level.SEVERE, null, ex);
             return null;
+        } finally {
+            rs.close();
         }
         return un;
     }

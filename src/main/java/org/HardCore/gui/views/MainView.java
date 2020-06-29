@@ -7,6 +7,7 @@ import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -15,8 +16,11 @@ import org.HardCore.gui.ui.MyUI;
 import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.UserDTO;
+import org.HardCore.process.control.SearchControl;
 import org.HardCore.process.proxy.SearchControlProxy;
+import org.HardCore.services.util.BuildGrid;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class MainView extends VerticalLayout implements View {
@@ -24,7 +28,6 @@ public class MainView extends VerticalLayout implements View {
     private StellenanzeigeDetail selektiert = null;
     private List<StellenanzeigeDetail> list;
     private String suchtext;
-
 
 
     @Override
@@ -48,12 +51,7 @@ public class MainView extends VerticalLayout implements View {
         final Grid<StellenanzeigeDetail> grid = new Grid<>("Ihre Treffer");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
-        grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
-        grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
-        grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
-        grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
-        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
-        grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
+        BuildGrid.buildGrid(grid);
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //DetailButton
@@ -62,6 +60,9 @@ public class MainView extends VerticalLayout implements View {
         detailButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                if (selection.getValue() == null) {
+                    detailButton.setEnabled(false);
+                }
                 selektiert = selection.getValue();
                 UI.getCurrent().addWindow( new StellenanzeigeWindow(selektiert, userDTO) );
             }
@@ -80,9 +81,13 @@ public class MainView extends VerticalLayout implements View {
         grid.addSelectionListener(new SelectionListener<StellenanzeigeDetail>() {
             @Override
             public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
-                System.out.println("Zeile selektiert: " + selection.getValue());
-                selektiert = selection.getValue();
-                detailButton.setEnabled(true);
+                if (selection.getValue() == null) {
+                    detailButton.setEnabled(false);
+                } else {
+                    System.out.println("Zeile selektiert: " + selection.getValue());
+                    selektiert = selection.getValue();
+                    detailButton.setEnabled(true);
+                }
             }
         });
 
@@ -100,7 +105,20 @@ public class MainView extends VerticalLayout implements View {
         searchButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                search(search, comboBox, grid, detailButton);
+                suchtext = search.getValue();
+                if(suchtext.equals("")) {
+                    try {
+                        list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, comboBox.getValue());
+                    } catch (SQLException e) {
+                        Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+                    }
+                    grid.setItems(list);
+                    addComponent(grid);
+                    addComponent(detailButton);
+                    setComponentAlignment(detailButton, Alignment.MIDDLE_CENTER);
+                } else {
+                    search(search, comboBox, grid, detailButton);
+                }
             }
         });
 
@@ -117,19 +135,23 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
     }
 
-    private void search(TextField search, ComboBox<String> comboBox, Grid<StellenanzeigeDetail> grid, Button showButton) {
+    private void search(TextField search, ComboBox<String> comboBox, Grid<StellenanzeigeDetail> grid, Button detailButton) {
         if (search.getValue().length() > 1) {
             suchtext = search.getValue();
             String filter = comboBox.getValue();
-            list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, filter);
+            try {
+                list = SearchControlProxy.getInstance().getAnzeigenForSearch(suchtext, filter);
+            } catch (SQLException e) {
+                Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+            }
             grid.setItems();
             grid.setItems(list);
             addComponent(grid);
-            addComponent(showButton);
-            setComponentAlignment(showButton, Alignment.MIDDLE_CENTER);
+            addComponent(detailButton);
+            setComponentAlignment(detailButton, Alignment.MIDDLE_CENTER);
         } else {
             removeComponent(grid);
-            removeComponent(showButton);
+            removeComponent(detailButton);
         }
     }
 

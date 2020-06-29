@@ -19,6 +19,7 @@ public class  TopPanel extends HorizontalLayout {
         ThemeResource icon = new ThemeResource("logo_small.png");
         Image logo = new Image(null, icon);
         logo.setWidth("150");
+        logo.setStyleName("HomeButtonStyle");
         logo.addClickListener(new MouseEvents.ClickListener() {
 
             @Override
@@ -32,6 +33,7 @@ public class  TopPanel extends HorizontalLayout {
 
         //Willkommenstext oben rechts
         HorizontalLayout hlayout = new HorizontalLayout();
+        setStyleName("schrift-willkommen");
         UserDTO userDTO = ( (MyUI) MyUI.getCurrent() ).getUserDTO();
         Label welcome = new Label("Willkommen bei HardCore!");
         if (userDTO != null) {

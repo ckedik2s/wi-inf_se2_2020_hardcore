@@ -7,6 +7,8 @@ import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
 
+import java.sql.SQLException;
+
 public class FreitextWindow extends Window {
 
     public FreitextWindow(StellenanzeigeDetail stellenanzeige, UserDTO userDTO) {
@@ -36,6 +38,8 @@ public class FreitextWindow extends Window {
                 catch (BewerbungException e) {
                     Notification.show("Bewerbung konnte nicht eingereicht werden.", Notification.Type.WARNING_MESSAGE);
                     return;
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
                 }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Bewerbung erfolgreich abgegeben!"));
                 close();

@@ -15,7 +15,9 @@ import org.HardCore.gui.windows.StellenanzeigeWindow;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.process.proxy.SearchControlProxy;
+import org.HardCore.services.util.BuildGrid;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StellenanzeigeView extends VerticalLayout implements View {
@@ -46,16 +48,14 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = SearchControlProxy.getInstance().getAnzeigenForUser();
-        grid.removeAllColumns();
-        grid.setItems(list);
-        grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
-        grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
-        grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
-        grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
-        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
-        grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
+        try {
+            list = SearchControlProxy.getInstance().getAnzeigenForUser();
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        }
+        BuildGrid.buildGrid(grid);
         grid.addColumn(StellenanzeigeDetail::getAnzahl_bewerber).setCaption("Anzahl der Bewerber");
+        grid.setItems(list);
 
         //ShowButton
         Button showButton = new Button("Bearbeiten");
@@ -75,7 +75,6 @@ public class StellenanzeigeView extends VerticalLayout implements View {
                 if (selection.getValue() == null) {
                     showButton.setEnabled(false);
                     deleteButton.setEnabled(false);
-                    return;
                 }
                 else {
                     System.out.println("Zeile selektiert: " + selection.getValue());
@@ -108,10 +107,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                DeleteStellenanzeigeWindow window = new DeleteStellenanzeigeWindow(selektiert);
-                UI.getCurrent().addWindow(window);
-                deleteButton.setEnabled(false);
-                showButton.setEnabled(false);
+                UI.getCurrent().addWindow(new DeleteStellenanzeigeWindow(selektiert));
             }
         });
 

@@ -13,9 +13,12 @@ import org.HardCore.gui.windows.DeleteBewerbungWindow;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StellenanzeigeDetail;
 import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
+import org.HardCore.services.util.BuildGrid;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class BewerbungView extends VerticalLayout implements View {
@@ -46,15 +49,13 @@ public class BewerbungView extends VerticalLayout implements View {
         SingleSelect<StellenanzeigeDetail> selection = grid.asSingleSelect();
 
         //Tabelle füllen
-        list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
-        grid.removeAllColumns();
+        try {
+            list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        }
+        BuildGrid.buildGrid(grid);
         grid.setItems(list);
-        grid.addColumn(StellenanzeigeDetail::getName).setCaption("Name");
-        grid.addColumn(StellenanzeigeDetail::getArt).setCaption("Art");
-        grid.addColumn(StellenanzeigeDetail::getBranche).setCaption("Branche");
-        grid.addColumn(StellenanzeigeDetail::getStudiengang).setCaption("Studiengang");
-        grid.addColumn(StellenanzeigeDetail::getOrt).setCaption("Ort");
-        grid.addColumn(StellenanzeigeDetail::getZeitraum).setCaption("Ende der Ausschreibung");
 
         //DeleteButton
         Button deleteButton = new Button("Löschen");
@@ -66,7 +67,6 @@ public class BewerbungView extends VerticalLayout implements View {
             public void selectionChange(SelectionEvent<StellenanzeigeDetail> event) {
                 if (selection.getValue() == null) {
                     deleteButton.setEnabled(false);
-                    return;
                 }
                 else {
                     selektiert = selection.getValue();
@@ -79,18 +79,15 @@ public class BewerbungView extends VerticalLayout implements View {
         deleteButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                BewerbungDTO bewerbungDTO = BewerbungControlProxy.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
-                DeleteBewerbungWindow window = new DeleteBewerbungWindow(bewerbungDTO);
-                UI.getCurrent().addWindow(window);
-                deleteButton.setEnabled(false);
-                grid.setItems();
-                list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);
+                BewerbungDTO bewerbungDTO = null;
                 try {
-                    grid.setItems(list);
-                } catch (Exception e) {
-                    System.out.println("Fehler 1");
-                    e.printStackTrace();
+                    bewerbungDTO = BewerbungControlProxy.getInstance().getBewerbungForStellenanzeige(selektiert, studentDTO);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte kontaktieren Sie den Administrator!", Notification.Type.ERROR_MESSAGE);
+                } catch (DatabaseException e) {
+                    Notification.show("Es ist ein Datenbankfehler aufgetreten. Bitte versuchen Sie es erneut!", Notification.Type.ERROR_MESSAGE);
                 }
+                UI.getCurrent().addWindow(new DeleteBewerbungWindow(bewerbungDTO));
             }
         });
 
@@ -103,5 +100,4 @@ public class BewerbungView extends VerticalLayout implements View {
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
     }
-
 }

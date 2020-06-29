@@ -1,5 +1,6 @@
 package org.HardCore.model.dao;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.RoleDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.services.util.Roles;
@@ -7,7 +8,6 @@ import org.HardCore.services.util.Roles;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,35 +25,37 @@ public class RoleDAO extends AbstractDAO{
         return dao;
     }
 
-    public List<RoleDTO> getRolesForUser(UserDTO userDTO) {
-        Statement statement = getStatement();
+    public List<RoleDTO> getRolesForUser(UserDTO userDTO) throws SQLException {
+        String sql = "SELECT rolle " +
+                "FROM collhbrs.user_to_rolle " +
+                "WHERE id = ? ";
+        PreparedStatement statement = getPreparedStatement(sql);
 
         ResultSet rs = null;
 
         try {
-            rs = statement.executeQuery("SELECT rolle " +
-                    "FROM collhbrs.user_to_rolle " +
-                    "WHERE id = \'" + userDTO.getId() + "\'");
+            statement.setInt(1,userDTO.getId());
+            rs = statement.executeQuery();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-        if (rs == null) {
-            return null;
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
 
         List<RoleDTO> liste = new ArrayList<>();
-        RoleDTO role = null;
+        RoleDTO role;
 
         try {
-            while (rs.next()) {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
                 role = new RoleDTO();
                 role.setBezeichnung(rs.getString(1));
                 liste.add(role);
             }
         } catch (SQLException ex) {
             return null;
+        } finally {
+            assert rs != null;
+            rs.close();
         }
         return liste;
     }

@@ -8,6 +8,7 @@ import org.HardCore.process.Interfaces.ProfileControlInterface;
 import org.HardCore.process.control.ProfileControl;
 import org.HardCore.process.exceptions.ProfileException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProfileControlProxy implements ProfileControlInterface {
@@ -32,11 +33,11 @@ public class ProfileControlProxy implements ProfileControlInterface {
         ProfileControl.getInstance().updateUnternehmenData(unternehmenDTO);
     }
 
-    public StudentDTO getStudent(UserDTO userDTO) {
+    public StudentDTO getStudent(UserDTO userDTO) throws SQLException {
         return ProfileControl.getInstance().getStudent(userDTO);
     }
 
-    public UnternehmenDTO getUnternehmen(UserDTO userDTO) {
+    public UnternehmenDTO getUnternehmen(UserDTO userDTO) throws SQLException {
         return ProfileControl.getInstance().getUnternehmen(userDTO);
     }
 
@@ -44,7 +45,7 @@ public class ProfileControlProxy implements ProfileControlInterface {
         ProfileControl.getInstance().setBewerbung(text, studentDTO);
     }
 
-    public List<BewerbungDTO> getBewerbung(StudentDTO studentDTO) {
+    public List<BewerbungDTO> getBewerbung(StudentDTO studentDTO) throws SQLException {
         return ProfileControl.getInstance().getBewerbung(studentDTO);
     }
 }

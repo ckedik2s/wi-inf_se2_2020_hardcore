@@ -1,14 +1,15 @@
 package org.HardCore.model.dao;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.HardCore.model.objects.dto.StudentDTO;
+import org.HardCore.process.exceptions.BewerbungException;
 import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.services.db.JDBCConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,7 +29,7 @@ public class BewerbungDAO extends AbstractDAO {
         return bewerbungDAO;
     }
 
-    public BewerbungDTO getBewerbung(int id_bewerbung) throws DatabaseException {
+    public BewerbungDTO getBewerbung(int id_bewerbung) throws DatabaseException, SQLException {
         String sql = "SELECT id_bewerbung, freitext " +
                 "FROM collhbrs.bewerbung " +
                 "WHERE id_bewerbung = ?";
@@ -38,34 +39,38 @@ public class BewerbungDAO extends AbstractDAO {
         try {
             statement.setInt(1, id_bewerbung);
             rs = statement.executeQuery();
-            if( rs.next() ) {
+            if (rs.next()) {
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(id_bewerbung);
                 bewerbungDTO.setFreitext(rs.getString(2));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        } finally {
+            assert rs != null;
+            rs.close();
         }
         return bewerbungDTO;
     }
 
-    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) {
+    public List<BewerbungDTO> getBewerbungenForStudent(StudentDTO studentDTO) throws SQLException {
+        String sql = "SELECT id_bewerbung, freitext " +
+                "FROM collhbrs.bewerbung " +
+                "WHERE id = ? ;";
         List<BewerbungDTO> list = new ArrayList<>();
-        Statement statement = getStatement();
+        PreparedStatement statement = this.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
-            rs = statement.executeQuery("SELECT id_bewerbung, freitext " +
-                    "FROM collhbrs.bewerbung " +
-                    "WHERE id =\'" + studentDTO.getId() + "\';");
+            statement.setInt(1, studentDTO.getId());
+            rs = statement.executeQuery();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
-        if (rs == null) {
-            return null;
-        }
-        BewerbungDTO bewerbungDTO = null;
+        BewerbungDTO bewerbungDTO;
         try {
-            while (rs.next()) {
+            while (true) {
+                assert rs != null;
+                if (!rs.next()) break;
                 bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setId(rs.getInt(1));
                 bewerbungDTO.setFreitext(rs.getString(2));
@@ -73,7 +78,11 @@ public class BewerbungDAO extends AbstractDAO {
 
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        }
+        finally{
+            assert rs != null;
+            rs.close();
         }
         return list;
     }

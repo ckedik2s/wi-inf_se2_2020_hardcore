@@ -1,5 +1,6 @@
 package org.HardCore.process.control;
 
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
 import org.HardCore.model.objects.dto.StudentDTO;
@@ -12,9 +13,9 @@ import org.HardCore.services.db.JDBCConnection;
 import org.HardCore.services.util.Roles;
 import org.HardCore.services.util.Views;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class LoginControl implements LoginControlInterface {
     private static LoginControl loginControl = null;
@@ -28,18 +29,18 @@ public class LoginControl implements LoginControlInterface {
         return loginControl;
     }
 
-    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException {
-
-        //DB User abfrage
-        ResultSet rs = null;
-        Statement statement = JDBCConnection.getInstance().getStatement();
-        try {
-            rs = statement.executeQuery("SELECT id " +
+    public void checkAuthentification( String email, String password) throws NoSuchUserOrPassword, DatabaseException, SQLException {
+        String sql = "SELECT id " +
                     "FROM collhbrs.user " +
-                    "WHERE email = \'" + email + "\' " +
-                    "AND password = \'" + password + "\'");
+                    "WHERE email = ? "+
+                    "AND password = ? ;";
+        ResultSet rs;
+        PreparedStatement statement = JDBCConnection.getInstance().getPreparedStatement(sql);
+        try {
+            statement.setString(1, email);
+            statement.setString(2, password);
+            rs = statement.executeQuery();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL-Befehl: Bitte den Programmierer informieren!");
         }
 
@@ -61,12 +62,12 @@ public class LoginControl implements LoginControlInterface {
                 throw new NoSuchUserOrPassword();
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
         finally {
             JDBCConnection.getInstance().closeConnection();
+            rs.close();
         }
-        //UI.getCurrent().getSession().setAttribute(user);
         ((MyUI) UI.getCurrent() ).setUserDTO(userDTO); //Mockito zum Testen
         UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
     }

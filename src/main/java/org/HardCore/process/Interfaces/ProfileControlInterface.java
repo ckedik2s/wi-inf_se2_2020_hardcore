@@ -6,6 +6,7 @@ import org.HardCore.model.objects.dto.UnternehmenDTO;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.process.exceptions.ProfileException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ProfileControlInterface {
@@ -14,11 +15,11 @@ public interface ProfileControlInterface {
 
     void updateUnternehmenData(UnternehmenDTO unternehmenDTO) throws ProfileException;
 
-    StudentDTO getStudent(UserDTO userDTO);
+    StudentDTO getStudent(UserDTO userDTO) throws SQLException;
 
-    UnternehmenDTO getUnternehmen(UserDTO userDTO);
+    UnternehmenDTO getUnternehmen(UserDTO userDTO) throws SQLException;
 
     void setBewerbung(String text, StudentDTO studentDTO) throws ProfileException;
 
-    List<BewerbungDTO> getBewerbung(StudentDTO studentDTO);
+    List<BewerbungDTO> getBewerbung(StudentDTO studentDTO) throws SQLException;
 }

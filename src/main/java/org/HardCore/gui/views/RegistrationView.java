@@ -15,6 +15,9 @@ import org.HardCore.process.exceptions.EmailInUseException;
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
 import org.HardCore.process.proxy.RegistrationControlProxy;
+import org.HardCore.services.util.Views;
+
+import java.sql.SQLException;
 
 public class RegistrationView extends VerticalLayout implements View {
 
@@ -87,7 +90,7 @@ public class RegistrationView extends VerticalLayout implements View {
 
         //Checkbox
         final Binder<UserDTO> checkboxBinder = new Binder<>();
-        RadioButtonGroup<String> radioButtonGroup = new RadioButtonGroup("Registrieren als:");
+        RadioButtonGroup<String> radioButtonGroup = new RadioButtonGroup<>("Registrieren als:");
         radioButtonGroup.setItems("Student", "Unternehmen");
         radioButtonGroup.setRequiredIndicatorVisible(true);
         radioButtonGroup.isSelected("Student");
@@ -119,9 +122,25 @@ public class RegistrationView extends VerticalLayout implements View {
                     Notification.show("Email-Fehler!", e.getReason(), Notification.Type.ERROR_MESSAGE);
                 } catch (EmptyFieldException e) {
                     Notification.show("Es sind ein oder mehrere Eingabefehler aufgetreten!", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                } catch (SQLException e) {
+                    Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
                 }
             }
         });
+
+        //LoginButton
+        Button loginButton = new Button("Zum Login");
+        loginButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().getNavigator().navigateTo(Views.LOGIN);
+            }
+        });
+
+        //Horizontal
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.addComponent(registerButton);
+        horizontalLayout.addComponent(loginButton);
 
         //Vertical Layout
         VerticalLayout verticalLayout = new VerticalLayout();
@@ -131,7 +150,8 @@ public class RegistrationView extends VerticalLayout implements View {
         verticalLayout.addComponent(fieldPassword2);
         verticalLayout.addComponent(counter2);
         verticalLayout.addComponent(radioButtonGroup);
-        verticalLayout.addComponent(registerButton);
+        verticalLayout.addComponent(horizontalLayout);
+        verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 
         //Panel
         Panel panel = new Panel( "Bitte geben Sie ihre Daten ein:");

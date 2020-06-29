@@ -12,12 +12,7 @@ public class BewerbungDTOFactory {
         return bewerbungDTO;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    public Object clone() {
-        return null;
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException("Dieses Object kann nicht geclont werden!");
     }
 }

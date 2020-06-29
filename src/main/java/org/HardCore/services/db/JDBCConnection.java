@@ -1,6 +1,8 @@
 package org.HardCore.services.db;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.process.exceptions.DatabaseException;
+import org.HardCore.services.util.SafeString;
 
 import java.sql.*;
 import java.util.Properties;
@@ -28,7 +30,7 @@ public class JDBCConnection {
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
         this.openConnection();
     }
@@ -36,11 +38,10 @@ public class JDBCConnection {
     public void openConnection() throws DatabaseException {
         try {
             Properties props = new Properties();
-            props.setProperty("user", login);
-            props.setProperty("password", passwort);
+            props.setProperty(SafeString.USER, login);
+            props.setProperty(SafeString.PW, passwort);
             this.conn = DriverManager.getConnection(this.url, props);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             throw new DatabaseException("Fehler bei Zugriff auf die DB! Sichere Verbindung vorhanden?");
         }
     }
@@ -52,7 +53,6 @@ public class JDBCConnection {
             }
             return this.conn.createStatement();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             return null;
         }
     }
@@ -64,7 +64,6 @@ public class JDBCConnection {
             }
             return this.conn.prepareStatement(sql);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             return null;
         }
     }
@@ -73,7 +72,7 @@ public class JDBCConnection {
         try {
             this.conn.close();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         }
     }
 

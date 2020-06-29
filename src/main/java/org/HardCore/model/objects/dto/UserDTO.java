@@ -1,11 +1,13 @@
 package org.HardCore.model.objects.dto;
 
+import com.vaadin.ui.Notification;
 import org.HardCore.model.dao.RoleDAO;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 
-public class UserDTO implements Serializable {
+public class UserDTO extends AbstractDTO implements Serializable {
     private int id;
     private String vorname;
     private String name;
@@ -53,9 +55,10 @@ public class UserDTO implements Serializable {
         this.email = id;
     }
 
-    public boolean hasRole(String role) {
+    public boolean hasRole(String role){
         if (this.roles == null) {
             getRoles();
+
         }
         for(RoleDTO r : roles) {
             if (r.getBezeichnung().equals(role)) return true;
@@ -73,6 +76,10 @@ public class UserDTO implements Serializable {
     }
 
     private void getRoles() {
-        this.roles = RoleDAO.getInstance().getRolesForUser(this);
+        try {
+            this.roles = RoleDAO.getInstance().getRolesForUser(this);
+        } catch (SQLException e) {
+            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
+        }
     }
 }
