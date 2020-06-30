@@ -1,5 +1,6 @@
 package org.HardCore.gui.views;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
@@ -33,10 +34,11 @@ public class ProfileView extends VerticalLayout implements View {
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
-
+        this.addStyleName("schrift-profil");
         UserDTO userDTO = ((MyUI) UI.getCurrent()).getUserDTO();
         setStyleName("schrift-profil");
         //Felder Student erzeugen
+
         final NativeSelect<String> anrede = new NativeSelect<>("Anrede");
         anrede.setItems("Herr", "Frau");
 
@@ -63,7 +65,6 @@ public class ProfileView extends VerticalLayout implements View {
         //Upload profilbild = new Upload("Profilbild", reciever);
 
         Label meinProfil = new Label("Mein Profil");
-
         //Felder Unternehmen erzeugen
         TextField firmenname = new TextField("Firmenname");
         firmenname.setPlaceholder("Firma Exa");

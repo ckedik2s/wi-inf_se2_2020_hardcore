@@ -42,13 +42,13 @@ public class BewerbungView extends VerticalLayout implements View {
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
-
+        setStyleName("schrift-profil");
         //Tabelle
         final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Bewerbungen");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
         SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
-
+        grid.setStyleName("schrift-tabelle");
         //Tabelle füllen
         try {
             list = StellenanzeigeControlProxy.getInstance().getAnzeigenForStudent(studentDTO);

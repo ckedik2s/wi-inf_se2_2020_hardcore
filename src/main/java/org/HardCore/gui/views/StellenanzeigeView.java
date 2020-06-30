@@ -41,13 +41,13 @@ public class StellenanzeigeView extends VerticalLayout implements View {
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
-
+        setStyleName("schrift-profil");
         //Tabelle
         final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Stellenanzeigen");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
         SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
-
+        grid.setStyleName("schrift-tabelle");
         //Tabelle füllen
         try {
             list = SearchControlProxy.getInstance().getAnzeigenForUser();
