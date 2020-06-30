@@ -1,3 +1,5 @@
+package DAOTests;
+
 import org.HardCore.model.objects.dto.BewerbungDTO;
 import org.junit.Test;
 

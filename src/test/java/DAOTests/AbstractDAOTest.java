@@ -1,3 +1,5 @@
+package DAOTests;
+
 import org.HardCore.model.dao.AbstractDAO;
 import org.HardCore.model.dao.UserDAO;
 import org.junit.Test;

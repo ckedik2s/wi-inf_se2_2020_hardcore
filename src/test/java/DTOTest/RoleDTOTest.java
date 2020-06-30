@@ -1,3 +1,5 @@
+package DTOTest;
+
 import org.HardCore.model.objects.dto.RoleDTO;
 import org.junit.Test;
 

@@ -1,3 +1,5 @@
+package DTOTest;
+
 import org.HardCore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
