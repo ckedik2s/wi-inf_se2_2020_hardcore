@@ -30,25 +30,26 @@ public class StellenanzeigeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         //User user = (User) VaadinSession.getCurrent().getAttribute(Roles.CURRENT_USER);
-        UnternehmenDTO unternehmenDTO = new UnternehmenDTO(( (MyUI) UI.getCurrent() ).getUserDTO());
+        UnternehmenDTO unternehmenDTO = new UnternehmenDTO(((MyUI) UI.getCurrent()).getUserDTO());
         this.setUp(unternehmenDTO);
     }
 
     private void setUp(UnternehmenDTO unternehmenDTO) {
 
         //Top Layer
-        this.addComponent( new TopPanel() );
+        this.addComponent(new TopPanel());
+        setStyleName("schrift-profil");
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
-        setStyleName("schrift-profil");
         //Tabelle
         final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Stellenanzeigen");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
-        SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
         grid.setStyleName("schrift-tabelle");
-        //Tabelle füllen
+        SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
+
+        //Tabelle befüllen
         try {
             list = SearchControlProxy.getInstance().getAnzeigenForUser();
         } catch (SQLException e) {
@@ -76,8 +77,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
                 if (selection.getValue() == null) {
                     showButton.setEnabled(false);
                     deleteButton.setEnabled(false);
-                }
-                else {
+                } else {
                     System.out.println("Zeile selektiert: " + selection.getValue());
                     selektiert = selection.getValue();
                     deleteButton.setEnabled(true);
@@ -109,7 +109,7 @@ public class StellenanzeigeView extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 DeleteStellenanzeigeWindow deleteStellenanzeigeWindow = new DeleteStellenanzeigeWindow(selektiert);
-                UI.getCurrent().addWindow( new DeleteWindow(deleteStellenanzeigeWindow) );
+                UI.getCurrent().addWindow(new DeleteWindow(deleteStellenanzeigeWindow));
             }
         });
 
