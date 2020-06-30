@@ -1,4 +1,4 @@
-import org.HardCore.model.objects.dto.BewerbungDTO;
+import org.hardcore.model.objects.dto.BewerbungDTO;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

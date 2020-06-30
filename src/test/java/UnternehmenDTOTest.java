@@ -1,5 +1,5 @@
-import org.HardCore.model.objects.dto.UnternehmenDTO;
-import org.HardCore.model.objects.dto.UserDTO;
+import org.hardcore.model.objects.dto.UnternehmenDTO;
+import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

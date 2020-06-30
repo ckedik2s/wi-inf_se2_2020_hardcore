@@ -1,6 +1,6 @@
-import org.HardCore.model.dao.BewerbungDAO;
-import org.HardCore.model.objects.dto.StudentDTO;
-import org.HardCore.model.objects.dto.UserDTO;
+import org.hardcore.model.dao.BewerbungDAO;
+import org.hardcore.model.objects.dto.StudentDTO;
+import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

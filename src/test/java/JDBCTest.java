@@ -1,5 +1,5 @@
-import org.HardCore.process.exceptions.DatabaseException;
-import org.HardCore.services.db.JDBCConnection;
+import org.hardcore.process.exceptions.DatabaseException;
+import org.hardcore.services.db.JDBCConnection;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

@@ -1,4 +1,4 @@
-import org.HardCore.model.dao.StudentDAO;
+import org.hardcore.model.dao.StudentDAO;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

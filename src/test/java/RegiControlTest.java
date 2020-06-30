@@ -1,8 +1,8 @@
-import org.HardCore.process.control.RegistrationControl;
-import org.HardCore.process.exceptions.EmptyFieldException;
-import org.HardCore.process.exceptions.NoEqualPasswordException;
-import org.HardCore.process.proxy.RegistrationControlProxy;
-import org.HardCore.services.util.SafeString;
+import org.hardcore.process.control.RegistrationControl;
+import org.hardcore.process.exceptions.EmptyFieldException;
+import org.hardcore.process.exceptions.NoEqualPasswordException;
+import org.hardcore.process.proxy.RegistrationControlProxy;
+import org.hardcore.services.util.SafeString;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

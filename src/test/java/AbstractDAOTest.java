@@ -1,4 +1,4 @@
-import org.HardCore.model.dao.AbstractDAO;
+import org.hardcore.model.dao.AbstractDAO;
 import org.junit.Test;
 
 import java.sql.Statement;
