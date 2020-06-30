@@ -1,6 +1,4 @@
-import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.process.control.RegistrationControl;
-import org.HardCore.process.exceptions.DatabaseException;
 import org.HardCore.process.exceptions.EmptyFieldException;
 import org.HardCore.process.exceptions.NoEqualPasswordException;
 import org.HardCore.process.proxy.RegistrationControlProxy;

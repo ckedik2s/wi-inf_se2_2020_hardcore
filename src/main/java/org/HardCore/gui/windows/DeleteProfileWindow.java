@@ -1,17 +1,11 @@
 package org.HardCore.gui.windows;
 
-import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import org.HardCore.gui.ui.MyUI;
-import org.HardCore.model.objects.dto.AbstractDTO;
 import org.HardCore.model.objects.dto.UserDTO;
-import org.HardCore.process.exceptions.BewerbungException;
-import org.HardCore.process.exceptions.StellenanzeigeException;
-import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.LoginControlProxy;
 import org.HardCore.process.proxy.RegistrationControlProxy;
-import org.HardCore.process.proxy.StellenanzeigeControlProxy;
-import org.HardCore.services.util.Views;
 
 public class DeleteProfileWindow extends DeleteWindow {
 

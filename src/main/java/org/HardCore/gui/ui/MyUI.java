@@ -8,7 +8,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.HardCore.gui.views.*;
 import org.HardCore.model.objects.dto.UserDTO;
 import org.HardCore.services.util.Views;

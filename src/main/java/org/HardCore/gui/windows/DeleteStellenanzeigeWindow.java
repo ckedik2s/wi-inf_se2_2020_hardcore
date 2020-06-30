@@ -1,6 +1,9 @@
 package org.HardCore.gui.windows;
 
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.HardCore.model.objects.dto.StellenanzeigeDTO;
 import org.HardCore.process.exceptions.StellenanzeigeException;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;

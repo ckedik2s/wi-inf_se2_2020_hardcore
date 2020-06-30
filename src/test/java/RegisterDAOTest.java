@@ -1,10 +1,6 @@
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
 import org.HardCore.model.dao.RegisterDAO;
 import org.HardCore.model.objects.dto.UserDTO;
-import org.junit.After;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

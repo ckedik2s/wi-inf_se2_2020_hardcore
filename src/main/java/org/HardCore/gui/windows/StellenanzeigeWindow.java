@@ -9,7 +9,6 @@ import org.HardCore.process.proxy.BewerbungControlProxy;
 import org.HardCore.process.proxy.StellenanzeigeControlProxy;
 
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class StellenanzeigeWindow extends Window {
