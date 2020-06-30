@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -44,7 +45,7 @@ public class RegisterDAOTest {
         try {
             userDTO.setId(UserDAO.getInstance().getMaxID());
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            assertNotNull(null);
         }
         regiDAO.deleteUser(userDTO);
     }
