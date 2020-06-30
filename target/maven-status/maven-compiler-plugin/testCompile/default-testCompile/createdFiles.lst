@@ -3,10 +3,10 @@ BewerbungDAOTest.class
 UnternehmenDAOTest.class
 AbstractDAOTest.class
 StudentDAOTest.class
+StellenanzeigeDTOTest.class
 StudentDTOTest.class
 RegiControlTest.class
 StellenanzeigeDAOTest.class
-StellenanzeigeDetailTest.class
 RegistrationControlProxyTest.class
 UserDTOTest.class
 RoleDAOTest.class
