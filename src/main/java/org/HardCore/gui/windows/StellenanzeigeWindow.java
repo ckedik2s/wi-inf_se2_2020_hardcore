@@ -50,8 +50,8 @@ public class StellenanzeigeWindow extends Window {
         ort.setReadOnly(true);
 
         //Zeitraum
-        TextField zeitraum = new TextField("Ende der Ausschreibung");
-        zeitraum.setValue(stellenanzeige.getZeitraum().format(DateTimeFormatter.ofPattern("dd.MM.yy")));
+        DateField zeitraum = new DateField("Ende der Ausschreibung");
+        zeitraum.setValue(stellenanzeige.getZeitraum());
         zeitraum.setReadOnly(true);
 
         //Beschreibung
@@ -86,16 +86,7 @@ public class StellenanzeigeWindow extends Window {
 
         //Vertikal
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.addComponent(name);
-        verticalLayout.addComponent(art);
-        verticalLayout.addComponent(branche);
-        verticalLayout.addComponent(studiengang);
-        verticalLayout.addComponent(ort);
-        verticalLayout.addComponent(zeitraum);
-        verticalLayout.addComponent(beschreibung);
-        verticalLayout.addComponent(horizontalLayout);
-        verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-
+        verticalLayout = this.buildVerticalLayout(verticalLayout, name, art, branche, studiengang, ort, zeitraum, beschreibung, horizontalLayout);
         setContent(verticalLayout);
     }
 
@@ -178,6 +169,11 @@ public class StellenanzeigeWindow extends Window {
 
         //Vertikal
         VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout = this.buildVerticalLayout(verticalLayout, name, art, branche, studiengang, ort, zeitraum, beschreibung, horizontalLayout);
+        setContent(verticalLayout);
+    }
+    public VerticalLayout buildVerticalLayout(VerticalLayout verticalLayout, TextField name, TextField art, TextField branche, TextField studiengang,
+                                              TextField ort, DateField zeitraum, TextArea beschreibung, HorizontalLayout horizontalLayout ){
         verticalLayout.addComponent(name);
         verticalLayout.addComponent(art);
         verticalLayout.addComponent(branche);
@@ -187,7 +183,6 @@ public class StellenanzeigeWindow extends Window {
         verticalLayout.addComponent(beschreibung);
         verticalLayout.addComponent(horizontalLayout);
         verticalLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
-
-        setContent(verticalLayout);
+        return verticalLayout;
     }
 }

@@ -31,7 +31,7 @@ public class RegistrationView extends VerticalLayout implements View {
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
-
+        setStyleName("schrift-profil");
         //Eingabefelder
         //Email
         final Binder<UserDTO> emailBinder = new Binder<>();

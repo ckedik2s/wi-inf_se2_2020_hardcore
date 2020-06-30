@@ -41,6 +41,7 @@ public class StellenanzeigeDAO extends AbstractDAO {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
         }
         List<StellenanzeigeDTO> list = new ArrayList<>();
+        assert rs != null;
         buildList(rs, list);
         return list;
     }
@@ -165,15 +166,16 @@ public class StellenanzeigeDAO extends AbstractDAO {
             assert rs != null;
             buildList(rs, listStellenanzeige);
         }
+
         return listStellenanzeige;
     }
 
     private void buildList(ResultSet rs, List<StellenanzeigeDTO> listStellenanzeige) throws SQLException {
+
         StellenanzeigeDTO stellenanzeigeDTO;
         try {
-            while (true) {
-                assert rs != null;
-                if (!rs.next()) break;
+            while (rs.next()) {
+
                 stellenanzeigeDTO = new StellenanzeigeDTO();
                 stellenanzeigeDTO.setId_anzeige(rs.getInt(1));
                 stellenanzeigeDTO.setBeschreibung(rs.getString(2));
@@ -195,8 +197,8 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 listStellenanzeige.add(stellenanzeigeDTO);
             }
         } catch (SQLException e) {
-            Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
-        } finally {
+            Notification.show("Es ist ein schwerer SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!");
+        } finally{
             assert rs != null;
             rs.close();
         }

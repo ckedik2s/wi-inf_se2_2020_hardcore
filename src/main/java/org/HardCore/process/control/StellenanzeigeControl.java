@@ -90,8 +90,10 @@ public class StellenanzeigeControl implements StellenanzeigeControlInterface {
         } catch (SQLException e) {
             Notification.show("Es ist ein SQL-Fehler aufgetreten. Bitte informieren Sie einen Administrator!", Notification.Type.ERROR_MESSAGE);
         } finally {
+            //JDBCConnection.getInstance().closeConnection();
             rs.close();
         }
+
         return anzahl_bewerber;
     }
 }
