@@ -3,14 +3,11 @@ package DAOTests;
 import org.hardcore.model.dao.RegisterDAO;
 import org.hardcore.model.dao.UserDAO;
 import org.hardcore.model.objects.dto.UserDTO;
-import org.junit.After;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class RegisterDAOTest {
 
@@ -45,7 +42,7 @@ public class RegisterDAOTest {
         try {
             userDTO.setId(UserDAO.getInstance().getMaxID());
         } catch (SQLException throwables) {
-            assertNotNull(null);
+            assertNull(userDTO);
         }
         regiDAO.deleteUser(userDTO);
     }
