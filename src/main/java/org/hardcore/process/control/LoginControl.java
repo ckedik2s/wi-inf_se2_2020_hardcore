@@ -74,6 +74,6 @@ public class LoginControl implements LoginControlInterface {
 
     public void logoutUser() {
         UI.getCurrent().close();
-        UI.getCurrent().getPage().setLocation("/HardCore");
+        UI.getCurrent().getPage().setLocation(Views.MAIN);
     }
 }
