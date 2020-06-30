@@ -1,8 +1,12 @@
 package DAOTests;
 
 import org.hardcore.model.dao.RegisterDAO;
+import org.hardcore.model.dao.UserDAO;
 import org.hardcore.model.objects.dto.UserDTO;
+import org.junit.After;
 import org.junit.Test;
+
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +29,6 @@ public class RegisterDAOTest {
     @Test
     public void AddUserTest() {
         assertTrue(RegisterDAO.getInstance().addUser(userDTO));
-        regiDAO.deleteUser(userDTO);
     }
     @Test
     public void update() {
@@ -35,5 +38,14 @@ public class RegisterDAOTest {
         userDTO.setName("Pat");
         userDTO.setVorname("Rick");
         assertNotNull(regiDAO);
+    }
+    @Test
+    public void testDelete() {
+        try {
+            userDTO.setId(UserDAO.getInstance().getMaxID());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        regiDAO.deleteUser(userDTO);
     }
 }
