@@ -1,3 +1,5 @@
+package DAOTests;
+
 import org.hardcore.model.dao.BewerbungDAO;
 import org.hardcore.model.objects.dto.StudentDTO;
 import org.hardcore.model.objects.dto.UserDTO;

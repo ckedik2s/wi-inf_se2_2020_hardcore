@@ -1,19 +1,21 @@
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\RegistrationControlProxyTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\UserDTOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\RoleDTOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\StudentDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\StellenanzeigeDTOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\RegisterDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\RoleDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\BewerbungDTOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\UnternehmenDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\MockitoTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\seleniumRegisterViewTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\RegiControlTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\UnternehmenDTOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\UserDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\BewerbungDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\JDBCTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\StellenanzeigeDAOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\StudentDTOTest.java
-F:\Uni\4. Semester\SE II\HardCore\src\test\java\AbstractDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\AbstractDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\StudentDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\UnternehmenDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\MockitoTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\UserDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DTOTest\BewerbungDTOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\RegiControlTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\RegisterDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\StellenanzeigeDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DTOTest\UnternehmenDTOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\RoleDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\JDBCTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DTOTest\RoleDTOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DTOTest\UserDTOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DTOTest\StudentDTOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DTOTest\StellenanzeigeDTOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\DAOTests\BewerbungDAOTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\seleniumRegisterViewTest.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\Builder\UnternehmenDTOBuilder.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\Builder\StudentDTOBuilder.java
+C:\Users\adem_\Desktop\UNI\#SoSe2020 4\Se2\wi-inf_se2_2020_hardcore\src\test\java\RegistrationControlProxyTest.java

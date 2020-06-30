@@ -1,3 +1,5 @@
+package DTOTest;
+
 import org.hardcore.model.objects.dto.UnternehmenDTO;
 import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;

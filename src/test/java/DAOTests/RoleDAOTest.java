@@ -1,3 +1,5 @@
+package DAOTests;
+
 import org.hardcore.model.dao.RoleDAO;
 import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;

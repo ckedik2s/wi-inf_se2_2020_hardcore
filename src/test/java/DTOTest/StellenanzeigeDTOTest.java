@@ -1,3 +1,5 @@
+package DTOTest;
+
 import org.hardcore.model.objects.dto.StellenanzeigeDTO;
 import org.junit.Test;
 

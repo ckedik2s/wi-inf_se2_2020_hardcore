@@ -1,3 +1,5 @@
+package DAOTests;
+
 import org.hardcore.model.dao.StudentDAO;
 import org.junit.Test;
 

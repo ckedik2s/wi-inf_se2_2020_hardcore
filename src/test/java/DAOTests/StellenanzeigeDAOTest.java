@@ -1,3 +1,5 @@
+package DAOTests;
+
 import org.hardcore.model.dao.StellenanzeigeDAO;
 import org.junit.Test;
 
