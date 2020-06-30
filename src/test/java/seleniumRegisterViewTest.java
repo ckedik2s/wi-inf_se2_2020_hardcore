@@ -1,8 +1,6 @@
-
-/*
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -12,15 +10,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class seleniumRegisterViewTest {
+public class seleniumRegisterViewTest {
 
-    private static WebDriver driver = null;
+    private WebDriver driver = null;
 
-    @BeforeAll
-    public static void setUpClass(){
-        System.setProperty("webdriver.gecko.driver","F:\\Uni\\SE II\\Projekt\\Geckodriver\\geckodriver.exe");
+    @Before
+    public void setUpClass(){
+        System.setProperty("webdriver.gecko.driver","F:\\Uni\\4. Semester\\SE II\\Projekt\\Geckodriver\\geckodriver.exe");
         File pathBinary = new File("E:\\Mozilla Firefox\\firefox.exe");
         FirefoxBinary firefoxBinary = new FirefoxBinary(pathBinary);
         DesiredCapabilities desired = DesiredCapabilities.firefox();
@@ -30,7 +28,7 @@ class seleniumRegisterViewTest {
     }
 
     @Test
-    void startWebDriver() {
+    public void startWebDriver() {
 
         //Öffne Seite
         driver.get("http://localhost:8080/HardCore/#!main");
@@ -61,9 +59,9 @@ class seleniumRegisterViewTest {
         //Check ob gleich
         assertEquals("http://localhost:8080/HardCore/#!main",driver.getCurrentUrl());
     }
-    @AfterAll
-    public static void tearDownClass() {
+    @After
+    public void tearDownClass() {
         driver.quit();
     }
 
-}/*/
+}

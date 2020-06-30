@@ -151,9 +151,9 @@ public class StellenanzeigeDAO extends AbstractDAO {
                 "FROM collhbrs.bewerbung_to_stellenanzeige " +
                 "WHERE id_bewerbung = ? );";
         PreparedStatement statement = this.getPreparedStatement(sql);
-        ResultSet rs = null;
         List<BewerbungDTO> list = BewerbungDAO.getInstance().getBewerbungenForStudent(studentDTO);
         List<StellenanzeigeDTO> listStellenanzeige = new ArrayList<>();
+        ResultSet rs = null;
         for (BewerbungDTO bewerbungDTO : list) {
             int id_bewerbung = bewerbungDTO.getId();
             try {
