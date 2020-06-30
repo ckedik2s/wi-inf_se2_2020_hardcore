@@ -1,9 +1,5 @@
-package DAOTests;
-
-import org.HardCore.model.dao.UserDAO;
+import org.hardcore.model.dao.UserDAO;
 import org.junit.Test;
-
-import java.sql.SQLException;
 
 import static org.junit.Assert.assertNotNull;
 

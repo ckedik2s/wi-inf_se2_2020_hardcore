@@ -1,11 +1,7 @@
-package DAOTests;
-
-import org.HardCore.model.dao.StudentDAO;
-import org.HardCore.model.objects.dto.StudentDTO;
-import org.HardCore.model.objects.dto.UserDTO;
+import org.hardcore.model.dao.StudentDAO;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class StudentDAOTest {
 

@@ -1,10 +1,9 @@
-package DAOTests;
-
-import org.HardCore.model.dao.AbstractDAO;
-import org.HardCore.model.dao.UserDAO;
+import org.hardcore.model.dao.AbstractDAO;
 import org.junit.Test;
+
 import java.sql.Statement;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertNotNull;
 
 public class AbstractDAOTest extends AbstractDAO {
 

@@ -1,9 +1,8 @@
-package DAOTests;
-
-import org.HardCore.model.dao.UnternehmenDAO;
-import org.HardCore.model.objects.dto.UserDTO;
+import org.hardcore.model.dao.UnternehmenDAO;
+import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertNotNull;
 
 
 public class UnternehmenDAOTest {

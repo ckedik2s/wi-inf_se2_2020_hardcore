@@ -1,9 +1,8 @@
-package DTOTest;
-
-import org.HardCore.model.objects.dto.StellenanzeigeDTO;
+import org.hardcore.model.objects.dto.StellenanzeigeDTO;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class StellenanzeigeDTOTest {
 

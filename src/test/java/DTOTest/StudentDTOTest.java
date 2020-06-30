@@ -1,10 +1,9 @@
-package DTOTest;
-
-import org.HardCore.model.objects.dto.StudentDTO;
-import org.HardCore.model.objects.dto.UserDTO;
+import org.hardcore.model.objects.dto.StudentDTO;
+import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class StudentDTOTest {
 

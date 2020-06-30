@@ -1,12 +1,10 @@
-package DAOTests;
-
-import org.HardCore.model.dao.BewerbungDAO;
-import org.HardCore.model.dao.StudentDAO;
-import org.HardCore.model.objects.dto.StudentDTO;
-import org.HardCore.model.objects.dto.UserDTO;
+import org.hardcore.model.dao.BewerbungDAO;
+import org.hardcore.model.objects.dto.StudentDTO;
+import org.hardcore.model.objects.dto.UserDTO;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class BewerbungDAOTest {
 
