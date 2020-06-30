@@ -29,7 +29,7 @@ public class seleniumRegisterViewTest {
     }
 
     @Test
-    public void startWebDriver() {
+    public void startWebDriver() throws InterruptedException {
 
         //Öffne Seite
         driver.get("http://localhost:8080/HardCore/#!main");
@@ -44,15 +44,15 @@ public class seleniumRegisterViewTest {
         driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/span[2]/span")).click();
 
         //Daten eingeben
-        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys("Lachs@laxi.de");
+        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys("11@laxi.de");
         driver.findElement(By.xpath("//*[@id=\"passwort1\"]")).sendKeys("12345");
         driver.findElement(By.xpath("//*[@id=\"passwort2\"]")).sendKeys("12345");
 
         //Click on Button "Student"
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[5]/div/div[2]/div/div[7]/div/div[2]/span[1]/label")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[5]/div/div[2]/div/div[11]/div/div[2]/span[1]/label")).click();
 
         //Registrieren button drücken
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[5]/div/div[2]/div/div[9]/div")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[5]/div/div[2]/div/div[13]/div/div[1]/div")).click();
 
         //Ok Button clicken
         driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/div[3]/div/div/div[3]/div")).click();
