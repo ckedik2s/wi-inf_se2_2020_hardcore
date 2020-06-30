@@ -44,14 +44,14 @@ public class MainView extends VerticalLayout implements View {
         Label line = new Label("<hr>", ContentMode.HTML);
         this.addComponent(line);
         line.setSizeFull();
-
+        setStyleName("schrift-profil");
         //Tabelle
         final Grid<StellenanzeigeDTO> grid = new Grid<>("Ihre Treffer");
         grid.setSizeFull();
         grid.setHeightMode(HeightMode.UNDEFINED);
         BuildGrid.buildGrid(grid);
         SingleSelect<StellenanzeigeDTO> selection = grid.asSingleSelect();
-
+        grid.setStyleName("schrift-tabelle");
         //DetailButton
         Button detailButton = new Button("Details", VaadinIcons.ENTER);
         detailButton.setEnabled(false);
