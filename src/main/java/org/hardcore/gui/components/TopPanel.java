@@ -16,9 +16,9 @@ public class  TopPanel extends HorizontalLayout {
         this.setSizeFull();
 
         //Logo links oben in der Ecke
-        ThemeResource icon = new ThemeResource("logo_small.png");
+        ThemeResource icon = new ThemeResource("iconNonCopyRight-removebg-preview.png");
         Image logo = new Image(null, icon);
-        logo.setWidth("150");
+        logo.setWidth("160");
         logo.setStyleName("HomeButtonStyle");
         logo.addClickListener(new MouseEvents.ClickListener() {
 
@@ -35,7 +35,7 @@ public class  TopPanel extends HorizontalLayout {
         HorizontalLayout hlayout = new HorizontalLayout();
         setStyleName("schrift-willkommen");
         UserDTO userDTO = ( (MyUI) MyUI.getCurrent() ).getUserDTO();
-        Label welcome = new Label("Willkommen bei HardCore!");
+        Label welcome = new Label("Willkommen bei CarLook!");
         if (userDTO != null) {
             if (userDTO.hasRole(Roles.STUDENT) && userDTO.getVorname() != null) {
                 welcome = new Label("Willkommen " + userDTO.getVorname() + "!");
